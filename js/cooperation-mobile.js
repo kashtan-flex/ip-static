@@ -1,3 +1,24 @@
+/*
+==================================================
+COOPERATION MOBILE JS
+
+Версия: cooperation-mobile-js-007-mobile-rider-open-new-tab-v035
+
+ИЗМЕНЕНИЯ:
+- mobile riders: райдеры на мобильной версии открываются в новой вкладке/окне, чтобы PDF корректно работали внутри Tilda iframe
+- popup date: единая маска ДД.ММ.ГГГГ и проверка реальной календарной даты без изменения дизайна, меню и остальной логики
+- файл основан на cooperation-mobile-js-001-initial
+- добавлен показ portrait только после начала скролла mobile-страницы
+- glow и текст остаются CSS-анимациями при открытии страницы
+- высота mobile-страницы повторно рассчитана по фактическому нижнему краю видимого портрета
+- scroll-top синхронизирован с финальной длиной страницы
+- удалён принудительный fetch/blob-download для PDF-райдеров
+- райдеры открываются обычными ссылками в новой вкладке для стабильной работы на iOS/Android
+- menu, accordion, popup, date mask и disabled portfolio link не изменялись
+- desktop JS не изменялся
+==================================================
+*/
+
 (function(){
   'use strict';
 
@@ -655,6 +676,40 @@
     });
   }
 
+  function setupFileDownloads(){
+    var fileDownloadLinks = Array.prototype.slice.call(
+      document.querySelectorAll('[data-cooperation-file-download]')
+    );
+
+    fileDownloadLinks.forEach(function(link){
+      var href = link.getAttribute('href');
+
+      if(!href){
+        return;
+      }
+
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+
+      link.addEventListener('click', function(event){
+        var url = new URL(href, window.location.href).href;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(typeof link.blur === 'function'){
+          link.blur();
+        }
+
+        var openedWindow = window.open(url, '_blank', 'noopener,noreferrer');
+
+        if(!openedWindow){
+          window.location.href = url;
+        }
+      });
+    });
+  }
+
 
   function bindEvents(){
     window.addEventListener('resize', requestScaleUpdate);
@@ -680,6 +735,7 @@
     setupMenuCloseOnScroll();
     setupDateMask();
     setupDisabledDownloads();
+    setupFileDownloads();
     if(scrollTopButton){
       scrollTopButton.addEventListener('click', scrollToTop);
     }
