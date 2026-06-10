@@ -10,8 +10,8 @@
   backface-visibility:hidden;
   will-change:opacity, visibility;
   transition:
-    opacity .24s cubic-bezier(.19,1,.22,1),
-    visibility .24s cubic-bezier(.19,1,.22,1);
+    opacity var(--ip-page-transition-exit, 180ms) cubic-bezier(.19,1,.22,1),
+    visibility var(--ip-page-transition-exit, 180ms) cubic-bezier(.19,1,.22,1);
 }
 
 .ip-page-transition.is-active{
@@ -23,8 +23,8 @@
   opacity:1;
   visibility:visible;
   transition:
-    opacity .34s cubic-bezier(.19,1,.22,1),
-    visibility .34s cubic-bezier(.19,1,.22,1);
+    opacity var(--ip-page-transition-enter, 220ms) cubic-bezier(.19,1,.22,1),
+    visibility var(--ip-page-transition-enter, 220ms) cubic-bezier(.19,1,.22,1);
 }
 
 .ip-page-transition.is-enter.is-ready{
@@ -35,12 +35,4 @@
 html.ip-page-transition-lock,
 html.ip-page-transition-lock body{
   overscroll-behavior:none;
-}
-
-@media (max-width:767px){
-  .ip-page-transition.is-enter{
-    transition:
-      opacity .42s cubic-bezier(.19,1,.22,1),
-      visibility .42s cubic-bezier(.19,1,.22,1);
-  }
 }
