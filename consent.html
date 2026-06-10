@@ -1,0 +1,62 @@
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>Согласие на обработку персональных данных — Иван Перцев</title>
+
+  <style>
+    html,
+    body,
+    #ip-policy-root{
+      width:100%;
+      min-height:100%;
+      margin:0;
+      padding:0;
+      background:#050603;
+      overflow-x:hidden;
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="preload" href="./assets/img/policy/background/policy-bg.webp" as="image" media="(min-width:768px)">
+  <link rel="preload" href="./assets/img/policy/mobile/background/policy-mobile-bg.webp" as="image" media="(max-width:767px)">
+
+  <link rel="stylesheet" href="./css/home.css">
+  <link rel="stylesheet" href="./css/popups.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/page-transition.css">
+  <link rel="stylesheet" href="./css/legal.css?v=065-consent-desktop-text-block-up">
+</head>
+
+<body>
+
+  <div class="ip-page-transition is-enter" aria-hidden="true"></div>
+  <div id="ip-policy-root"></div>
+
+  <script>
+    fetch('./pages/legal/consent.html?v=004-scrolltop-arrow')
+      .then(function(response){
+        return response.text();
+      })
+      .then(function(html){
+        document.getElementById('ip-policy-root').innerHTML = html;
+
+        var pageScript = document.createElement('script');
+        pageScript.src = './js/legal.js?v=' + Date.now();
+        document.body.appendChild(pageScript);
+
+        var transitionScript = document.createElement('script');
+        transitionScript.src = './js/page-transition.js';
+        document.body.appendChild(transitionScript);
+      });
+  </script>
+
+</body>
+</html>

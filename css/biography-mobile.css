@@ -1,0 +1,607 @@
+
+
+.ip-biography-scrolltop{
+  display:none;
+}
+
+@media (max-width:767px){
+
+  html,
+  body,
+  #ip-biography-root{
+    width:100%;
+    min-height:100%;
+    height:auto;
+    margin:0;
+    padding:0;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    background:#050603 !important;
+    overscroll-behavior-x:none;
+  }
+
+  html.ip-popup-lock,
+  body.ip-popup-lock{
+    overflow:hidden !important;
+  }
+
+  .ip-biography{
+    position:relative;
+    width:100%;
+    min-height:var(--biography-mobile-page-height, 1510px);
+    height:var(--biography-mobile-page-height, 1510px);
+    overflow:visible;
+    background:#050603;
+  }
+
+  .ip-biography-stage{
+    position:absolute;
+    left:50%;
+    top:0;
+    width:390px;
+    height:1510px;
+    min-height:1510px;
+    overflow:hidden;
+    transform:translate3d(-50%,0,0) scale(var(--biography-mobile-scale,1));
+    transform-origin:top center;
+    background:#050603;
+  }
+
+  .ip-biography-bg{
+    position:absolute;
+    inset:0;
+
+    background-image:image-set(
+      url('../assets/img/biography/mobile/background/biography-mobile-bg.webp') 1x,
+      url('../assets/img/biography/mobile/background/biography-mobile-bg@2x.webp') 2x
+    );
+
+    background-size:390px 1506px;
+    background-position:top center;
+    background-repeat:no-repeat;
+  }
+
+  .ip-biography-content{
+    position:absolute;
+    inset:0;
+    z-index:2;
+  }
+
+  .ip-biography-left{
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:3;
+    width:390px;
+    height:auto;
+  }
+
+  .ip-biography-header{
+    position:absolute;
+    left:20px;
+    top:32px;
+    z-index:5;
+    width:350px;
+    margin:0;
+    padding:0;
+  }
+
+  .ip-biography-title{
+    margin:0;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:32px;
+    line-height:.95;
+    font-weight:600;
+    letter-spacing:-.03em;
+  }
+
+  .ip-biography-subtitle-desktop{
+    display:none !important;
+  }
+
+  .ip-biography-subtitle-mobile{
+    display:block !important;
+  }
+
+  .ip-biography-subtitle{
+    width:320px;
+    margin:16px 0 0;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:14px;
+    line-height:1;
+    font-weight:400;
+    letter-spacing:-.04em;
+  }
+
+  .ip-biography-right{
+    position:absolute;
+    left:0;
+    top:162px;
+    z-index:4;
+    width:390px;
+    height:603px;
+    overflow:hidden;
+    background:#080807;
+  }
+
+  .ip-biography-carousel{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    overflow:hidden;
+  }
+
+  .ip-biography-slide{
+    position:absolute;
+    inset:0;
+  }
+
+  .ip-biography-slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+  }
+
+  .ip-biography-quote{
+    position:absolute;
+    left:50%;
+    bottom:60px;
+    z-index:5;
+    width:321px;
+    margin:0;
+    padding:0;
+    color:#fff;
+    text-align:left;
+    transform:translate3d(-50%,0,0);
+  }
+
+  .ip-biography-quote p{
+    margin:0;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:16px;
+    line-height:1.40;
+    font-weight:400;
+    letter-spacing:-.03em;
+  }
+
+  .ip-biography-quote strong{
+    font-weight:700;
+  }
+
+  .ip-biography-quote cite{
+    display:block;
+    margin-top:18px;
+    padding-right:2px;
+    color:#fff;
+    font-family:'Benzin',Arial,sans-serif;
+    font-size:10px;
+    line-height:.9;
+    font-style:normal;
+    font-weight:700;
+    text-align:right;
+    letter-spacing:0;
+  }
+
+  .ip-biography-list-desktop{
+    display:none !important;
+  }
+
+  .ip-biography-list-mobile{
+    display:block !important;
+  }
+
+  .ip-biography-list{
+    position:absolute;
+    left:50%;
+    top:823px;
+    width:351px;
+    margin:0;
+    padding:0;
+    list-style:none;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:16px;
+    line-height:1.30;
+    font-weight:400;
+    letter-spacing:-.03em;
+    transform:translate3d(-50%,0,0);
+  }
+
+  .ip-biography-list li{
+    position:relative;
+    margin:0;
+    padding:0 0 0 20px;
+  }
+
+  .ip-biography-list li::before{
+    content:'•';
+    position:absolute;
+    left:0;
+    top:0;
+    color:#fff;
+    font-size:14px;
+    line-height:1.3;
+  }
+
+  .ip-biography-awards{
+    position:absolute;
+    left:0;
+    top:1260px;
+    bottom:auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:390px;
+    margin:0;
+    padding:0;
+  }
+
+  .ip-biography-award{
+    display:flex;
+    align-items:center;
+    min-width:0;
+  }
+
+  .ip-biography-award-top{
+    order:1;
+    gap:20px;
+    margin:0;
+  }
+
+  .ip-biography-award-icon{
+    display:block;
+    width:48px;
+    height:28px;
+  }
+
+  .ip-biography-award-text-top{
+    width:114px;
+  }
+
+  .ip-biography-award-text{
+    margin:0;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:14px;
+    line-height:1;
+    font-weight:400;
+    letter-spacing:-.04em;
+    opacity:.70;
+  }
+
+  .ip-biography-award-text strong,
+  .ip-biography-award-text span{
+    display:block;
+    white-space:nowrap;
+  }
+
+  .ip-biography-award-text strong{
+    margin:0;
+    color:#fff;
+    font-size:14px;
+    line-height:1;
+    font-weight:600;
+    letter-spacing:-.04em;
+    opacity:1;
+  }
+
+  .ip-biography-award-text span{
+    color:#fff;
+    font-size:14px;
+    line-height:1;
+    font-weight:400;
+    letter-spacing:-.04em;
+    opacity:.70;
+  }
+
+  .ip-biography-award-wedding{
+    order:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    margin:50px 0 0;
+  }
+
+  .ip-biography-award-logo{
+    display:block;
+    width:267px;
+    height:auto;
+  }
+
+  .ip-biography-award-text-wedding{
+    width:210px;
+    text-align:center;
+  }
+
+  .ip-biography-scrolltop{
+    position:absolute;
+    right:20px;
+    bottom:55px;
+    z-index:8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:24px;
+    height:24px;
+    padding:0;
+    border:1px solid rgba(255,255,255,.9);
+    border-radius:7px;
+    background:transparent;
+    cursor:pointer;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translate3d(0,10px,0) scale(.96);
+    transition:
+      opacity .42s cubic-bezier(.19,1,.22,1),
+      transform .42s cubic-bezier(.19,1,.22,1),
+      visibility 0s linear .42s;
+    will-change:opacity,transform;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    -webkit-transform:translate3d(0,10px,0) scale(.96);
+    -webkit-transition:
+      opacity .42s cubic-bezier(.19,1,.22,1),
+      -webkit-transform .42s cubic-bezier(.19,1,.22,1),
+      visibility 0s linear .42s;
+  }
+
+  .ip-biography-scrolltop.is-visible{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transform:translate3d(0,0,0) scale(1);
+    transition:
+      opacity .42s cubic-bezier(.19,1,.22,1),
+      transform .42s cubic-bezier(.19,1,.22,1),
+      visibility 0s linear 0s;
+    -webkit-transform:translate3d(0,0,0) scale(1);
+    -webkit-transition:
+      opacity .42s cubic-bezier(.19,1,.22,1),
+      -webkit-transform .42s cubic-bezier(.19,1,.22,1),
+      visibility 0s linear 0s;
+  }
+
+  .ip-biography-scrolltop span{
+    display:block;
+    width:8px;
+    height:8px;
+    border-top:1.5px solid #fff;
+    border-left:1.5px solid #fff;
+    transform:translateY(2px) rotate(45deg);
+  }
+
+  .ip-biography .ip-menu-toggle{
+    position:absolute;
+    top:40px;
+    right:20px;
+    z-index:80;
+    width:27px;
+    height:27px;
+    padding:0 !important;
+    margin:0 !important;
+    border:none !important;
+    outline:none !important;
+    background:transparent !important;
+    cursor:pointer;
+    overflow:visible;
+    appearance:none;
+    -webkit-appearance:none;
+    box-shadow:none !important;
+    filter:none;
+    touch-action:manipulation;
+  }
+
+  .ip-biography .ip-menu-line{
+    position:absolute;
+    left:0;
+    top:50%;
+    width:27px;
+    height:3px;
+    border-radius:10px;
+    background:#fff;
+    transform-origin:center center;
+    transition:transform .42s cubic-bezier(.19,1,.22,1);
+    will-change:transform;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+
+  .ip-biography .ip-menu-line:first-child{
+    transform:translateY(calc(-50% - 5.5px));
+  }
+
+  .ip-biography .ip-menu-line:last-child{
+    transform:translateY(calc(-50% + 5.5px));
+  }
+
+  .ip-biography .ip-menu-toggle.is-open .ip-menu-line:first-child{
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .ip-biography .ip-menu-toggle.is-open .ip-menu-line:last-child{
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-biography .ip-menu-panel{
+    position:absolute;
+    top:0;
+    right:0;
+    z-index:70;
+    width:390px;
+    max-width:none;
+    height:765px;
+    padding:40px 22px 45px 40px;
+    overflow:hidden;
+    background:transparent;
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+    touch-action:pan-y;
+  }
+
+  .ip-biography .ip-menu-panel::before{
+    background:rgba(0,0,0,.30);
+    -webkit-backdrop-filter:blur(18px);
+    backdrop-filter:blur(18px);
+  }
+
+  .ip-biography .ip-menu-panel::after{
+    background-image:url('../assets/img/home/popups/menu-noise.webp');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    opacity:.35;
+    mix-blend-mode:normal;
+  }
+
+  @supports not ((backdrop-filter:blur(18px)) or (-webkit-backdrop-filter:blur(18px))){
+    .ip-biography .ip-menu-panel{
+      background:transparent;
+    }
+
+    .ip-biography .ip-menu-panel::before{
+      background:rgba(0,0,0,.62);
+    }
+  }
+
+  .ip-biography .ip-menu-socials{
+    gap:10px;
+    margin-bottom:55px;
+  }
+
+  .ip-biography .ip-social::after{
+    display:none;
+  }
+
+  .ip-biography .ip-social:hover::before{
+    opacity:1;
+  }
+
+  .ip-biography .ip-social:hover::after{
+    opacity:0;
+  }
+
+  .ip-biography .ip-menu-list{
+    width:328px;
+    gap:20px;
+  }
+
+  .ip-biography .ip-menu-link,
+  .ip-biography .ip-menu-link:link,
+  .ip-biography .ip-menu-link:visited,
+  .ip-biography .ip-menu-link:hover,
+  .ip-biography .ip-menu-link:active,
+  .ip-biography .ip-accordion-button,
+  .ip-biography .ip-accordion-button:hover,
+  .ip-biography .ip-accordion-button:active{
+    color:#fff !important;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:20px;
+    line-height:90%;
+    font-weight:600;
+    letter-spacing:-.04em;
+    text-decoration:none !important;
+  }
+
+  .ip-biography .ip-accordion-button{
+    position:relative;
+    width:100%;
+    min-height:24px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    padding-right:34px;
+    touch-action:manipulation;
+  }
+
+  .ip-biography .ip-accordion-button::before,
+  .ip-biography .ip-accordion-button::after{
+    content:'';
+    position:absolute;
+    top:50%;
+    display:block;
+    width:14px;
+    height:3px;
+    border-radius:10px;
+    background:#fff;
+    opacity:1;
+    pointer-events:none;
+    transform-origin:center center;
+    transition:
+      transform .35s cubic-bezier(.19,1,.22,1),
+      opacity .35s ease;
+    will-change:transform,opacity;
+  }
+
+  .ip-biography .ip-accordion-button::before{
+    right:9px;
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .ip-biography .ip-accordion-button::after{
+    right:0;
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-biography .ip-accordion.is-open .ip-accordion-button::before{
+    opacity:.5;
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-biography .ip-accordion.is-open .ip-accordion-button::after{
+    opacity:.5;
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .ip-biography .ip-accordion-content{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+
+  .ip-biography .ip-accordion.is-open .ip-accordion-content{
+    max-height:220px;
+  }
+
+  .ip-biography .ip-submenu{
+    gap:12px;
+    padding-top:16px;
+  }
+
+  .ip-biography .ip-submenu a,
+  .ip-biography .ip-submenu a:link,
+  .ip-biography .ip-submenu a:visited,
+  .ip-biography .ip-submenu a:hover,
+  .ip-biography .ip-submenu a:active{
+    color:#69C9FF !important;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:16px;
+    line-height:120%;
+    font-weight:400;
+    letter-spacing:-.025em;
+    opacity:1;
+    text-decoration:none !important;
+  }
+
+  .ip-biography .ip-menu-legal{
+    left:40px;
+    right:22px;
+    bottom:145px;
+  }
+
+  .ip-biography .ip-menu-legal a,
+  .ip-biography .ip-menu-legal a:link,
+  .ip-biography .ip-menu-legal a:visited,
+  .ip-biography .ip-menu-legal a:hover,
+  .ip-biography .ip-menu-legal a:active{
+    color:rgba(255,255,255,.5) !important;
+    font-size:8px;
+    line-height:150%;
+    text-decoration:none !important;
+  }
+}

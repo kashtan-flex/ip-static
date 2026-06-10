@@ -1,0 +1,228 @@
+
+
+@media (max-width:767px){
+
+  html,
+  body,
+  #allrecords,
+  #ip-home-root{
+    width:100%;
+    height:100%;
+    overflow:hidden !important;
+    background:#050603 !important;
+  }
+
+  .ip-page-home{
+    width:100%;
+    height:100dvh;
+    min-height:100dvh;
+    overflow:hidden !important;
+    background:#050603;
+  }
+
+  .ip-home-stage{
+    width:390px;
+    height:700px;
+  }
+
+  .ip-home-bg-base,
+  .ip-home-bg-glow,
+  .ip-home-portrait{
+    background-size:390px 700px;
+    background-position:center center;
+  }
+
+  .ip-home-bg-base{
+    background-image:image-set(
+      url('../assets/img/home/mobile/background/home-mobile-bg.webp') 1x,
+      url('../assets/img/home/mobile/background/home-mobile-bg@2x.webp') 2x
+    );
+  }
+
+  .ip-home-bg-glow{
+    background-image:image-set(
+      url('../assets/img/home/mobile/background/home-mobile-bg-glow.webp') 1x,
+      url('../assets/img/home/mobile/background/home-mobile-bg-glow@2x.webp') 2x
+    );
+  }
+
+  .ip-home-portrait{
+    background-image:image-set(
+      url('../assets/img/home/mobile/portrait/home-mobile-portrait.png') 1x,
+      url('../assets/img/home/mobile/portrait/home-mobile-portrait@2x.png') 2x
+    );
+  }
+
+  .ip-home-content{
+    left:20px;
+    top:515px;
+    width:365px;
+    height:178px;
+    overflow:visible;
+  }
+
+  .ip-home-title,
+  .ip-title-line,
+  .ip-title-line span{
+    width:360px;
+  }
+
+  .ip-home-title{
+    font-size:62px;
+    line-height:.81;
+    letter-spacing:0;
+  }
+
+  .ip-title-line{
+    overflow:hidden;
+  }
+
+  .ip-title-line-first{
+    height:74px;
+  }
+
+  .ip-title-line-second{
+    height:96px;
+    margin-top:-22px;
+  }
+
+  .ip-title-line span{
+    display:block;
+    height:104px;
+    line-height:.81;
+    padding-top:8px;
+    box-sizing:border-box;
+    opacity:0;
+    transform:translate3d(0,-52px,0);
+    will-change:transform,opacity;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+
+  .ip-title-line-first span{
+    animation:ipMobileTextRevealSoft .42s cubic-bezier(.19,1,.22,1) forwards .9s;
+  }
+
+  .ip-title-line-second span{
+    animation:ipMobileTextRevealSoft .5s cubic-bezier(.19,1,.22,1) forwards 1.12s;
+  }
+
+  .ip-home-subtitle-wrap{
+    left:0;
+    top:110px;
+    width:215px;
+    height:24px;
+    overflow:hidden;
+  }
+
+  .ip-home-subtitle{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:15px;
+    line-height:100%;
+    font-weight:400;
+    letter-spacing:.025em;
+  }
+
+  .ip-subtitle-word,
+  .ip-subtitle-dot{
+    opacity:0;
+    transform:translate3d(0,-10px,0);
+  }
+
+  .ip-subtitle-word-one{
+    animation:ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.32s;
+  }
+
+  .ip-subtitle-dot{
+    position:relative;
+    top:0;
+    width:4px;
+    height:4px;
+    flex:0 0 4px;
+    margin-top:1px;
+    animation:
+      ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.40s,
+      ipDotBlink 1.4s ease-in-out infinite 1.82s;
+  }
+
+  .ip-subtitle-word-two{
+    animation:ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.48s;
+  }
+
+  .ip-menu-toggle{
+    top:40px;
+    right:20px;
+    width:27px;
+    height:27px;
+  }
+
+  .ip-menu-line{
+    width:27px;
+    height:3px;
+  }
+
+  .ip-menu-panel{
+    width:390px;
+    height:700px;
+    padding:40px 22px 45px 40px;
+  }
+
+  .ip-menu-socials{
+    margin-bottom:55px;
+  }
+
+  .ip-social::after{
+    display:none;
+  }
+
+  .ip-social:hover::before{
+    opacity:1;
+  }
+
+  .ip-social:hover::after{
+    opacity:0;
+  }
+
+  .ip-menu-list{
+    width:328px;
+  }
+
+  .ip-accordion-button::before{
+    right:9px;
+  }
+
+  .ip-accordion-button::after{
+    right:0;
+  }
+
+  .ip-menu-legal{
+    left:40px;
+    right:22px;
+  }
+}
+
+@keyframes ipMobileTextRevealSoft{
+  0%{
+    opacity:0;
+    transform:translate3d(0,-52px,0);
+  }
+
+  100%{
+    opacity:1;
+    transform:translate3d(0,0,0);
+  }
+}
+
+@keyframes ipMobileSubtitleRevealSoft{
+  0%{
+    opacity:0;
+    transform:translate3d(0,-10px,0);
+  }
+
+  100%{
+    opacity:1;
+    transform:translate3d(0,0,0);
+  }
+}

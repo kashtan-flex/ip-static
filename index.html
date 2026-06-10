@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+
+  <title>Иван Перцев — ведущий и музыкант</title>
+
+  <style>
+    html,
+    body,
+    #ip-home-root{
+      width:100%;
+      min-height:100%;
+      margin:0;
+      padding:0;
+      background:#050603;
+    }
+
+    body{
+      overflow:hidden;
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/home.css">
+  <link rel="stylesheet" href="./css/home-mobile.css">
+  <link rel="stylesheet" href="./css/popups.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/page-transition.css">
+</head>
+
+<body>
+
+  <div class="ip-page-transition is-enter" aria-hidden="true"></div>
+
+  <div id="ip-home-root"></div>
+
+  <script>
+    fetch('./pages/home/home.html')
+      .then(function(response){
+        return response.text();
+      })
+      .then(function(html){
+        document.getElementById('ip-home-root').innerHTML = html;
+
+        var script = document.createElement('script');
+        script.src = './js/home.js?v=' + Date.now();
+        document.body.appendChild(script);
+
+        var transitionScript = document.createElement('script');
+        transitionScript.src = './js/page-transition.js';
+        document.body.appendChild(transitionScript);
+      });
+  </script>
+
+</body>
+</html>

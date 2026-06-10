@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>Сотрудничество — Иван Перцев</title>
+
+  <style>
+    :root{
+      --cooperation-vh:1vh;
+      --cooperation-mobile-vh:1vh;
+    }
+
+    html,
+    body,
+    #ip-cooperation-root{
+      width:100%;
+      margin:0;
+      padding:0;
+      background:#050603;
+    }
+
+    html{
+      min-height:100%;
+      overflow-x:hidden;
+    }
+
+    body{
+      min-height:100vh;
+      min-height:calc(var(--cooperation-vh) * 100);
+      overflow-x:hidden;
+    }
+
+    #ip-cooperation-root{
+      position:relative;
+      min-height:100vh;
+      min-height:calc(var(--cooperation-vh) * 100);
+    }
+
+    @media (min-width:768px){
+      html,
+      body,
+      #ip-cooperation-root{
+        width:100%;
+        height:100%;
+        min-height:100%;
+        overflow:hidden;
+      }
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="preload" href="./assets/img/cooperation/background/cooperation-bg.webp" as="image" media="(min-width:768px)">
+  <link rel="preload" href="./assets/img/cooperation/background/cooperation-bg-glow.webp" as="image" media="(min-width:768px)">
+  <link rel="preload" href="./assets/img/cooperation/portrait/cooperation-portrait.webp" as="image" media="(min-width:768px)">
+
+  <link rel="preload" href="./assets/img/cooperation/mobile/background/cooperation-mobile-bg@2x.webp" as="image" media="(max-width:767px)">
+  <link rel="preload" href="./assets/img/cooperation/mobile/background/cooperation-mobile-bg-glow@2x.webp" as="image" media="(max-width:767px)">
+  <link rel="preload" href="./assets/img/cooperation/mobile/portrait/cooperation-mobile-portrait.webp" as="image" media="(max-width:767px)">
+
+  <link rel="stylesheet" href="./css/home.css">
+  <link rel="stylesheet" href="./css/popups.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/page-transition.css">
+</head>
+
+<body>
+
+  <div class="ip-page-transition is-enter" aria-hidden="true"></div>
+  <div id="ip-cooperation-root"></div>
+
+  <script>
+    (function(){
+      'use strict';
+
+      var MOBILE_BREAKPOINT = 767;
+      var BREAKPOINT_DEBOUNCE = 120;
+      var root = document.getElementById('ip-cooperation-root');
+      var currentMode = null;
+      var resizeTimer = null;
+      var loadedStyles = [];
+      var loadedScript = null;
+      var loadToken = 0;
+
+      function getMode(){
+        return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
+      }
+
+      function setViewportHeight(){
+        var height = window.innerHeight;
+
+        if(window.visualViewport && window.visualViewport.height){
+          height = window.visualViewport.height;
+        }
+
+        document.documentElement.style.setProperty('--cooperation-vh', (height * 0.01) + 'px');
+        document.documentElement.style.setProperty('--cooperation-mobile-vh', (height * 0.01) + 'px');
+      }
+
+      function getConfig(mode){
+        if(mode === 'mobile'){
+          return {
+            css:['./css/cooperation-mobile.css'],
+            html:'./pages/cooperation/cooperation-mobile.html',
+            js:'./js/cooperation-mobile.js',
+            error:'Ошибка загрузки мобильной страницы Сотрудничество. Проверь путь: pages/cooperation/cooperation-mobile.html'
+          };
+        }
+
+        return {
+          css:['./css/cooperation.css'],
+          html:'./pages/cooperation/cooperation.html',
+          js:'./js/cooperation.js',
+          error:'Ошибка загрузки страницы Сотрудничество. Проверь путь: pages/cooperation/cooperation.html'
+        };
+      }
+
+      function resetState(){
+        document.documentElement.classList.remove('ip-popup-lock');
+        document.body.classList.remove('ip-popup-lock');
+        document.documentElement.style.height = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflowX = '';
+        document.body.style.overflowX = '';
+        document.documentElement.style.overflowY = '';
+        document.body.style.overflowY = '';
+        document.documentElement.style.removeProperty('--ip-cooperation-scale');
+        document.documentElement.style.removeProperty('--cooperation-mobile-scale');
+        document.documentElement.style.removeProperty('--cooperation-mobile-page-height');
+      }
+
+      function clearPageAssets(){
+        loadedStyles.forEach(function(link){
+          if(link && link.parentNode){
+            link.parentNode.removeChild(link);
+          }
+        });
+
+        loadedStyles = [];
+
+        if(loadedScript && loadedScript.parentNode){
+          loadedScript.parentNode.removeChild(loadedScript);
+        }
+
+        loadedScript = null;
+      }
+
+      function loadStylesheet(href){
+        return new Promise(function(resolve, reject){
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = href;
+          link.setAttribute('data-cooperation-page-style', 'true');
+          link.onload = function(){ resolve(link); };
+          link.onerror = reject;
+          document.head.appendChild(link);
+        });
+      }
+
+      function loadScript(src){
+        return new Promise(function(resolve, reject){
+          var script = document.createElement('script');
+          script.src = src + '?v=' + Date.now();
+          script.defer = true;
+          script.setAttribute('data-cooperation-page-script', 'true');
+          script.onload = function(){
+            loadedScript = script;
+            resolve(script);
+          };
+          script.onerror = reject;
+          document.body.appendChild(script);
+        });
+      }
+
+      function loadPage(mode){
+        var config = getConfig(mode);
+        var token = loadToken + 1;
+        loadToken = token;
+        currentMode = mode;
+
+        resetState();
+        clearPageAssets();
+        root.innerHTML = '';
+
+        Promise.all(config.css.map(loadStylesheet))
+          .then(function(links){
+            if(token !== loadToken){
+              throw new Error('stale-load');
+            }
+            loadedStyles = links;
+            return fetch(config.html);
+          })
+          .then(function(response){
+            if(!response.ok){
+              throw new Error(config.error);
+            }
+            return response.text();
+          })
+          .then(function(html){
+            if(token !== loadToken){
+              throw new Error('stale-load');
+            }
+            root.innerHTML = html;
+            return loadScript(config.js);
+          })
+          .then(function(){
+            if(!document.querySelector('script[data-page-transition-script]')){
+              var transitionScript = document.createElement('script');
+              transitionScript.src = './js/page-transition.js';
+              transitionScript.defer = true;
+              transitionScript.setAttribute('data-page-transition-script', 'true');
+              document.body.appendChild(transitionScript);
+            }
+          })
+          .catch(function(error){
+            if(error && error.message === 'stale-load'){
+              return;
+            }
+            console.error(error);
+            root.innerHTML = '<pre style="color:#fff;padding:40px;font-family:Arial,sans-serif;">' + config.error + '</pre>';
+          });
+      }
+
+      function scheduleModeCheck(){
+        if(resizeTimer){
+          window.clearTimeout(resizeTimer);
+        }
+
+        resizeTimer = window.setTimeout(function(){
+          var nextMode = getMode();
+          if(nextMode !== currentMode){
+            loadPage(nextMode);
+          }
+        }, BREAKPOINT_DEBOUNCE);
+      }
+
+      if(!root){
+        return;
+      }
+
+      setViewportHeight();
+      loadPage(getMode());
+
+      window.addEventListener('resize', function(){
+        setViewportHeight();
+        scheduleModeCheck();
+      }, { passive:true });
+
+      window.addEventListener('orientationchange', function(){
+        window.setTimeout(function(){
+          setViewportHeight();
+          scheduleModeCheck();
+        }, 250);
+      }, { passive:true });
+
+      if(window.visualViewport){
+        window.visualViewport.addEventListener('resize', function(){
+          setViewportHeight();
+          scheduleModeCheck();
+        }, { passive:true });
+      }
+    })();
+  </script>
+
+</body>
+</html>

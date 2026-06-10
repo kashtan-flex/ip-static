@@ -1,0 +1,32 @@
+
+
+.ip-page-transition{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:#050603;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:
+    opacity .19s cubic-bezier(.19,1,.22,1),
+    visibility .19s cubic-bezier(.19,1,.22,1);
+}
+
+.ip-page-transition.is-active{
+  opacity:1;
+  visibility:visible;
+}
+
+.ip-page-transition.is-enter{
+  opacity:1;
+  visibility:visible;
+  transition:
+    opacity .23s cubic-bezier(.19,1,.22,1),
+    visibility .23s cubic-bezier(.19,1,.22,1);
+}
+
+.ip-page-transition.is-enter.is-ready{
+  opacity:0;
+  visibility:hidden;
+}

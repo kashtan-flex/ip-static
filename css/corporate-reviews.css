@@ -1,0 +1,463 @@
+
+
+.ip-corporate-reviews,
+.ip-corporate-reviews{
+  position:absolute;
+  left:11px;
+  top:860px !important;
+  z-index:6;
+  display:flex;
+  gap:10px;
+}
+
+.ip-corporate-review,
+.ip-corporate-review{
+  position:relative;
+  width:194px;
+  height:302px;
+  padding:0;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:4px;
+  overflow:hidden;
+  background:transparent;
+  box-shadow:none;
+  color:#fff;
+  text-align:left;
+  cursor:pointer;
+  font-family:'Montserrat',Arial,sans-serif;
+  isolation:isolate;
+  backface-visibility:visible;
+  -webkit-backface-visibility:visible;
+  transition:
+    border-color .35s ease,
+    box-shadow .35s ease;
+}
+
+.ip-corporate-review::before,
+.ip-corporate-review::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:0;
+  border-radius:inherit;
+  background:transparent;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  pointer-events:none;
+  transition:
+    background .35s ease,
+    opacity .35s ease;
+}
+
+.ip-corporate-review-top,
+.ip-corporate-review-top,
+.ip-corporate-review-text,
+.ip-corporate-review-text{
+  z-index:2;
+  backface-visibility:visible;
+  -webkit-backface-visibility:visible;
+  transform:none;
+  -webkit-transform:none;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+
+.ip-corporate-review:hover,
+.ip-corporate-review:hover{
+  border-color:rgba(255,255,255,.22);
+  box-shadow:
+    0 28px 72px rgba(0,0,0,.40),
+    0 10px 28px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+
+.ip-corporate-review-top,
+.ip-corporate-review-top{
+  position:absolute;
+  left:17px;
+  top:17px;
+  display:flex;
+  align-items:flex-start;
+  gap:15px;
+  width:160px;
+  height:23px;
+}
+
+.ip-corporate-review-avatar,
+.ip-corporate-review-avatar{
+  width:23px;
+  height:23px;
+  flex:0 0 23px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;
+}
+
+
+.ip-corporate-review-avatar img,
+.ip-corporate-review-avatar img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  border-radius:50%;
+}
+
+
+.ip-corporate-review-meta,
+.ip-corporate-review-meta{
+  min-width:0;
+}
+
+.ip-corporate-review-name,
+.ip-corporate-review-name{
+  margin:0;
+  padding:0;
+  color:#fff;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:11px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+}
+
+.ip-corporate-review-type,
+.ip-corporate-review-type{
+  margin:4px 0 0;
+  padding:0;
+  color:rgba(255,255,255,.60);
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:7px;
+  line-height:1;
+  font-weight:400;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+}
+
+.ip-corporate-review-text,
+.ip-corporate-review-text{
+  position:absolute;
+  left:17px;
+  right:17px;
+  top:57px;
+  margin:0;
+  padding:0;
+  color:#fff;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:9px;
+  line-height:1.5;
+  font-weight:400;
+  letter-spacing:0;
+}
+
+.ip-corporate-review-text strong,
+.ip-corporate-review-text strong{
+  font-weight:600;
+}
+
+
+.ip-review-popup{
+  position:fixed;
+  inset:0;
+  z-index:9998;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.ip-review-popup.is-open{
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.ip-review-popup-backdrop{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  background:rgba(0,0,0,0);
+  backdrop-filter:blur(0);
+  -webkit-backdrop-filter:blur(0);
+  transition:
+    background .36s cubic-bezier(.19,1,.22,1),
+    backdrop-filter .36s cubic-bezier(.19,1,.22,1),
+    opacity .36s cubic-bezier(.19,1,.22,1);
+}
+
+.ip-review-popup.is-open .ip-review-popup-backdrop{
+  opacity:1;
+  background:rgba(0,0,0,.62);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+.ip-review-popup-card{
+  position:relative;
+  width:339px;
+  height:528px;
+  min-height:528px;
+  padding:0;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:7px;
+  overflow:hidden;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  box-shadow:
+    0 44px 120px rgba(0,0,0,.48),
+    inset 0 1px 0 rgba(255,255,255,.035);
+  opacity:0;
+  transform:translate3d(0,0,0) scale(.25);
+  transition:
+    transform .52s cubic-bezier(.19,1,.22,1),
+    opacity .52s cubic-bezier(.19,1,.22,1);
+  transform-origin:center center;
+}
+
+.ip-review-popup.is-open .ip-review-popup-card{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+}
+
+.ip-review-popup-card .ip-corporate-review,
+.ip-review-popup-card .ip-corporate-review{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  min-height:0;
+  padding:0;
+  margin:0;
+  border:none !important;
+  border-radius:0 !important;
+  background:none !important;
+  background-color:transparent !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  box-shadow:none !important;
+  cursor:default;
+  transform:none !important;
+}
+
+.ip-review-popup-card .ip-corporate-review::before,
+.ip-review-popup-card .ip-corporate-review::before,
+.ip-review-popup-card .ip-corporate-review::after,
+.ip-review-popup-card .ip-corporate-review::after{
+  display:none !important;
+  content:none !important;
+}
+
+.ip-review-popup-card .ip-corporate-review-top,
+.ip-review-popup-card .ip-corporate-review-top{
+  position:absolute;
+  left:30px;
+  top:30px;
+  display:flex;
+  align-items:flex-start;
+  gap:20px;
+  width:279px;
+  height:40px;
+}
+
+.ip-review-popup-card .ip-corporate-review-avatar,
+.ip-review-popup-card .ip-corporate-review-avatar{
+  width:40px;
+  height:40px;
+  flex:0 0 40px;
+}
+
+
+.ip-review-popup-card .ip-corporate-review-avatar img,
+.ip-review-popup-card .ip-corporate-review-avatar img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  border-radius:50%;
+}
+
+
+.ip-review-popup-card .ip-corporate-review-name,
+.ip-review-popup-card .ip-corporate-review-name{
+  margin:0;
+  padding:0;
+  color:#fff;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:19px;
+  line-height:1.2;
+  font-weight:600;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+}
+
+.ip-review-popup-card .ip-corporate-review-type,
+.ip-review-popup-card .ip-corporate-review-type{
+  margin:1px 0 0;
+  padding:0;
+  color:#fff;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:12px;
+  line-height:1.2;
+  font-weight:400;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+}
+
+.ip-review-popup-card .ip-corporate-review-text,
+.ip-review-popup-card .ip-corporate-review-text{
+  position:absolute;
+  left:30px;
+  right:30px;
+  top:100px;
+  width:279px;
+  margin:0;
+  padding:0;
+  color:#fff;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:16px;
+  line-height:1.5;
+  font-weight:400;
+  letter-spacing:0;
+}
+
+
+.ip-corporate-review-hint,
+.ip-corporate-review-hint{
+  position:absolute;
+  left:1211px;
+  top:1226px;
+  z-index:5;
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  width:129px;
+  height:39px;
+  pointer-events:none;
+  user-select:none;
+}
+
+.ip-corporate-review-hint-icon,
+.ip-corporate-review-hint-icon{
+  width:24px;
+  height:24px;
+  flex:0 0 24px;
+  display:block;
+  opacity:.20;
+}
+
+.ip-corporate-review-hint-text,
+.ip-corporate-review-hint-text{
+  width:96px;
+  height:39px;
+  margin-top:-1px;
+  color:rgba(255,255,255,.20);
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:14px;
+  line-height:1.4;
+  font-weight:400;
+  letter-spacing:-.01em;
+  text-align:left;
+}
+
+
+@media (max-width:767px){
+
+  .ip-corporate-review-hint,
+  .ip-corporate-review-hint{
+    display:none !important;
+  }
+
+  .ip-corporate-reviews,
+  .ip-corporate-reviews{
+    position:absolute;
+    left:0;
+    top:860px !important;
+    width:100%;
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding:0 20px 22px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .ip-corporate-reviews::-webkit-scrollbar,
+  .ip-corporate-reviews::-webkit-scrollbar{
+    display:none;
+  }
+
+  .ip-corporate-review,
+  .ip-corporate-review{
+    width:279px;
+    min-width:279px;
+    height:auto;
+    min-height:359px;
+    padding:26px;
+    border-radius:24px;
+    background:rgba(0,0,0,.20);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    cursor:default;
+    scroll-snap-align:center;
+  }
+
+  .ip-corporate-review:hover,
+  .ip-corporate-review:hover{
+    transform:none;
+  }
+
+  .ip-corporate-review-top,
+  .ip-corporate-review-top{
+    position:relative;
+    left:auto;
+    top:auto;
+    gap:15px;
+    width:auto;
+    height:auto;
+  }
+
+  .ip-corporate-review-avatar,
+  .ip-corporate-review-avatar{
+    width:42px;
+    height:42px;
+    flex:0 0 42px;
+  }
+
+  .ip-corporate-review-name,
+  .ip-corporate-review-name{
+    font-size:19px;
+  }
+
+  .ip-corporate-review-type,
+  .ip-corporate-review-type{
+    margin-top:8px;
+    font-size:12px;
+  }
+
+  .ip-corporate-review-text,
+  .ip-corporate-review-text{
+    position:relative;
+    left:auto;
+    right:auto;
+    top:auto;
+    margin-top:26px;
+    font-size:16px;
+    line-height:1.5;
+  }
+
+  .ip-review-popup{
+    display:none !important;
+  }
+}
+
+.ip-review-popup-card .ip-corporate-review-text strong,
+.ip-review-popup-card .ip-corporate-review-text strong{
+  font-weight:700;
+}

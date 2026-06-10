@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  
+
+  <title>Биография — Иван Перцев</title>
+
+  <style>
+    :root{
+      --biography-vh: 1vh;
+    }
+
+    html,
+    body,
+    #ip-biography-root{
+      width:100%;
+      margin:0;
+      padding:0;
+      background:#050603;
+    }
+
+    html{
+      min-height:100%;
+      overflow-x:hidden;
+    }
+
+    body{
+      min-height:100vh;
+      min-height:calc(var(--biography-vh) * 100);
+      overflow-x:hidden;
+    }
+
+    #ip-biography-root{
+      position:relative;
+      min-height:100vh;
+      min-height:calc(var(--biography-vh) * 100);
+    }
+
+    @media (min-width:768px){
+
+      html,
+      body,
+      #ip-biography-root{
+        width:100%;
+        height:100%;
+        min-height:100%;
+        overflow:hidden;
+      }
+    }
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="./css/home.css">
+  <link rel="stylesheet" href="./css/biography.css">
+  <link rel="stylesheet" href="./css/biography-mobile.css">
+  <link rel="stylesheet" href="./css/popups.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/page-transition.css">
+
+</head>
+
+<body>
+
+  <div
+    class="ip-page-transition is-enter"
+    aria-hidden="true"
+  ></div>
+
+  <div id="ip-biography-root"></div>
+
+  <script>
+    (function(){
+      'use strict';
+
+      function setBiographyViewportHeight(){
+        var height = window.innerHeight;
+
+        if(window.visualViewport && window.visualViewport.height){
+          height = window.visualViewport.height;
+        }
+
+        document.documentElement.style.setProperty(
+          '--biography-vh',
+          (height * 0.01) + 'px'
+        );
+      }
+
+      setBiographyViewportHeight();
+
+      window.addEventListener(
+        'resize',
+        setBiographyViewportHeight,
+        { passive:true }
+      );
+
+      window.addEventListener(
+        'orientationchange',
+        function(){
+          window.setTimeout(setBiographyViewportHeight, 250);
+        },
+        { passive:true }
+      );
+
+      if(window.visualViewport){
+        window.visualViewport.addEventListener(
+          'resize',
+          setBiographyViewportHeight,
+          { passive:true }
+        );
+      }
+    })();
+  </script>
+
+  <script>
+    fetch('./pages/biography/biography.html')
+      .then(function(response){
+        if(!response.ok){
+          throw new Error(
+            'Не удалось загрузить pages/biography/biography.html'
+          );
+        }
+
+        return response.text();
+      })
+      .then(function(html){
+        document.getElementById(
+          'ip-biography-root'
+        ).innerHTML = html;
+
+        var biographyScript =
+          document.createElement('script');
+
+        biographyScript.src =
+          './js/biography.js?v=' + Date.now();
+
+        document.body.appendChild(
+          biographyScript
+        );
+
+        var transitionScript =
+          document.createElement('script');
+
+        transitionScript.src =
+          './js/page-transition.js';
+
+        document.body.appendChild(
+          transitionScript
+        );
+      })
+      .catch(function(error){
+        console.error(error);
+
+        document.body.style.background =
+          '#050603';
+
+        document.body.innerHTML =
+          '<pre style="color:#fff;padding:40px;font-family:Arial,sans-serif;">Ошибка загрузки страницы Биография. Проверь путь: pages/biography/biography.html</pre>';
+      });
+  </script>
+
+</body>
+</html>

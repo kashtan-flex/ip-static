@@ -1,0 +1,1359 @@
+
+
+html,
+body,
+#allrecords,
+#ip-policy-root{
+  width:100%;
+  min-height:100%;
+  height:auto;
+  margin:0;
+  padding:0;
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  background:#050603 !important;
+}
+
+.ip-policy-page,
+.ip-policy-page *{
+  box-sizing:border-box;
+}
+
+.ip-policy-page a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.ip-policy-page{
+  position:relative;
+  min-height:var(--ip-policy-page-height, 100vh);
+  height:var(--ip-policy-page-height, auto);
+  overflow:visible;
+  background:#050603;
+  color:#fff;
+  font-family:'Montserrat',Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+}
+
+.ip-policy-bg,
+.ip-policy-overlay{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+.ip-policy-bg{
+  z-index:0;
+  background-image:url('../assets/img/policy/background/policy-bg.webp');
+  background-size:calc(1440px * var(--ip-policy-desktop-scale, 1)) auto;
+  background-position:center top;
+  background-repeat:repeat-y;
+}
+
+.ip-policy-overlay{
+  z-index:1;
+  background:
+    linear-gradient(180deg, rgba(5,6,3,.16) 0%, rgba(5,6,3,.54) 100%),
+    rgba(0,0,0,.08);
+}
+
+.ip-policy-shell{
+  position:absolute;
+  left:50%;
+  top:0;
+  z-index:5;
+  width:1240px;
+  max-width:none;
+  margin:0;
+  padding:55px 0 146px;
+  transform:translate3d(-50%,0,0) scale(var(--ip-policy-desktop-scale, 1));
+  transform-origin:top center;
+}
+
+.ip-legal-page{
+  width:100%;
+}
+
+.ip-legal-header{
+  position:relative;
+  height:212px;
+  margin:0;
+}
+
+.ip-legal-title{
+  width:903px;
+  margin:0;
+  color:#fff;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:40px;
+  line-height:.95;
+  font-weight:600;
+  letter-spacing:-.03em;
+}
+
+.ip-legal-meta{
+  position:absolute;
+  right:0;
+  top:128px;
+  width:430px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  color:rgba(255,255,255,.82);
+  font-size:16px;
+  line-height:1.4;
+  font-weight:400;
+  letter-spacing:-.02em;
+  text-align:right;
+}
+
+.ip-legal-meta p{
+  margin:0;
+}
+
+.ip-legal-date{
+  display:block;
+  width:100%;
+  white-space:nowrap;
+}
+
+.ip-legal-content{
+  display:flex;
+  flex-direction:column;
+  gap:40px;
+  width:1122px;
+}
+
+.ip-legal-section{
+  width:100%;
+}
+
+.ip-legal-section-title{
+  margin:0 0 20px;
+  color:#fff;
+  font-size:20px;
+  line-height:1;
+  font-weight:600;
+  letter-spacing:-.03em;
+}
+
+.ip-legal-content p,
+.ip-legal-list{
+  margin:0 0 20px;
+  color:rgba(255,255,255,.82);
+  font-size:16px;
+  line-height:1;
+  font-weight:400;
+  letter-spacing:-.02em;
+}
+
+.ip-legal-content p:last-child,
+.ip-legal-list:last-child{
+  margin-bottom:0;
+}
+
+.ip-legal-list{
+  padding-left:14px;
+  list-style-position:outside;
+}
+
+.ip-legal-list li{
+  margin:0;
+}
+
+.ip-legal-content a,
+.ip-legal-meta a{
+  color:#69C9FF !important;
+  text-decoration:none !important;
+  transition:opacity .25s ease;
+}
+
+.ip-legal-content a:hover,
+.ip-legal-meta a:hover{
+  opacity:.75;
+}
+
+
+.ip-legal-section-title--visually-hidden{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0 0 0 0);
+  white-space:nowrap;
+  border:0;
+}
+
+.ip-legal-mobile-break{
+  display:none;
+}
+
+
+.ip-legal-scrolltop{
+  position:absolute;
+  right:calc(((100vw - (1440px * var(--ip-policy-menu-stage-scale, 1))) / 2) + (90px * var(--ip-policy-menu-stage-scale, 1)));
+  bottom:calc(146px * var(--ip-policy-desktop-scale, 1));
+  z-index:9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:calc(24px * var(--ip-policy-desktop-scale, 1));
+  height:calc(24px * var(--ip-policy-desktop-scale, 1));
+  padding:0;
+  border:calc(1px * var(--ip-policy-desktop-scale, 1)) solid rgba(255,255,255,.9);
+  border-radius:calc(7px * var(--ip-policy-desktop-scale, 1));
+  background:transparent;
+  cursor:pointer;
+  opacity:1;
+  visibility:visible;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:opacity .25s ease;
+}
+
+.ip-legal-scrolltop:hover{
+  opacity:.75;
+}
+
+.ip-legal-scrolltop span{
+  display:block;
+  width:calc(8px * var(--ip-policy-desktop-scale, 1));
+  height:calc(8px * var(--ip-policy-desktop-scale, 1));
+  border-top:calc(1.5px * var(--ip-policy-desktop-scale, 1)) solid #fff;
+  border-left:calc(1.5px * var(--ip-policy-desktop-scale, 1)) solid #fff;
+  transform:translateY(calc(2px * var(--ip-policy-desktop-scale, 1))) rotate(45deg);
+}
+
+
+:root{
+  --ip-policy-menu-stage-scale:1;
+  --ip-policy-menu-stage-height:800px;
+  --ip-policy-menu-bg-bleed-left:48px;
+}
+
+@media (min-width:768px){
+  .ip-legal-page--consent .ip-legal-title{
+    width:1122px;
+    white-space:nowrap;
+  }
+
+  .ip-legal-page--consent .ip-legal-header{
+    height:128px;
+  }
+
+  .ip-policy-menu-stage{
+    position:fixed;
+    top:0;
+    left:50%;
+    z-index:10000;
+    width:1440px;
+    height:var(--ip-policy-menu-stage-height, 800px);
+    overflow:hidden;
+    pointer-events:none;
+    transform:translate3d(-50%,0,0) scale(var(--ip-policy-menu-stage-scale, 1)) !important;
+    transform-origin:top center;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering:geometricPrecision;
+  }
+
+  .ip-policy-menu-stage,
+  .ip-policy-menu-stage *{
+    box-sizing:border-box;
+  }
+
+  .ip-policy-menu-stage::before,
+  .ip-policy-menu-stage::after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:auto;
+    left:auto;
+    z-index:39;
+    width:calc(385px + var(--ip-policy-menu-bg-bleed-left, 48px));
+    height:var(--ip-policy-menu-stage-height, 800px);
+    min-height:var(--ip-policy-menu-stage-height, 800px);
+    pointer-events:none;
+    transform:translate3d(100%,0,0);
+    opacity:0;
+    visibility:hidden;
+    transition:
+      transform .72s cubic-bezier(.19,1,.22,1),
+      opacity .22s ease,
+      visibility 0s linear .72s;
+    will-change:transform, opacity;
+  }
+
+  .ip-policy-menu-stage.is-open::before,
+  .ip-policy-menu-stage.is-open::after{
+    transform:translate3d(0,0,0);
+    visibility:visible;
+    transition:
+      transform .72s cubic-bezier(.19,1,.22,1),
+      opacity .18s ease,
+      visibility 0s linear 0s;
+  }
+
+  .ip-policy-menu-stage::before{
+    background:rgba(0,0,0,.30);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+  }
+
+  .ip-policy-menu-stage.is-open::before{
+    opacity:1;
+  }
+
+  .ip-policy-menu-stage::after{
+    background-image:url('../assets/img/home/popups/menu-noise.webp');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    mix-blend-mode:normal;
+  }
+
+  .ip-policy-menu-stage.is-open::after{
+    opacity:.35;
+  }
+
+  @supports not ((backdrop-filter:blur(18px)) or (-webkit-backdrop-filter:blur(18px))){
+    .ip-policy-menu-stage::before{
+      background:rgba(0,0,0,.62);
+    }
+  }
+
+  .ip-policy-page > .ip-menu-toggle{
+    position:absolute !important;
+    top:calc(60px * var(--ip-policy-menu-stage-scale, 1)) !important;
+    right:calc(((100vw - (1440px * var(--ip-policy-menu-stage-scale, 1))) / 2) + (90px * var(--ip-policy-menu-stage-scale, 1))) !important;
+    left:auto !important;
+    bottom:auto !important;
+    z-index:10050 !important;
+    width:27px !important;
+    height:27px !important;
+    padding:0 !important;
+    margin:0 !important;
+    border:none !important;
+    outline:none !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
+    transform:scale(var(--ip-policy-menu-stage-scale, 1)) !important;
+    transform-origin:top right !important;
+    pointer-events:auto !important;
+    cursor:pointer;
+    overflow:visible;
+    appearance:none;
+    -webkit-appearance:none;
+    touch-action:manipulation;
+  }
+
+  .ip-policy-page > .ip-menu-toggle::before,
+  .ip-policy-page > .ip-menu-toggle::after{
+    content:none !important;
+    display:none !important;
+  }
+
+  .ip-policy-page > .ip-menu-toggle .ip-menu-line{
+    position:absolute;
+    left:0;
+    top:50%;
+    width:27px;
+    height:3px;
+    border-radius:10px;
+    background:#fff;
+    transform-origin:center center;
+    transition:transform .42s cubic-bezier(.19,1,.22,1);
+    backface-visibility:visible;
+    -webkit-backface-visibility:visible;
+  }
+
+  .ip-policy-page > .ip-menu-toggle .ip-menu-line:first-child{
+    transform:translateY(calc(-50% - 5.5px));
+  }
+
+  .ip-policy-page > .ip-menu-toggle .ip-menu-line:last-child{
+    transform:translateY(calc(-50% + 5.5px));
+  }
+
+  .ip-policy-page > .ip-menu-toggle.is-open .ip-menu-line:first-child{
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .ip-policy-page > .ip-menu-toggle.is-open .ip-menu-line:last-child{
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-policy-menu-stage .ip-menu-toggle{
+    position:fixed !important;
+    top:calc(60px * var(--ip-policy-menu-stage-scale, 1)) !important;
+    right:calc(((100vw - (1440px * var(--ip-policy-menu-stage-scale, 1))) / 2) + (90px * var(--ip-policy-menu-stage-scale, 1))) !important;
+    left:auto !important;
+    bottom:auto !important;
+    z-index:50 !important;
+    width:27px !important;
+    height:27px !important;
+    padding:0 !important;
+    margin:0 !important;
+    border:none !important;
+    outline:none !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
+    transform:scale(var(--ip-policy-menu-stage-scale, 1)) !important;
+    transform-origin:top right !important;
+    pointer-events:auto !important;
+    cursor:pointer;
+    overflow:visible;
+    appearance:none;
+    -webkit-appearance:none;
+    touch-action:manipulation;
+  }
+
+  .ip-policy-menu-stage .ip-menu-panel{
+    position:absolute !important;
+    top:0 !important;
+    right:0 !important;
+    left:auto !important;
+    bottom:auto !important;
+    z-index:40 !important;
+    width:385px !important;
+    max-width:385px !important;
+    height:800px !important;
+    min-height:800px !important;
+    padding:60px 100px 80px 30px !important;
+    overflow:visible !important;
+    background:transparent !important;
+    transform:none !important;
+    transform-origin:top right !important;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none !important;
+    transition:
+      opacity .28s ease .18s,
+      visibility 0s linear .46s;
+  }
+
+  .ip-policy-menu-stage .ip-menu-panel::before,
+  .ip-policy-menu-stage .ip-menu-panel::after{
+    display:none !important;
+    content:none !important;
+  }
+
+  .ip-policy-menu-stage .ip-menu-panel.is-open{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto !important;
+    transition:
+      opacity .34s ease .16s,
+      visibility 0s linear 0s;
+  }
+
+  .ip-policy-menu-stage .ip-menu-socials{
+    margin-left:0 !important;
+  }
+
+  .ip-policy-menu-stage .ip-menu-list{
+    width:255px !important;
+  }
+
+  .ip-policy-menu-stage .ip-menu-legal{
+    left:30px !important;
+    right:100px !important;
+  }
+
+  .ip-policy-menu-stage .ip-accordion-button{
+    position:relative;
+    width:100%;
+    padding-right:34px !important;
+  }
+
+  .ip-policy-menu-stage .ip-accordion-button::before,
+  .ip-policy-menu-stage .ip-accordion-button::after{
+    content:'';
+    position:absolute;
+    top:50%;
+    display:block;
+    width:14px;
+    height:3px;
+    border-radius:10px;
+    background:#fff;
+    opacity:1;
+    pointer-events:none;
+    transform-origin:center center;
+    transition:
+      transform .35s cubic-bezier(.19,1,.22,1),
+      opacity .35s ease;
+  }
+
+  .ip-policy-menu-stage .ip-accordion-button::before{
+    right:9px !important;
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .ip-policy-menu-stage .ip-accordion-button::after{
+    right:0 !important;
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-policy-menu-stage .ip-accordion.is-open .ip-accordion-button::before{
+    opacity:.5;
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-policy-menu-stage .ip-accordion.is-open .ip-accordion-button::after{
+    opacity:.5;
+    transform:translateY(-50%) rotate(45deg);
+  }
+}
+
+@media (max-width:767px){
+
+  html,
+  body,
+  #ip-policy-root{
+    width:100%;
+    min-height:100%;
+    height:auto;
+    margin:0;
+    padding:0;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    background:#050603 !important;
+  }
+
+  .ip-policy-page{
+    min-height:var(--ip-policy-page-height, 100vh);
+    height:var(--ip-policy-page-height, auto);
+    overflow:visible;
+    background:#050603;
+  }
+
+  .ip-policy-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    background-image:url('../assets/img/policy/mobile/background/policy-mobile-bg.webp');
+    background-size:calc(390px * var(--ip-policy-mobile-scale, 1)) auto;
+    background-position:top center;
+    background-repeat:repeat-y;
+  }
+
+  .ip-policy-overlay{
+    background:
+      linear-gradient(180deg, rgba(5,6,3,.06) 0%, rgba(5,6,3,.28) 100%),
+      rgba(0,0,0,.04);
+  }
+
+  .ip-policy-shell{
+    position:absolute;
+    left:50%;
+    top:0;
+    width:390px;
+    max-width:none;
+    margin:0;
+    padding:32px 20px 92px;
+    transform:translate3d(-50%,0,0) scale(var(--ip-policy-mobile-scale, 1));
+    transform-origin:top center;
+  }
+
+  .ip-legal-page{
+    width:350px;
+  }
+
+  .ip-legal-header{
+    position:relative;
+    height:auto;
+    margin:0 0 60px;
+  }
+
+  .ip-legal-title{
+    width:247px;
+    margin:0 0 40px;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:32px;
+    line-height:.95;
+    font-weight:600;
+    letter-spacing:-.03em;
+  }
+
+  .ip-legal-meta{
+    position:static;
+    width:301px;
+    margin:0 0 0 49px;
+    color:rgba(255,255,255,.86);
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:16px;
+    line-height:1.4;
+    font-weight:400;
+    letter-spacing:-.02em;
+    text-align:right;
+  }
+
+  .ip-legal-date{
+    display:block;
+    width:100%;
+    white-space:nowrap;
+  }
+
+  .ip-legal-site{
+    display:block;
+    width:100%;
+    white-space:nowrap;
+  }
+
+  .ip-legal-desktop-break{
+    display:none;
+  }
+
+  .ip-legal-content{
+    width:350px;
+    max-width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:40px;
+  }
+
+  .ip-legal-section{
+    width:100%;
+  }
+
+  .ip-legal-section-title{
+    margin:0 0 20px;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:20px;
+    line-height:1;
+    font-weight:600;
+    letter-spacing:-.03em;
+  }
+
+  .ip-legal-content p,
+  .ip-legal-list{
+    margin:0 0 20px;
+    color:rgba(255,255,255,.86);
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:16px;
+    line-height:1;
+    font-weight:400;
+    letter-spacing:-.02em;
+  }
+
+  .ip-legal-content p:last-child,
+  .ip-legal-list:last-child{
+    margin-bottom:0;
+  }
+
+  .ip-legal-list{
+    padding-left:17px;
+    list-style-position:outside;
+  }
+
+  .ip-legal-list li{
+    margin:0;
+  }
+
+  .ip-legal-content a,
+  .ip-legal-meta a{
+    color:#69C9FF !important;
+    text-decoration:none !important;
+  }
+
+  .ip-legal-scrolltop{
+    position:absolute;
+    right:20px;
+    bottom:50px;
+    z-index:9;
+    width:24px;
+    height:24px;
+  }
+
+  .ip-policy-page > .ip-menu-toggle{
+    position:absolute !important;
+    top:calc(36px * var(--ip-policy-mobile-scale, 1));
+    right:calc(((100vw - (390px * var(--ip-policy-mobile-scale, 1))) / 2) + (20px * var(--ip-policy-mobile-scale, 1)));
+    z-index:10050;
+    width:27px;
+    height:27px;
+    padding:0 !important;
+    margin:0 !important;
+    border:none !important;
+    outline:none !important;
+    background:transparent !important;
+    cursor:pointer;
+    overflow:visible;
+    appearance:none;
+    -webkit-appearance:none;
+    box-shadow:none !important;
+    filter:none;
+    touch-action:manipulation;
+    transform:scale(var(--ip-policy-mobile-scale, 1));
+    transform-origin:top right;
+  }
+
+  .ip-policy-page .ip-menu-line{
+    position:absolute;
+    left:0;
+    top:50%;
+    width:27px;
+    height:3px;
+    border-radius:10px;
+    background:#fff;
+    transform-origin:center center;
+    transition:transform .42s cubic-bezier(.19,1,.22,1);
+    will-change:transform;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+
+  .ip-policy-page .ip-menu-line:first-child{
+    transform:translateY(calc(-50% - 5.5px));
+  }
+
+  .ip-policy-page .ip-menu-line:last-child{
+    transform:translateY(calc(-50% + 5.5px));
+  }
+
+  .ip-policy-page .ip-menu-toggle.is-open .ip-menu-line:first-child{
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .ip-policy-page .ip-menu-toggle.is-open .ip-menu-line:last-child{
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-policy-page .ip-menu-panel{
+    position:fixed !important;
+    top:0;
+    right:calc((100vw - (390px * var(--ip-policy-mobile-scale, 1))) / 2);
+    z-index:10010;
+    width:390px;
+    max-width:none;
+    height:700px;
+    min-height:700px;
+    padding:40px 22px 45px 40px;
+    overflow:hidden;
+    background:transparent;
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+    touch-action:pan-y;
+    transform:translateX(100%) scale(var(--ip-policy-mobile-scale, 1));
+    transform-origin:top right;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:
+      transform .72s cubic-bezier(.19,1,.22,1),
+      opacity .28s ease .18s,
+      visibility 0s linear .72s;
+  }
+
+  .ip-policy-page .ip-menu-panel.is-open{
+    transform:translateX(0) scale(var(--ip-policy-mobile-scale, 1));
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transition:
+      transform .72s cubic-bezier(.19,1,.22,1),
+      opacity .34s ease .16s,
+      visibility 0s linear 0s;
+  }
+
+  .ip-policy-page .ip-menu-panel::before{
+    height:100%;
+    background:rgba(0,0,0,.30);
+    -webkit-backdrop-filter:blur(18px);
+    backdrop-filter:blur(18px);
+  }
+
+  .ip-policy-page .ip-menu-panel::after{
+    height:100%;
+    background-image:url('../assets/img/home/popups/menu-noise.webp');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    opacity:.35;
+    mix-blend-mode:normal;
+  }
+
+  @supports not ((backdrop-filter:blur(18px)) or (-webkit-backdrop-filter:blur(18px))){
+    .ip-policy-page .ip-menu-panel::before{
+      background:rgba(0,0,0,.62);
+    }
+  }
+
+  .ip-policy-page .ip-menu-socials{
+    gap:10px;
+    margin-bottom:50px;
+  }
+
+  .ip-policy-page .ip-social::after{
+    display:none;
+  }
+
+  .ip-policy-page .ip-menu-list{
+    width:328px;
+    gap:20px;
+  }
+
+  .ip-policy-page .ip-menu-link,
+  .ip-policy-page .ip-menu-link:link,
+  .ip-policy-page .ip-menu-link:visited,
+  .ip-policy-page .ip-menu-link:hover,
+  .ip-policy-page .ip-menu-link:active,
+  .ip-policy-page .ip-accordion-button,
+  .ip-policy-page .ip-accordion-button:hover,
+  .ip-policy-page .ip-accordion-button:active{
+    color:#fff !important;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:20px;
+    line-height:90%;
+    font-weight:600;
+    letter-spacing:-.04em;
+    text-decoration:none !important;
+  }
+
+  .ip-policy-page .ip-accordion-button{
+    position:relative;
+    width:100%;
+    min-height:24px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    padding-right:34px;
+    touch-action:manipulation;
+  }
+
+  .ip-policy-page .ip-accordion-button::before,
+  .ip-policy-page .ip-accordion-button::after{
+    content:'';
+    position:absolute;
+    top:50%;
+    display:block;
+    width:14px;
+    height:3px;
+    border-radius:10px;
+    background:#fff;
+    opacity:1;
+    pointer-events:none;
+    transform-origin:center center;
+    transition:
+      transform .35s cubic-bezier(.19,1,.22,1),
+      opacity .35s ease;
+    will-change:transform,opacity;
+  }
+
+  .ip-policy-page .ip-accordion-button::before{
+    right:9px;
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .ip-policy-page .ip-accordion-button::after{
+    right:0;
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-policy-page .ip-accordion.is-open .ip-accordion-button::before{
+    opacity:.5;
+    transform:translateY(-50%) rotate(-45deg);
+  }
+
+  .ip-policy-page .ip-accordion.is-open .ip-accordion-button::after{
+    opacity:.5;
+    transform:translateY(-50%) rotate(45deg);
+  }
+
+  .ip-policy-page .ip-accordion-content{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+
+  .ip-policy-page .ip-accordion.is-open .ip-accordion-content{
+    max-height:220px;
+  }
+
+  .ip-policy-page .ip-submenu{
+    gap:12px;
+    padding-top:16px;
+  }
+
+  .ip-policy-page .ip-submenu a,
+  .ip-policy-page .ip-submenu a:link,
+  .ip-policy-page .ip-submenu a:visited,
+  .ip-policy-page .ip-submenu a:hover,
+  .ip-policy-page .ip-submenu a:active{
+    color:#69C9FF !important;
+    font-family:'Montserrat',Arial,sans-serif;
+    font-size:16px;
+    line-height:120%;
+    font-weight:400;
+    letter-spacing:-.025em;
+    opacity:1;
+    text-decoration:none !important;
+  }
+
+  .ip-policy-page .ip-menu-legal{
+    left:40px;
+    right:22px;
+    bottom:42px;
+    z-index:8;
+  }
+
+  .ip-policy-page .ip-menu-legal a,
+  .ip-policy-page .ip-menu-legal a:link,
+  .ip-policy-page .ip-menu-legal a:visited,
+  .ip-policy-page .ip-menu-legal a:hover,
+  .ip-policy-page .ip-menu-legal a:active{
+    color:rgba(255,255,255,.5) !important;
+    font-size:8px;
+    line-height:150%;
+    text-decoration:none !important;
+  }
+}
+
+
+@media (max-width:767px){
+  .ip-policy-menu-stage{
+    display:none !important;
+  }
+
+  .ip-policy-page{
+    position:relative;
+    width:100%;
+    min-height:var(--ip-policy-page-height, 100vh);
+    height:var(--ip-policy-page-height, auto);
+    overflow:visible;
+    background:#050603;
+    color:#fff;
+    font-family:'Montserrat',Arial,sans-serif;
+  }
+
+  .ip-policy-bg{
+    position:absolute !important;
+    left:50% !important;
+    top:0 !important;
+    right:auto !important;
+    bottom:auto !important;
+    z-index:1 !important;
+    width:390px !important;
+    min-height:100% !important;
+    height:var(--ip-policy-page-height, 100vh) !important;
+    background-image:url('../assets/img/policy/mobile/background/policy-mobile-bg.webp') !important;
+    background-size:390px auto !important;
+    background-position:top center !important;
+    background-repeat:repeat-y !important;
+    transform:translate3d(-50%,0,0) scale(var(--ip-policy-mobile-scale,1)) !important;
+    transform-origin:top center !important;
+    pointer-events:none !important;
+  }
+
+  .ip-policy-overlay{
+    position:absolute !important;
+    inset:0 !important;
+    z-index:1 !important;
+    pointer-events:none !important;
+  }
+
+  .ip-policy-shell{
+    z-index:2 !important;
+  }
+
+  .ip-policy-page > .ip-menu-toggle{
+    position:absolute !important;
+    top:calc(40px * var(--ip-policy-mobile-scale, 1)) !important;
+    left:calc(50% + (148px * var(--ip-policy-mobile-scale, 1))) !important;
+    right:auto !important;
+    z-index:80 !important;
+    display:block !important;
+    width:27px !important;
+    height:27px !important;
+    padding:0 !important;
+    margin:0 !important;
+    border:none !important;
+    outline:none !important;
+    background:transparent !important;
+    cursor:pointer !important;
+    overflow:visible !important;
+    appearance:none !important;
+    -webkit-appearance:none !important;
+    box-shadow:none !important;
+    filter:none !important;
+    touch-action:manipulation !important;
+    transform:scale(var(--ip-policy-mobile-scale, 1)) !important;
+    transform-origin:top left !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:auto !important;
+  }
+
+  .ip-policy-page > .ip-menu-toggle::before,
+  .ip-policy-page > .ip-menu-toggle::after{
+    content:none !important;
+    display:none !important;
+  }
+
+  .ip-policy-page > .ip-menu-toggle .ip-menu-line{
+    position:absolute !important;
+    left:0 !important;
+    top:50% !important;
+    display:block !important;
+    width:27px !important;
+    height:3px !important;
+    border-radius:10px !important;
+    background:#fff !important;
+    transform-origin:center center !important;
+    transition:transform .42s cubic-bezier(.19,1,.22,1) !important;
+    will-change:transform !important;
+    backface-visibility:hidden !important;
+    -webkit-backface-visibility:hidden !important;
+  }
+
+  .ip-policy-page > .ip-menu-toggle .ip-menu-line:first-child{
+    transform:translateY(calc(-50% - 5.5px)) !important;
+  }
+
+  .ip-policy-page > .ip-menu-toggle .ip-menu-line:last-child{
+    transform:translateY(calc(-50% + 5.5px)) !important;
+  }
+
+  .ip-policy-page > .ip-menu-toggle.is-open .ip-menu-line:first-child{
+    transform:translateY(-50%) rotate(45deg) !important;
+  }
+
+  .ip-policy-page > .ip-menu-toggle.is-open .ip-menu-line:last-child{
+    transform:translateY(-50%) rotate(-45deg) !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel{
+    position:absolute !important;
+    top:0 !important;
+    left:calc(50% - (195px * var(--ip-policy-mobile-scale, 1))) !important;
+    right:auto !important;
+    z-index:70 !important;
+    display:block !important;
+    width:390px !important;
+    max-width:none !important;
+    height:765px !important;
+    min-height:765px !important;
+    padding:40px 22px 45px 40px !important;
+    overflow:visible !important;
+    background:transparent !important;
+    -webkit-backdrop-filter:none !important;
+    backdrop-filter:none !important;
+    touch-action:pan-y !important;
+    transform:scale(var(--ip-policy-mobile-scale, 1)) !important;
+    transform-origin:top left !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:none !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel.is-open{
+    pointer-events:auto !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel::before,
+  .ip-policy-page > .ip-menu-panel::after{
+    content:'' !important;
+    position:absolute !important;
+    left:0 !important;
+    right:0 !important;
+    top:0 !important;
+    bottom:auto !important;
+    height:833px !important;
+    pointer-events:none !important;
+    transform:translateX(100%) !important;
+    transition:transform .72s cubic-bezier(.19,1,.22,1) !important;
+    will-change:transform !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel.is-open::before,
+  .ip-policy-page > .ip-menu-panel.is-open::after{
+    transform:translateX(0) !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel::before{
+    z-index:0 !important;
+    background:rgba(0,0,0,.30) !important;
+    -webkit-backdrop-filter:blur(18px) !important;
+    backdrop-filter:blur(18px) !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel::after{
+    z-index:1 !important;
+    background-image:url('../assets/img/home/popups/menu-noise.webp') !important;
+    background-size:cover !important;
+    background-position:center !important;
+    background-repeat:no-repeat !important;
+    opacity:.35 !important;
+    mix-blend-mode:normal !important;
+  }
+
+  @supports not ((backdrop-filter:blur(18px)) or (-webkit-backdrop-filter:blur(18px))){
+    .ip-policy-page > .ip-menu-panel::before{
+      background:rgba(0,0,0,.62) !important;
+    }
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-menu-inner{
+    position:relative !important;
+    z-index:5 !important;
+    pointer-events:auto !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-menu-socials{
+    gap:10px !important;
+    margin-bottom:50px !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-social::after{
+    display:none !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-social:hover::before{
+    opacity:1 !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-social:hover::after{
+    opacity:0 !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-menu-list{
+    width:328px !important;
+    gap:20px !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-menu-link,
+  .ip-policy-page > .ip-menu-panel .ip-menu-link:link,
+  .ip-policy-page > .ip-menu-panel .ip-menu-link:visited,
+  .ip-policy-page > .ip-menu-panel .ip-menu-link:hover,
+  .ip-policy-page > .ip-menu-panel .ip-menu-link:active,
+  .ip-policy-page > .ip-menu-panel .ip-accordion-button,
+  .ip-policy-page > .ip-menu-panel .ip-accordion-button:hover,
+  .ip-policy-page > .ip-menu-panel .ip-accordion-button:active{
+    color:#fff !important;
+    font-family:'Montserrat',Arial,sans-serif !important;
+    font-size:20px !important;
+    line-height:90% !important;
+    font-weight:600 !important;
+    letter-spacing:-.04em !important;
+    text-decoration:none !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-accordion-button{
+    position:relative !important;
+    width:100% !important;
+    min-height:24px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    padding-right:34px !important;
+    touch-action:manipulation !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-accordion-button::before,
+  .ip-policy-page > .ip-menu-panel .ip-accordion-button::after{
+    content:'' !important;
+    position:absolute !important;
+    top:50% !important;
+    display:block !important;
+    width:14px !important;
+    height:3px !important;
+    border-radius:10px !important;
+    background:#fff !important;
+    opacity:1 !important;
+    pointer-events:none !important;
+    transform-origin:center center !important;
+    transition:
+      transform .35s cubic-bezier(.19,1,.22,1),
+      opacity .35s ease !important;
+    will-change:transform,opacity !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-accordion-button::before{
+    right:9px !important;
+    transform:translateY(-50%) rotate(45deg) !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-accordion-button::after{
+    right:0 !important;
+    transform:translateY(-50%) rotate(-45deg) !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-accordion.is-open .ip-accordion-button::before{
+    opacity:.5 !important;
+    transform:translateY(-50%) rotate(-45deg) !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-accordion.is-open .ip-accordion-button::after{
+    opacity:.5 !important;
+    transform:translateY(-50%) rotate(45deg) !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-accordion-content{
+    max-height:0 !important;
+    overflow:hidden !important;
+    transition:max-height .4s ease !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-accordion.is-open .ip-accordion-content{
+    max-height:220px !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-submenu{
+    gap:12px !important;
+    padding-top:16px !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-submenu a,
+  .ip-policy-page > .ip-menu-panel .ip-submenu a:link,
+  .ip-policy-page > .ip-menu-panel .ip-submenu a:visited,
+  .ip-policy-page > .ip-menu-panel .ip-submenu a:hover,
+  .ip-policy-page > .ip-menu-panel .ip-submenu a:active{
+    color:#69C9FF !important;
+    font-family:'Montserrat',Arial,sans-serif !important;
+    font-size:16px !important;
+    line-height:120% !important;
+    font-weight:400 !important;
+    letter-spacing:-.025em !important;
+    opacity:1 !important;
+    text-decoration:none !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-menu-legal{
+    left:40px !important;
+    right:22px !important;
+    bottom:145px !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-menu-legal a,
+  .ip-policy-page > .ip-menu-panel .ip-menu-legal a:link,
+  .ip-policy-page > .ip-menu-panel .ip-menu-legal a:visited,
+  .ip-policy-page > .ip-menu-panel .ip-menu-legal a:hover,
+  .ip-policy-page > .ip-menu-panel .ip-menu-legal a:active{
+    color:rgba(255,255,255,.5) !important;
+    font-size:8px !important;
+    line-height:150% !important;
+    text-decoration:none !important;
+  }
+}
+
+
+@media (max-width:767px){
+  .ip-policy-page{
+    overflow:hidden !important;
+  }
+
+  .ip-policy-bg{
+    height:var(--ip-policy-bg-height, var(--ip-policy-page-height, 100vh)) !important;
+    min-height:var(--ip-policy-bg-height, var(--ip-policy-page-height, 100vh)) !important;
+  }
+
+  .ip-legal-scrolltop{
+    position:absolute !important;
+    right:calc(((100vw - (390px * var(--ip-policy-mobile-scale, 1))) / 2) + (34px * var(--ip-policy-mobile-scale, 1))) !important;
+    bottom:50px;
+    z-index:9 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:24px !important;
+    height:24px !important;
+    padding:0 !important;
+    border:1px solid rgba(255,255,255,.9) !important;
+    border-radius:7px !important;
+    background:transparent !important;
+    cursor:pointer !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    pointer-events:auto !important;
+    transform:scale(var(--ip-policy-mobile-scale, 1)) !important;
+    transform-origin:center center !important;
+    -webkit-transform:scale(var(--ip-policy-mobile-scale, 1)) !important;
+    -webkit-transform-origin:center center !important;
+    -webkit-tap-highlight-color:transparent !important;
+    touch-action:manipulation !important;
+  }
+
+  .ip-legal-scrolltop span{
+    display:block !important;
+    width:8px !important;
+    height:8px !important;
+    border-top:1.5px solid #fff !important;
+    border-left:1.5px solid #fff !important;
+    transform:translateY(2px) rotate(45deg) !important;
+    -webkit-transform:translateY(2px) rotate(45deg) !important;
+  }
+}
+
+
+@media (max-width:767px){
+  .ip-policy-page > .ip-menu-panel.is-open.is-closing::before,
+  .ip-policy-page > .ip-menu-panel.is-open.is-closing::after{
+    transform:translateX(100%) !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel .ip-menu-inner{
+    opacity:1 !important;
+    transform:translate3d(0,0,0) !important;
+    transition:
+      opacity .34s cubic-bezier(.19,1,.22,1),
+      transform .42s cubic-bezier(.19,1,.22,1) !important;
+    will-change:opacity,transform !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel.is-closing .ip-menu-inner{
+    opacity:0 !important;
+    transform:translate3d(18px,0,0) !important;
+    pointer-events:none !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel.is-closing .ip-social,
+  .ip-policy-page > .ip-menu-panel.is-closing .ip-menu-list > *,
+  .ip-policy-page > .ip-menu-panel.is-closing .ip-menu-legal{
+    animation-play-state:paused !important;
+    pointer-events:none !important;
+  }
+}
+
+
+@media (max-width:767px){
+  .ip-legal-header{
+    transform:translate3d(0,5px,0) !important;
+  }
+}
+
+
+@media (max-width:767px){
+  .ip-policy-page > .ip-menu-panel:not(.is-open),
+  .ip-policy-page > .ip-menu-panel:not(.is-open) *{
+    pointer-events:none !important;
+  }
+
+  .ip-legal-meta,
+  .ip-legal-site,
+  .ip-legal-site a{
+    pointer-events:auto !important;
+  }
+}
+
+
+@media (max-width:767px){
+  .ip-legal-mobile-break{
+    display:block;
+    width:100%;
+    height:0;
+    font-size:0;
+    line-height:0;
+  }
+}
+
