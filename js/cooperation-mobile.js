@@ -2,18 +2,19 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-007-mobile-rider-open-new-tab-v035
+Версия: cooperation-mobile-js-008-mobile-rider-parent-message-v036
 
 ИЗМЕНЕНИЯ:
-- mobile riders: райдеры на мобильной версии открываются в новой вкладке/окне, чтобы PDF корректно работали внутри Tilda iframe
+- mobile riders: райдеры на мобильной версии запрашивают открытие PDF у родительской Tilda-страницы через postMessage
 - popup date: единая маска ДД.ММ.ГГГГ и проверка реальной календарной даты без изменения дизайна, меню и остальной логики
 - файл основан на cooperation-mobile-js-001-initial
 - добавлен показ portrait только после начала скролла mobile-страницы
 - glow и текст остаются CSS-анимациями при открытии страницы
 - высота mobile-страницы повторно рассчитана по фактическому нижнему краю видимого портрета
 - scroll-top синхронизирован с финальной длиной страницы
-- удалён принудительный fetch/blob-download для PDF-райдеров
-- райдеры открываются обычными ссылками в новой вкладке для стабильной работы на iOS/Android
+- удалён прямой window.open из iframe для PDF-райдеров
+- добавлен postMessage в родительскую Tilda-страницу для более стабильного открытия PDF на mobile
+- добавлен fallback на обычный переход, если родительская страница не подтвердила получение сообщения
 - menu, accordion, popup, date mask и disabled portfolio link не изменялись
 - desktop JS не изменялся
 ==================================================
@@ -681,6 +682,26 @@ COOPERATION MOBILE JS
       document.querySelectorAll('[data-cooperation-file-download]')
     );
 
+    var pendingOpenRequests = Object.create(null);
+
+    window.addEventListener('message', function(event){
+      var data = event && event.data;
+
+      if(!data || data.type !== 'ip-rider-open-ack' || !data.requestId){
+        return;
+      }
+
+      pendingOpenRequests[data.requestId] = true;
+    });
+
+    function createRequestId(){
+      return 'ip-rider-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    }
+
+    function isInsideParentFrame(){
+      return window.parent && window.parent !== window;
+    }
+
     fileDownloadLinks.forEach(function(link){
       var href = link.getAttribute('href');
 
@@ -693,19 +714,41 @@ COOPERATION MOBILE JS
 
       link.addEventListener('click', function(event){
         var url = new URL(href, window.location.href).href;
-
-        event.preventDefault();
-        event.stopPropagation();
+        var title = (link.textContent || '').replace(/\s+/g, ' ').trim();
 
         if(typeof link.blur === 'function'){
           link.blur();
         }
 
-        var openedWindow = window.open(url, '_blank', 'noopener,noreferrer');
-
-        if(!openedWindow){
-          window.location.href = url;
+        if(!isInsideParentFrame()){
+          return;
         }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        var requestId = createRequestId();
+        pendingOpenRequests[requestId] = false;
+
+        window.parent.postMessage(
+          {
+            type:'ip-open-rider-pdf',
+            requestId:requestId,
+            url:url,
+            title:title
+          },
+          '*'
+        );
+
+        window.setTimeout(function(){
+          if(pendingOpenRequests[requestId]){
+            delete pendingOpenRequests[requestId];
+            return;
+          }
+
+          delete pendingOpenRequests[requestId];
+          window.location.href = url;
+        }, 700);
       });
     });
   }
