@@ -87,6 +87,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
+      var ASSET_VERSION = 'mobile-riders-011';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
@@ -155,7 +156,7 @@
         return new Promise(function(resolve, reject){
           var link = document.createElement('link');
           link.rel = 'stylesheet';
-          link.href = href;
+          link.href = href + '?v=' + ASSET_VERSION;
           link.setAttribute('data-cooperation-page-style', 'true');
           link.onload = function(){ resolve(link); };
           link.onerror = reject;
@@ -166,7 +167,7 @@
       function loadScript(src){
         return new Promise(function(resolve, reject){
           var script = document.createElement('script');
-          script.src = src + '?v=' + Date.now();
+          script.src = src + '?v=' + ASSET_VERSION;
           script.defer = true;
           script.setAttribute('data-cooperation-page-script', 'true');
           script.onload = function(){
@@ -194,7 +195,7 @@
               throw new Error('stale-load');
             }
             loadedStyles = links;
-            return fetch(config.html);
+            return fetch(config.html + '?v=' + ASSET_VERSION, { cache:'no-store' });
           })
           .then(function(response){
             if(!response.ok){
