@@ -826,3 +826,51 @@ body,
     }
   }
 }
+/* ==========================================================
+   SOCIAL ICONS MOBILE RESTORE SUPPORT
+   Версия: home-css-032-tilda-social-icons-restore
+
+   ИЗМЕНЕНИЯ:
+   - mobile/touch: добавлена страховка от пропадания иконок соцсетей
+     после перехода во внешнюю соцсеть и возврата назад внутри Tilda iframe;
+   - для открытого меню соцсети принудительно остаются видимыми;
+   - на touch-устройствах отключается залипание hover-состояния у соцсетей;
+   - меню, геометрия, размеры, ссылки и анимации страниц не меняются.
+========================================================== */
+.ip-menu-panel.is-open .ip-social{
+  visibility:visible;
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media (hover:none), (pointer:coarse){
+  .ip-menu-panel.is-open .ip-social,
+  .ip-menu-panel.is-open .ip-social:active,
+  .ip-menu-panel.is-open .ip-social:focus,
+  .ip-menu-panel.is-open .ip-social:focus-visible{
+    visibility:visible !important;
+    opacity:1 !important;
+    transform:translateY(0) !important;
+    pointer-events:auto !important;
+  }
+
+  .ip-menu-panel.is-open .ip-social::before,
+  .ip-menu-panel.is-open .ip-social:active::before,
+  .ip-menu-panel.is-open .ip-social:focus::before,
+  .ip-menu-panel.is-open .ip-social:focus-visible::before{
+    opacity:1 !important;
+  }
+
+  .ip-menu-panel.is-open .ip-social:hover::before{
+    opacity:1 !important;
+  }
+
+  .ip-menu-panel.is-open .ip-social::after,
+  .ip-menu-panel.is-open .ip-social:active::after,
+  .ip-menu-panel.is-open .ip-social:focus::after,
+  .ip-menu-panel.is-open .ip-social:focus-visible::after,
+  .ip-menu-panel.is-open .ip-social:hover::after{
+    opacity:0 !important;
+    display:none !important;
+  }
+}
