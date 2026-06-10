@@ -350,10 +350,100 @@
     });
   }
 
+
+  function bindSocialIconReturnRestore(){
+    if(!isMobile){
+      return;
+    }
+
+    function getMenuPanel(){
+      return document.querySelector('.ip-menu-panel');
+    }
+
+    function clearSocialFocus(){
+      try{
+        var active = document.activeElement;
+
+        if(active && active.classList && active.classList.contains('ip-social')){
+          active.blur();
+        }
+      }catch(error){
+        /* noop */
+      }
+    }
+
+    function restoreSocialIconsAfterReturn(){
+      var panel = getMenuPanel();
+
+      if(!panel || !panel.classList.contains('is-open')){
+        return;
+      }
+
+      clearSocialFocus();
+      panel.classList.add('is-social-return-restore');
+    }
+
+    function observeMenuState(){
+      var panel = getMenuPanel();
+
+      if(!panel || !window.MutationObserver){
+        return;
+      }
+
+      var observer = new MutationObserver(function(){
+        if(!panel.classList.contains('is-open')){
+          panel.classList.remove('is-social-return-restore');
+        }
+      });
+
+      observer.observe(panel, {
+        attributes:true,
+        attributeFilter:['class']
+      });
+    }
+
+    document.addEventListener('click', function(event){
+      var socialLink = event.target.closest && event.target.closest('a.ip-social');
+
+      if(!socialLink){
+        return;
+      }
+
+      window.setTimeout(function(){
+        try{
+          socialLink.blur();
+        }catch(error){
+          /* noop */
+        }
+
+        clearSocialFocus();
+      }, 0);
+    }, true);
+
+    window.addEventListener('pageshow', function(event){
+      if(event.persisted){
+        restoreSocialIconsAfterReturn();
+      }
+    });
+
+    window.addEventListener('focus', function(){
+      window.setTimeout(restoreSocialIconsAfterReturn, 0);
+    });
+
+    document.addEventListener('visibilitychange', function(){
+      if(!document.hidden){
+        window.setTimeout(restoreSocialIconsAfterReturn, 0);
+      }
+    });
+
+    observeMenuState();
+  }
+
   function init(){
     getOverlay();
     bindLinks();
     bindBrowserNavigation();
+    bindSocialIconReturnRestore();
     revealPage();
   }
 
