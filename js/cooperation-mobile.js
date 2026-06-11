@@ -2,7 +2,7 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-008-mobile-rider-parent-message-v036
+Версия: cooperation-mobile-js-009-mobile-rider-touch-navigation-v037
 
 ИЗМЕНЕНИЯ:
 - mobile riders: райдеры на мобильной версии запрашивают открытие PDF у родительской Tilda-страницы через postMessage
@@ -17,6 +17,7 @@ COOPERATION MOBILE JS
 - добавлен fallback на обычный переход, если родительская страница не подтвердила получение сообщения
 - menu, accordion, popup, date mask и disabled portfolio link не изменялись
 - desktop JS не изменялся
+- mobile riders: добавлена точечная обработка touch/click для HTML-страниц райдеров, если обычный тап не доходит до ссылки
 ==================================================
 */
 
@@ -677,6 +678,126 @@ COOPERATION MOBILE JS
     });
   }
 
+
+  function setupMobileRiderHtmlLinks(){
+    var riderLinks = Array.prototype.slice.call(
+      document.querySelectorAll('a.ip-cooperation-mobile-download[href*="rider-"]')
+    ).filter(function(link){
+      return !link.classList.contains('is-disabled');
+    });
+
+    if(!riderLinks.length){
+      return;
+    }
+
+    var lastHandledAt = 0;
+
+    function getEventPoint(event){
+      var touch =
+        event.changedTouches &&
+        event.changedTouches.length &&
+        event.changedTouches[0];
+
+      if(touch){
+        return {
+          x:touch.clientX,
+          y:touch.clientY
+        };
+      }
+
+      if(typeof event.clientX === 'number' && typeof event.clientY === 'number'){
+        return {
+          x:event.clientX,
+          y:event.clientY
+        };
+      }
+
+      return null;
+    }
+
+    function getLinkFromEvent(event){
+      var target = event.target;
+      var directLink = target && target.closest
+        ? target.closest('a.ip-cooperation-mobile-download[href*="rider-"]')
+        : null;
+
+      if(directLink && riderLinks.indexOf(directLink) !== -1){
+        return directLink;
+      }
+
+      var point = getEventPoint(event);
+
+      if(!point){
+        return null;
+      }
+
+      return riderLinks.find(function(link){
+        var rect = link.getBoundingClientRect();
+        var tolerance = 12;
+
+        return point.x >= rect.left - tolerance &&
+          point.x <= rect.right + tolerance &&
+          point.y >= rect.top - tolerance &&
+          point.y <= rect.bottom + tolerance;
+      }) || null;
+    }
+
+    function openRiderLink(link){
+      if(!link || !link.href){
+        return;
+      }
+
+      if(typeof link.blur === 'function'){
+        link.blur();
+      }
+
+      window.location.assign(link.href);
+    }
+
+    function handleRiderNavigation(event){
+      if(!isMobile()){
+        return;
+      }
+
+      if(event.type === 'click' && Date.now() - lastHandledAt < 650){
+        return;
+      }
+
+      var link = getLinkFromEvent(event);
+
+      if(!link){
+        return;
+      }
+
+      lastHandledAt = Date.now();
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      if(typeof event.stopImmediatePropagation === 'function'){
+        event.stopImmediatePropagation();
+      }
+
+      openRiderLink(link);
+    }
+
+    document.addEventListener(
+      'touchend',
+      handleRiderNavigation,
+      {
+        capture:true,
+        passive:false
+      }
+    );
+
+    document.addEventListener(
+      'click',
+      handleRiderNavigation,
+      true
+    );
+  }
+
+
   function setupFileDownloads(){
     var fileDownloadLinks = Array.prototype.slice.call(
       document.querySelectorAll('[data-cooperation-file-download]')
@@ -778,6 +899,7 @@ COOPERATION MOBILE JS
     setupMenuCloseOnScroll();
     setupDateMask();
     setupDisabledDownloads();
+    setupMobileRiderHtmlLinks();
     setupFileDownloads();
     if(scrollTopButton){
       scrollTopButton.addEventListener('click', scrollToTop);
