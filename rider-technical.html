@@ -13,7 +13,7 @@
     ==================================================
     RIDER HTML PAGES
 
-    Версия: rider-html-css-023-rider-text-line-breaks
+    Версия: rider-html-css-024-scrolltop-arrow
 
     ИЗМЕНЕНИЯ:
     - весь текст райдеров переведён на Montserrat, без Benzin
@@ -30,6 +30,8 @@
     - удалена лишняя вводная подпись под заголовком райдера
     - основной текстовый блок поднят на 20px без изменения внутренних расстояний между разделами
     - добавлены точечные переносы строк в техническом и бытовом райдерах по утверждённой типографике
+    - добавлена стрелка “Наверх” внизу страницы по аналогии с legal-страницами
+    - расстояние от почты до стрелки и от стрелки до низа страницы сделано одинаковым
     ==================================================
     */
 
@@ -98,7 +100,7 @@
       width:390px;
       max-width:100%;
       margin:0 auto;
-      padding:32px 20px 92px;
+      padding:32px 20px 50px;
     }
 
     .ip-rider-top{
@@ -242,6 +244,39 @@
       letter-spacing:-.02em;
     }
 
+
+    .ip-rider-scrolltop{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:24px;
+      height:24px;
+      margin:50px 0 0 auto;
+      padding:0;
+      border:1px solid rgba(255,255,255,.9);
+      border-radius:7px;
+      background:transparent;
+      cursor:pointer;
+      opacity:1;
+      visibility:visible;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      transition:opacity .25s ease;
+    }
+
+    .ip-rider-scrolltop:active{
+      opacity:.75;
+    }
+
+    .ip-rider-scrolltop span{
+      display:block;
+      width:8px;
+      height:8px;
+      border-top:1.5px solid #fff;
+      border-left:1.5px solid #fff;
+      transform:translateY(2px) rotate(45deg);
+    }
+
     @media (max-width:389px){
       .ip-rider-shell{
         width:100%;
@@ -271,7 +306,6 @@
 <h1 class="ip-rider-title">Технический райдер</h1>
 <a class="ip-rider-back" href="./cooperation.html">Назад</a>
 </header>
-
 <div class="ip-rider-content">
 <section class="ip-rider-section">
 <h2>Звуковое оборудование</h2>
@@ -294,7 +328,7 @@
 <p>Радиосистема инструментальная <strong>Sennheiser не ниже EW100G3/Shure</strong> аналогичного класса или Di-box, выведенный к сцене, кабель Jack-Jack не менее 5 м и система с передатчиком того же бренда для ушного мониторинга или предусмотреть напольные мониторы. Батарейка или АКБ крона 9V — 1 шт.</p>
 <p>Аккумуляторы и батарейки во всех устройствах должны быть полностью заряжены, необходим запасной комплект, рассчитанный на длительность мероприятия.</p>
 <p>Все радиосистемы должны работать в разрешенном для вашего региона и страны диапазоне частот.</p>
-<p>Саундчек производится за&nbsp;1-2 часа<br>до&nbsp;сбора гостей, до&nbsp;этого времени<br>должны пройти все репетиции<br>и&nbsp;настройки.</p>
+<p>Саундчек производится за 1-2 часа<br/>до сбора гостей, до этого времени<br/>должны пройти все репетиции<br/>и настройки.</p>
 <p>На протяжении всего события должен находиться и работать звукорежиссер от прокатной компании, а также минимум один квалифицированный специалист, знающий данное оборудование и способный оперативно устранить любую неполадку.</p>
 </section>
 <section class="ip-rider-section">
@@ -313,8 +347,27 @@
 <div aria-label="Контакты" class="ip-rider-contacts">
 <a href="tel:+79200127624">+7 920 012 76 24</a>
 <a href="mailto:ya@ivanpertsev.ru">ya@ivanpertsev.ru</a>
-</div>
+</div><button aria-label="Наверх" class="ip-rider-scrolltop" data-rider-scrolltop="" type="button"><span aria-hidden="true"></span></button>
 </div>
 </main>
+
+<script>
+  (function(){
+    'use strict';
+
+    var scrollTopButton = document.querySelector('[data-rider-scrolltop]');
+
+    if(!scrollTopButton){
+      return;
+    }
+
+    scrollTopButton.addEventListener('click', function(){
+      window.scrollTo({
+        top:0,
+        behavior:'smooth'
+      });
+    });
+  })();
+</script>
 </body>
 </html>
