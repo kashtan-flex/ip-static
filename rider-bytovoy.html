@@ -4,35 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Бытовой райдер — Иван Перцев</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    @font-face{
-      font-family:'Benzin';
-      src:url('./assets/fonts/Benzin-Bold.woff2') format('woff2');
-      font-weight:700;
-      font-style:normal;
-      font-display:swap;
-    }
+    /*
+    ==================================================
+    RIDER HTML PAGES
+
+    Версия: rider-html-css-020-legal-typography
+
+    ИЗМЕНЕНИЯ:
+    - весь текст райдеров переведён на Montserrat, без Benzin
+    - типографика приведена к мобильной логике правовых страниц:
+      заголовок 32px / 95% / 600 / -3%
+      заголовки разделов 20px / 100% / 600 / -3%
+      основной текст 16px / 100% / 400 / -2%
+    - отступы страницы, секций, списков и контактов приведены к legal mobile-подходу
+    - фон оставлен из правовых мобильных страниц:
+      assets/img/policy/mobile/background/policy-mobile-bg.webp
+    - desktop-скачивание PDF, Tilda, меню, попапы и страница сотрудничества не изменяются
+    ==================================================
+    */
 
     html,
     body{
-      margin:0;
-      padding:0;
       width:100%;
       min-height:100%;
-      background:#050603;
-      color:#f5f5f5;
-      overflow-x:hidden;
-      font-family:Montserrat, Arial, sans-serif;
+      height:auto;
+      margin:0;
+      padding:0;
+      overflow-x:hidden !important;
+      overflow-y:auto !important;
+      background:#050603 !important;
+      color:#fff;
+      font-family:'Montserrat',Arial,sans-serif;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+      text-rendering:geometricPrecision;
+    }
+
+    .ip-rider-page,
+    .ip-rider-page *{
+      box-sizing:border-box;
+    }
+
+    .ip-rider-page a{
+      color:inherit;
+      text-decoration:none;
     }
 
     .ip-rider-page{
       position:relative;
       min-height:100vh;
-      padding:24px 15px 42px;
-      box-sizing:border-box;
+      overflow:visible;
       background:#050603;
+      color:#fff;
+      font-family:'Montserrat',Arial,sans-serif;
     }
 
     .ip-rider-page::before{
@@ -40,119 +70,189 @@
       position:fixed;
       inset:0;
       z-index:0;
+      background-image:url('./assets/img/policy/mobile/background/policy-mobile-bg.webp');
+      background-size:390px auto;
+      background-position:top center;
+      background-repeat:repeat-y;
+      pointer-events:none;
+    }
+
+    .ip-rider-page::after{
+      content:'';
+      position:fixed;
+      inset:0;
+      z-index:1;
       background:
-        linear-gradient(180deg, rgba(5,6,3,.16), rgba(5,6,3,.72)),
-        url('./assets/img/policy/mobile/background/policy-mobile-bg.webp') center top / cover no-repeat;
-      opacity:.96;
+        linear-gradient(180deg, rgba(5,6,3,.06) 0%, rgba(5,6,3,.28) 100%),
+        rgba(0,0,0,.04);
       pointer-events:none;
     }
 
     .ip-rider-shell{
       position:relative;
-      z-index:1;
-      width:100%;
-      max-width:390px;
+      z-index:2;
+      width:390px;
+      max-width:100%;
       margin:0 auto;
+      padding:32px 20px 92px;
     }
 
     .ip-rider-top{
-      position:sticky;
-      top:0;
-      z-index:5;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:16px;
-      padding:0 0 22px;
-      background:linear-gradient(180deg, rgba(5,6,3,.96) 0%, rgba(5,6,3,.86) 72%, rgba(5,6,3,0) 100%);
-      backdrop-filter:blur(0px);
+      position:relative;
+      width:350px;
+      max-width:100%;
+      min-height:92px;
+      margin:0 0 60px;
     }
 
     .ip-rider-title{
-      margin:0;
-      max-width:240px;
-      font-family:'Benzin', Montserrat, Arial, sans-serif;
-      font-size:28px;
-      line-height:1.02;
-      letter-spacing:-.045em;
-      font-weight:700;
-    }
-
-    .ip-rider-back{
-      flex:0 0 auto;
-      margin-top:2px;
+      width:247px;
+      margin:0 0 40px;
       color:#fff;
-      text-decoration:none;
-      font-size:12px;
-      line-height:1;
-      border:1px solid rgba(255,255,255,.48);
-      border-radius:999px;
-      padding:10px 12px;
-      background:rgba(255,255,255,.045);
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    .ip-rider-intro{
-      margin:6px 0 24px;
-      color:rgba(255,255,255,.70);
-      font-size:14px;
-      line-height:1.28;
+      font-family:'Montserrat',Arial,sans-serif;
+      font-size:32px;
+      line-height:.95;
+      font-weight:600;
       letter-spacing:-.03em;
     }
 
+    .ip-rider-back{
+      position:absolute;
+      right:0;
+      top:4px;
+      z-index:3;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:58px;
+      min-height:34px;
+      padding:0 13px;
+      color:#fff;
+      font-family:'Montserrat',Arial,sans-serif;
+      font-size:12px;
+      line-height:1;
+      font-weight:500;
+      letter-spacing:-.02em;
+      border:1px solid rgba(255,255,255,.45);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    .ip-rider-intro{
+      width:301px;
+      margin:0 0 0 49px;
+      color:rgba(255,255,255,.86);
+      font-family:'Montserrat',Arial,sans-serif;
+      font-size:16px;
+      line-height:1.4;
+      font-weight:400;
+      letter-spacing:-.02em;
+      text-align:right;
+    }
+
+    .ip-rider-content{
+      width:350px;
+      max-width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:40px;
+    }
+
     .ip-rider-section{
-      margin:0 0 28px;
+      width:100%;
+      margin:0;
     }
 
     .ip-rider-section h2{
-      margin:0 0 13px;
-      font-family:'Benzin', Montserrat, Arial, sans-serif;
-      font-size:16px;
-      line-height:1.15;
-      letter-spacing:-.035em;
+      margin:0 0 20px;
+      color:#fff;
+      font-family:'Montserrat',Arial,sans-serif;
+      font-size:20px;
+      line-height:1;
+      font-weight:600;
+      letter-spacing:-.03em;
       text-transform:uppercase;
     }
 
     .ip-rider-section p,
     .ip-rider-section li{
-      margin:0;
-      color:rgba(255,255,255,.82);
-      font-size:14px;
-      line-height:1.23;
-      letter-spacing:-.035em;
+      margin:0 0 20px;
+      color:rgba(255,255,255,.86);
+      font-family:'Montserrat',Arial,sans-serif;
+      font-size:16px;
+      line-height:1;
+      font-weight:400;
+      letter-spacing:-.02em;
+    }
+
+    .ip-rider-section p:last-child,
+    .ip-rider-section li:last-child{
+      margin-bottom:0;
     }
 
     .ip-rider-section p + p{
-      margin-top:10px;
+      margin-top:0;
     }
 
     .ip-rider-section ul{
-      margin:10px 0 0;
-      padding:0 0 0 17px;
+      margin:0 0 20px;
+      padding-left:17px;
+      list-style-position:outside;
     }
 
-    .ip-rider-section li + li{
-      margin-top:5px;
+    .ip-rider-section ul:last-child{
+      margin-bottom:0;
     }
 
     .ip-rider-section strong{
       color:#fff;
-      font-weight:700;
+      font-weight:600;
     }
 
     .ip-rider-contacts{
-      margin:38px 0 0;
-      padding:0 2px 0 0;
+      width:301px;
+      margin:40px 0 0 49px;
+      color:rgba(255,255,255,.86);
+      font-family:'Montserrat',Arial,sans-serif;
+      font-size:16px;
+      line-height:1.4;
+      font-weight:400;
+      letter-spacing:-.02em;
       text-align:right;
     }
 
     .ip-rider-contacts a{
       display:block;
-      color:#78b7df;
-      text-decoration:none;
-      font-size:15px;
-      line-height:1.35;
-      letter-spacing:.02em;
+      color:#69C9FF !important;
+      text-decoration:none !important;
+      font-family:'Montserrat',Arial,sans-serif;
+      font-size:16px;
+      line-height:1.4;
+      font-weight:400;
+      letter-spacing:-.02em;
+    }
+
+    @media (max-width:389px){
+      .ip-rider-shell{
+        width:100%;
+      }
+
+      .ip-rider-top,
+      .ip-rider-content{
+        width:100%;
+      }
+
+      .ip-rider-title{
+        width:calc(100% - 92px);
+      }
+
+      .ip-rider-intro,
+      .ip-rider-contacts{
+        width:100%;
+        margin-left:0;
+      }
     }
   </style>
 </head>
@@ -166,7 +266,8 @@
 
       <p class="ip-rider-intro">Документ для организаторов и площадки.</p>
 
-      <section class="ip-rider-section">
+      <div class="ip-rider-content">
+        <section class="ip-rider-section">
         <h2>Гримерная комната</h2>
         <p>При наличии гримерной, предоставить доступ с момента прибытия ведущего на площадку — саундчек/репетиция — до окончания пребывания на площадке.</p>
         <p>Предпочтительно отдельное размещение или одна гримерная с DJ. Возможно общее размещение с зонированием ширмой. Достаточное количество свободного места, чтобы комфортно подготовиться к работе.</p>
@@ -219,6 +320,8 @@
         <p>Предоставить номер в отеле уровня не ниже 4 звезд со всеми удобствами или равноценную замену по согласованию с ведущим.</p>
         <p>Если прилет ночной или утренний — предусмотреть раннее заселение. Перед оплатой билетов и размещения просьба согласовать все параметры лично.</p>
       </section>
+
+      </div>
 
       <div class="ip-rider-contacts" aria-label="Контакты">
         <a href="tel:+79200127624">+7 920 012 76 24</a>
