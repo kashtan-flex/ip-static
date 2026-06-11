@@ -1,3 +1,16 @@
+/*
+==================================================
+HOME JS
+
+Версия: home-js-025-mobile-reload-animation-sync
+
+ИЗМЕНЕНИЯ:
+- mobile-only: добавлен единый запуск стартовой анимации главной страницы после первичного scale
+- при обновлении страницы точка под подзаголовком не должна появляться раньше имени
+- desktop, меню, попапы, аккордеоны и дата в форме не изменялись
+==================================================
+*/
+
 (function () {
   const page = document.querySelector('.ip-page-home');
   const menuButton = document.querySelector('.ip-menu-toggle');
@@ -33,6 +46,21 @@
   function requestScaleUpdate() {
     if (resizeFrame) cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(updateHomeScale);
+  }
+
+  function startMobileIntroAnimation() {
+    if (!isMobile()) {
+      page.classList.remove('is-mobile-animation-ready');
+      return;
+    }
+
+    page.classList.remove('is-mobile-animation-ready');
+
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () {
+        page.classList.add('is-mobile-animation-ready');
+      });
+    });
   }
 
   function openMenu() {
@@ -379,6 +407,7 @@
   }
 
   updateHomeScale();
+  startMobileIntroAnimation();
   setupPopupTriggers();
   setupDateMask();
 

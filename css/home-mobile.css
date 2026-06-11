@@ -1,3 +1,16 @@
+/*
+==================================================
+HOME MOBILE CSS
+
+Версия: home-mobile-css-025-reload-animation-sync
+
+ИЗМЕНЕНИЯ:
+- mobile-only: синхронизирован запуск анимации имени, подзаголовка и точки при обновлении страницы
+- точка под подзаголовком больше не стартует раньше имени при reload
+- desktop, меню, попапы, переходы и геометрия главной страницы не изменялись
+==================================================
+*/
+
 
 
 @media (max-width:767px){
@@ -99,11 +112,16 @@
     -webkit-backface-visibility:hidden;
   }
 
-  .ip-title-line-first span{
+  .ip-title-line-first span,
+  .ip-title-line-second span{
+    animation:none;
+  }
+
+  .ip-page-home.is-mobile-animation-ready .ip-title-line-first span{
     animation:ipMobileTextRevealSoft .42s cubic-bezier(.19,1,.22,1) forwards .9s;
   }
 
-  .ip-title-line-second span{
+  .ip-page-home.is-mobile-animation-ready .ip-title-line-second span{
     animation:ipMobileTextRevealSoft .5s cubic-bezier(.19,1,.22,1) forwards 1.12s;
   }
 
@@ -132,6 +150,10 @@
   }
 
   .ip-subtitle-word-one{
+    animation:none;
+  }
+
+  .ip-page-home.is-mobile-animation-ready .ip-subtitle-word-one{
     animation:ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.32s;
   }
 
@@ -142,13 +164,33 @@
     height:4px;
     flex:0 0 4px;
     margin-top:1px;
+    animation:none;
+  }
+
+  .ip-page-home.is-mobile-animation-ready .ip-subtitle-dot{
     animation:
       ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.40s,
       ipDotBlink 1.4s ease-in-out infinite 1.82s;
   }
 
   .ip-subtitle-word-two{
+    animation:none;
+  }
+
+  .ip-page-home.is-mobile-animation-ready .ip-subtitle-word-two{
     animation:ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.48s;
+  }
+
+
+  .ip-page-home:not(.is-mobile-animation-ready) .ip-title-line span{
+    opacity:0;
+    transform:translate3d(0,-52px,0);
+  }
+
+  .ip-page-home:not(.is-mobile-animation-ready) .ip-subtitle-word,
+  .ip-page-home:not(.is-mobile-animation-ready) .ip-subtitle-dot{
+    opacity:0;
+    transform:translate3d(0,-10px,0);
   }
 
   .ip-menu-toggle{
