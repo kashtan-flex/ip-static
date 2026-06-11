@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Технический райдер — Иван Перцев</title>
+  <style>
+    @font-face{
+      font-family:'Benzin';
+      src:url('./assets/fonts/Benzin-Bold.woff2') format('woff2');
+      font-weight:700;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    html,
+    body{
+      margin:0;
+      padding:0;
+      width:100%;
+      min-height:100%;
+      background:#050603;
+      color:#f5f5f5;
+      overflow-x:hidden;
+      font-family:Montserrat, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .ip-rider-page{
+      position:relative;
+      min-height:100vh;
+      padding:24px 15px 42px;
+      box-sizing:border-box;
+      background:#050603;
+    }
+
+    .ip-rider-page::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      z-index:0;
+      background:
+        linear-gradient(180deg, rgba(5,6,3,.16), rgba(5,6,3,.72)),
+        url('./assets/img/policy/mobile/background/policy-mobile-bg.webp') center top / cover no-repeat;
+      opacity:.96;
+      pointer-events:none;
+    }
+
+    .ip-rider-shell{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:390px;
+      margin:0 auto;
+    }
+
+    .ip-rider-top{
+      position:sticky;
+      top:0;
+      z-index:5;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      padding:0 0 22px;
+      background:linear-gradient(180deg, rgba(5,6,3,.96) 0%, rgba(5,6,3,.86) 72%, rgba(5,6,3,0) 100%);
+      backdrop-filter:blur(0px);
+    }
+
+    .ip-rider-title{
+      margin:0;
+      max-width:240px;
+      font-family:'Benzin', Montserrat, Arial, sans-serif;
+      font-size:28px;
+      line-height:1.02;
+      letter-spacing:-.045em;
+      font-weight:700;
+    }
+
+    .ip-rider-back{
+      flex:0 0 auto;
+      margin-top:2px;
+      color:#fff;
+      text-decoration:none;
+      font-size:12px;
+      line-height:1;
+      border:1px solid rgba(255,255,255,.48);
+      border-radius:999px;
+      padding:10px 12px;
+      background:rgba(255,255,255,.045);
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .ip-rider-intro{
+      margin:6px 0 24px;
+      color:rgba(255,255,255,.70);
+      font-size:14px;
+      line-height:1.28;
+      letter-spacing:-.03em;
+    }
+
+    .ip-rider-section{
+      margin:0 0 28px;
+    }
+
+    .ip-rider-section h2{
+      margin:0 0 13px;
+      font-family:'Benzin', Montserrat, Arial, sans-serif;
+      font-size:16px;
+      line-height:1.15;
+      letter-spacing:-.035em;
+      text-transform:uppercase;
+    }
+
+    .ip-rider-section p,
+    .ip-rider-section li{
+      margin:0;
+      color:rgba(255,255,255,.82);
+      font-size:14px;
+      line-height:1.23;
+      letter-spacing:-.035em;
+    }
+
+    .ip-rider-section p + p{
+      margin-top:10px;
+    }
+
+    .ip-rider-section ul{
+      margin:10px 0 0;
+      padding:0 0 0 17px;
+    }
+
+    .ip-rider-section li + li{
+      margin-top:5px;
+    }
+
+    .ip-rider-section strong{
+      color:#fff;
+      font-weight:700;
+    }
+
+    .ip-rider-contacts{
+      margin:38px 0 0;
+      padding:0 2px 0 0;
+      text-align:right;
+    }
+
+    .ip-rider-contacts a{
+      display:block;
+      color:#78b7df;
+      text-decoration:none;
+      font-size:15px;
+      line-height:1.35;
+      letter-spacing:.02em;
+    }
+  </style>
+</head>
+<body>
+  <main class="ip-rider-page">
+    <div class="ip-rider-shell">
+      <header class="ip-rider-top">
+        <h1 class="ip-rider-title">Технический райдер</h1>
+        <a class="ip-rider-back" href="./cooperation.html">Назад</a>
+      </header>
+
+      <p class="ip-rider-intro">Документ для технических специалистов площадки и подрядчиков.</p>
+
+      <section class="ip-rider-section">
+        <h2>Звуковое оборудование</h2>
+        <p>Предпочтительно использование звукоусилительных комплектов следующих производителей: <strong>L’Acoustics, Meyer Sound, D&amp;B Audiotechnik, Nexo, Seeburg.</strong></p>
+        <p>При работе в вытянутых залах длиной более 20 м и высотой потолков более 3,5 м, а также в пространствах большой площади или сложной геометрии необходимы <strong>Delay-системы</strong>, желательно в активном исполнении.</p>
+        <p>Мощность системы портальной акустики должна быть рассчитана и настроена техническим специалистом, учитывая размеры локации, количество и расположение гостей.</p>
+        <p>Во всех зонах, где подразумевается работа ведущего, должен стоять необходимый сетап звукового оборудования, включая микрофоны. Либо должна быть организована трансляция от основного звукоусилительного комплекта в дополнительные зоны с работающими микрофонами.</p>
+        <p><strong>Цифровой микшерный пульт!</strong> Использование аналогового исключено. Модели классом не ниже <strong>Behringer X32</strong> и внешняя стабильная WI-FI точка доступа для удаленного управления.</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Микрофоны</h2>
+        <p><strong>2 микрофона на прямых стойках.</strong> При работе в дуэте — 4 шт. Микрофоны должны быть обязательно оригинальными, одного бренда и одной модели. Микрофоны SHURE.</p>
+        <p>Shure. Ручной передатчик не ниже QLXD, предпочтительно UR4D или AXIENT. Капсуль не ниже BETA 58A.</p>
+        <p>В случае длины зала более 20 м обязательно наличие направленных внешних антенн не ниже SHURE UA 874. Обязательно наличие двух прямых микрофонных стоек на круглом основании K&amp;M или OnStage с держателем.</p>
+        <p>Микрофоны и стойки должны быть презентабельного внешнего вида без царапин, трещин, вмятин, потертостей, помады, изоленты, наклеек.</p>
+        <p>Каналы микрофонов ведущего должны быть всегда открыты и загружены в каждую звуковую сцену.</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Гитара</h2>
+        <p>Радиосистема инструментальная <strong>Sennheiser не ниже EW100G3/Shure</strong> аналогичного класса или Di-box, выведенный к сцене, кабель Jack-Jack не менее 5 м и система с передатчиком того же бренда для ушного мониторинга или предусмотреть напольные мониторы. Батарейка или АКБ крона 9V — 1 шт.</p>
+        <p>Аккумуляторы и батарейки во всех устройствах должны быть полностью заряжены, необходим запасной комплект, рассчитанный на длительность мероприятия.</p>
+        <p>Все радиосистемы должны работать в разрешенном для вашего региона и страны диапазоне частот.</p>
+        <p>Саундчек производится за 1–2 часа до сбора гостей, до этого времени должны пройти все репетиции и настройки.</p>
+        <p>На протяжении всего события должен находиться и работать звукорежиссер от прокатной компании, а также минимум один квалифицированный специалист, знающий данное оборудование и способный оперативно устранить любую неполадку.</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Видео</h2>
+        <p>Если предусмотрена демонстрация контента — желательны LED телевизоры не менее 65 дюймов на декоративных стойках или LED экраны, закоммутированные в сплиттер с hdmi кабелем/витой парой, подведенные к компьютеру DJ и VJ. Для больших площадок количество и размер увеличивается пропорционально площади зала.</p>
+        <p>Необходимо обеспечить возможность воспроизведения файлов: <strong>pptx, pdf, mp4, mov, png, jpeg.</strong> По запросу наличие кликера. В зависимости от формата — видеоинженер для работы с контентом.</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Свет</h2>
+        <p>Приветствуется профессиональное художественное световое оформление, настраиваемое и управляемое специалистом под концепцию мероприятия.</p>
+        <p>Если площадка имеет инсталлированное звуковое, световое и медиа оборудование, необходимо заблаговременно предоставить точную марку, модель и параметры.</p>
+        <p>От качества оборудования и профессионализма подрядчиков зависит качество работы ведущего и соответственно уровень всего мероприятия.</p>
+        <p>При неисполнении райдера — ведущий оставляет за собой право менять программу по своему усмотрению.</p>
+      </section>
+
+      <div class="ip-rider-contacts" aria-label="Контакты">
+        <a href="tel:+79200127624">+7 920 012 76 24</a>
+        <a href="mailto:ya@ivanpertsev.ru">ya@ivanpertsev.ru</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Бытовой райдер — Иван Перцев</title>
+  <style>
+    @font-face{
+      font-family:'Benzin';
+      src:url('./assets/fonts/Benzin-Bold.woff2') format('woff2');
+      font-weight:700;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    html,
+    body{
+      margin:0;
+      padding:0;
+      width:100%;
+      min-height:100%;
+      background:#050603;
+      color:#f5f5f5;
+      overflow-x:hidden;
+      font-family:Montserrat, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .ip-rider-page{
+      position:relative;
+      min-height:100vh;
+      padding:24px 15px 42px;
+      box-sizing:border-box;
+      background:#050603;
+    }
+
+    .ip-rider-page::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      z-index:0;
+      background:
+        linear-gradient(180deg, rgba(5,6,3,.16), rgba(5,6,3,.72)),
+        url('./assets/img/policy/mobile/background/policy-mobile-bg.webp') center top / cover no-repeat;
+      opacity:.96;
+      pointer-events:none;
+    }
+
+    .ip-rider-shell{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:390px;
+      margin:0 auto;
+    }
+
+    .ip-rider-top{
+      position:sticky;
+      top:0;
+      z-index:5;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      padding:0 0 22px;
+      background:linear-gradient(180deg, rgba(5,6,3,.96) 0%, rgba(5,6,3,.86) 72%, rgba(5,6,3,0) 100%);
+      backdrop-filter:blur(0px);
+    }
+
+    .ip-rider-title{
+      margin:0;
+      max-width:240px;
+      font-family:'Benzin', Montserrat, Arial, sans-serif;
+      font-size:28px;
+      line-height:1.02;
+      letter-spacing:-.045em;
+      font-weight:700;
+    }
+
+    .ip-rider-back{
+      flex:0 0 auto;
+      margin-top:2px;
+      color:#fff;
+      text-decoration:none;
+      font-size:12px;
+      line-height:1;
+      border:1px solid rgba(255,255,255,.48);
+      border-radius:999px;
+      padding:10px 12px;
+      background:rgba(255,255,255,.045);
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .ip-rider-intro{
+      margin:6px 0 24px;
+      color:rgba(255,255,255,.70);
+      font-size:14px;
+      line-height:1.28;
+      letter-spacing:-.03em;
+    }
+
+    .ip-rider-section{
+      margin:0 0 28px;
+    }
+
+    .ip-rider-section h2{
+      margin:0 0 13px;
+      font-family:'Benzin', Montserrat, Arial, sans-serif;
+      font-size:16px;
+      line-height:1.15;
+      letter-spacing:-.035em;
+      text-transform:uppercase;
+    }
+
+    .ip-rider-section p,
+    .ip-rider-section li{
+      margin:0;
+      color:rgba(255,255,255,.82);
+      font-size:14px;
+      line-height:1.23;
+      letter-spacing:-.035em;
+    }
+
+    .ip-rider-section p + p{
+      margin-top:10px;
+    }
+
+    .ip-rider-section ul{
+      margin:10px 0 0;
+      padding:0 0 0 17px;
+    }
+
+    .ip-rider-section li + li{
+      margin-top:5px;
+    }
+
+    .ip-rider-section strong{
+      color:#fff;
+      font-weight:700;
+    }
+
+    .ip-rider-contacts{
+      margin:38px 0 0;
+      padding:0 2px 0 0;
+      text-align:right;
+    }
+
+    .ip-rider-contacts a{
+      display:block;
+      color:#78b7df;
+      text-decoration:none;
+      font-size:15px;
+      line-height:1.35;
+      letter-spacing:.02em;
+    }
+  </style>
+</head>
+<body>
+  <main class="ip-rider-page">
+    <div class="ip-rider-shell">
+      <header class="ip-rider-top">
+        <h1 class="ip-rider-title">Бытовой райдер</h1>
+        <a class="ip-rider-back" href="./cooperation.html">Назад</a>
+      </header>
+
+      <p class="ip-rider-intro">Документ для организаторов и площадки.</p>
+
+      <section class="ip-rider-section">
+        <h2>Гримерная комната</h2>
+        <p>При наличии гримерной, предоставить доступ с момента прибытия ведущего на площадку — саундчек/репетиция — до окончания пребывания на площадке.</p>
+        <p>Предпочтительно отдельное размещение или одна гримерная с DJ. Возможно общее размещение с зонированием ширмой. Достаточное количество свободного места, чтобы комфортно подготовиться к работе.</p>
+        <p>Гримерная должна также быть оборудована:</p>
+        <ul>
+          <li>стулья/кресла — 2 шт.;</li>
+          <li>стол — 1 шт.;</li>
+          <li>минимум одна исправная розетка питания 220V;</li>
+          <li>вешалка-рейл для одежды — 1 шт.;</li>
+          <li>зеркало в полный рост;</li>
+          <li>валик для одежды;</li>
+          <li>отпариватель.</li>
+        </ul>
+        <p>Гримерная закрывается на ключ либо находится под наблюдением охраны.</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Питание</h2>
+        <p>Категорически не фастфуд, не стафф питание и не бизнес-ланчи. В идеале свежеприготовленные овощной салат с оливковым маслом, куриная грудка/индейка/белая рыба сваренные или гриль, гарнир из круп на выбор: гречка/булгур/рис/киноа/картофель, сваренные на воде. Фруктовая корзина приветствуется: ананас, бананы, зеленые яблоки, ягоды.</p>
+        <p>Питание каждые 4 часа присутствия на площадке. Питьевая вода — не менее 5 бутылок емкостью 0,5 л. Кофе американо без сахара — 1–2 чашки по 0,2.</p>
+        <p>В случае невозможности обеспечить полноценным питанием ведущего — выделить сумму суточных.</p>
+        <p><strong>Просьба все детали согласовать до мероприятия.</strong></p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Тайминг/сценарий</h2>
+        <p>Распечатанный сценарий под формат стилизованных карточек с логотипом мероприятия для ведущего. Если программа свободная, то это необязательно.</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Трансфер</h2>
+        <p><strong>Москва</strong> — парковочное место для автомобиля.</p>
+        <p><strong>Московская обл.</strong> — если место проведения находится за МКАД, то такси в тарифах «комфорт+» или «бизнес». Оплачивается заказчиком по чекам.</p>
+        <p><strong>Другой город</strong> — в городе назначения обязателен трансфер: аэропорт/отель/площадка и обратно или компенсация расходов на такси. Класс автомобиля — «комфорт+» или «бизнес».</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Авиа</h2>
+        <p>Класс обслуживания повышенной комфортности или на усмотрение клиента. Билет с багажом. Аэрофлот либо другой крупный перевозчик.</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>ЖД</h2>
+        <p>Возможен вариант трансфера скоростным поездом, но при условии, что время в пути до города назначения не более 4–5 часов. Место повышенной категории или бизнес.</p>
+        <p>Если до места назначения самолетом добраться нет возможности, можно рассмотреть вариант поезда. Поезд — СВ с одноместным размещением.</p>
+      </section>
+
+      <section class="ip-rider-section">
+        <h2>Проживание</h2>
+        <p>Предоставить номер в отеле уровня не ниже 4 звезд со всеми удобствами или равноценную замену по согласованию с ведущим.</p>
+        <p>Если прилет ночной или утренний — предусмотреть раннее заселение. Перед оплатой билетов и размещения просьба согласовать все параметры лично.</p>
+      </section>
+
+      <div class="ip-rider-contacts" aria-label="Контакты">
+        <a href="tel:+79200127624">+7 920 012 76 24</a>
+        <a href="mailto:ya@ivanpertsev.ru">ya@ivanpertsev.ru</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
