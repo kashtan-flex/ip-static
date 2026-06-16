@@ -2,22 +2,13 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-009-mobile-rider-touch-navigation-v037
+Версия: cooperation-mobile-js-010-mobile-menu-rider-guard-v038
 
 ИЗМЕНЕНИЯ:
-- mobile riders: райдеры на мобильной версии запрашивают открытие PDF у родительской Tilda-страницы через postMessage
-- popup date: единая маска ДД.ММ.ГГГГ и проверка реальной календарной даты без изменения дизайна, меню и остальной логики
-- файл основан на cooperation-mobile-js-001-initial
-- добавлен показ portrait только после начала скролла mobile-страницы
-- glow и текст остаются CSS-анимациями при открытии страницы
-- высота mobile-страницы повторно рассчитана по фактическому нижнему краю видимого портрета
-- scroll-top синхронизирован с финальной длиной страницы
-- удалён прямой window.open из iframe для PDF-райдеров
-- добавлен postMessage в родительскую Tilda-страницу для более стабильного открытия PDF на mobile
-- добавлен fallback на обычный переход, если родительская страница не подтвердила получение сообщения
-- menu, accordion, popup, date mask и disabled portfolio link не изменялись
-- desktop JS не изменялся
-- mobile riders: добавлена точечная обработка touch/click для HTML-страниц райдеров, если обычный тап не доходит до ссылки
+- mobile menu: обработчик ссылок райдеров больше не срабатывает, когда открыто меню или тап происходит внутри меню.
+- mobile menu: пункт «Сотрудничество» больше не может быть перехвачен расположенными под меню ссылками «Бытовой райдер» и «Технический райдер».
+- mobile riders: прямое открытие HTML-страниц райдеров сохранено для обычных тапов по самим ссылкам райдеров.
+- desktop JS, popup, date mask, accordion и визуальная разметка меню не изменялись.
 ==================================================
 */
 
@@ -754,8 +745,33 @@ COOPERATION MOBILE JS
       window.location.assign(link.href);
     }
 
+    function shouldIgnoreRiderNavigation(event){
+      var target = event && event.target;
+
+      if(menuPanel && menuPanel.classList.contains('is-open')){
+        return true;
+      }
+
+      if(
+        target &&
+        target.closest &&
+        (
+          target.closest('.ip-menu-panel') ||
+          target.closest('.ip-menu-toggle')
+        )
+      ){
+        return true;
+      }
+
+      if(popup && popup.classList.contains('is-open')){
+        return true;
+      }
+
+      return false;
+    }
+
     function handleRiderNavigation(event){
-      if(!isMobile()){
+      if(!isMobile() || shouldIgnoreRiderNavigation(event)){
         return;
       }
 

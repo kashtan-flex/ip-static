@@ -1,6 +1,12 @@
 
 
 <!DOCTYPE html>
+<!--
+Версия: cooperation-html-035-mobile-menu-rider-guard
+ИЗМЕНЕНИЯ:
+- mobile: обновлён cache-buster для cooperation-mobile.js после защиты меню от перехвата ссылками райдеров.
+- desktop, разметка меню, попапы и контент страницы не изменялись.
+-->
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -87,7 +93,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'mobile-riders-touch-navigation-019';
+      var ASSET_VERSION = 'cooperation-menu-rider-guard-035';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
