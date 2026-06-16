@@ -2,13 +2,12 @@
 ==================================================
 PAGE TRANSITION JS
 
-Версия: page-transition-js-008-rider-native-links
+Версия: page-transition-js-043-rider-bypass
 
 ИЗМЕНЕНИЯ:
-- Tilda iframe: добавлена отправка hash для rider-страниц #rider-bytovoy и #rider-technical.
-- Общий transition-router больше не перехватывает ссылки на rider-bytovoy.html и rider-technical.html.
-- Rider-ссылки открываются нативно браузером, без preventDefault и без кастомной JS-навигации.
-- Основные переходы страниц, desktop/mobile анимации, меню и попапы не изменялись.
+- Tilda iframe: hash-bridge сохранён для основных страниц.
+- Tilda iframe: добавлены hash-маршруты rider-страниц #rider-bytovoy и #rider-technical.
+- Общий transition-router больше не перехватывает ссылки бытового и технического райдеров.
 ==================================================
 */
 
@@ -178,6 +177,14 @@ PAGE TRANSITION JS
     }
 
     if(href.indexOf('.html') === -1 && href.indexOf('/') !== 0){
+      return true;
+    }
+
+    if(
+      link.hasAttribute('data-ip-rider-link') ||
+      link.hasAttribute('data-ip-mobile-rider-page') ||
+      isRiderPageFile(getPageFileFromUrl(link.href))
+    ){
       return true;
     }
 
@@ -438,6 +445,7 @@ PAGE TRANSITION JS
     }
 
     if(
+      link.hasAttribute('data-ip-rider-link') ||
       link.hasAttribute('data-ip-mobile-rider-page') ||
       isRiderPageFile(getPageFileFromUrl(link.href))
     ){

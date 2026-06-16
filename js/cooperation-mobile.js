@@ -2,12 +2,13 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-042-rider-native-links
+Версия: cooperation-mobile-js-043-rider-stable-open
 
 ИЗМЕНЕНИЯ:
-- mobile riders: полностью убрана кастомная JS-навигация по HTML-страницам бытового и технического райдера.
-- mobile riders: ссылки «Бытовой райдер» и «Технический райдер» открываются нативно через href.
-- mobile portrait: портрет продолжает появляться вместе с основными элементами страницы через общий fade-in.
+- mobile riders: удалена координатная и touch-only логика открытия райдеров.
+- mobile riders: переход выполняется только от реального клика/тапа по ссылке бытового или технического райдера.
+- mobile riders: открытое меню и попап полностью блокируют открытие подлежащих ссылок райдеров.
+- mobile portrait: scroll-класс портрета больше не используется для появления изображения.
 - desktop JS, popup, date mask, accordion и визуальная разметка меню не изменялись.
 ==================================================
 */
@@ -657,10 +658,220 @@ COOPERATION MOBILE JS
 
 
   function setupMobileRiderHtmlLinks(){
-    /*
-      Rider HTML links intentionally use native browser navigation.
-      Do not add touch/click interception here: it can cancel mobile taps inside Tilda iframe.
-    */
+    var riderSelector = [
+      'a.ip-cooperation-mobile-download[data-ip-rider-link]',
+      'a.ip-cooperation-mobile-download[data-ip-mobile-rider-page]',
+      'a.ip-cooperation-mobile-download[href$="rider-bytovoy.html"]',
+      'a.ip-cooperation-mobile-download[href$="rider-technical.html"]'
+    ].join(',');
+
+    var isNavigatingToRider = false;
+    var lastNavigationAt = 0;
+    var lastNavigationUrl = '';
+
+    function normalizeHash(hash){
+      var value = String(hash || '').trim();
+
+      if(value && value.charAt(0) !== '#'){
+        value = '#' + value;
+      }
+
+      return value;
+    }
+
+    function getPageFileFromUrl(url){
+      try{
+        return new URL(url, window.location.href).pathname.split('/').pop();
+      }catch(error){
+        return '';
+      }
+    }
+
+    function getTargetUrlFromLink(link){
+      try{
+        return new URL(link.getAttribute('href') || '', window.location.href).href;
+      }catch(error){
+        return link.href || '';
+      }
+    }
+
+    function getHashForPage(pageFile, link){
+      var explicitHash = normalizeHash(
+        link.getAttribute('data-ip-mobile-rider-hash') ||
+        link.getAttribute('data-ip-rider-hash') ||
+        ''
+      );
+
+      if(explicitHash){
+        return explicitHash;
+      }
+
+      if(pageFile === 'rider-bytovoy.html'){
+        return '#rider-bytovoy';
+      }
+
+      if(pageFile === 'rider-technical.html'){
+        return '#rider-technical';
+      }
+
+      return '';
+    }
+
+    function getRiderLinkFromEvent(event){
+      var target = event && event.target;
+
+      if(!target || !target.closest){
+        return null;
+      }
+
+      return target.closest(riderSelector);
+    }
+
+    function isInsideMenu(target){
+      return Boolean(
+        target &&
+        target.closest &&
+        (
+          target.closest('.ip-menu-panel') ||
+          target.closest('.ip-menu-toggle')
+        )
+      );
+    }
+
+    function isMenuOpen(){
+      return Boolean(
+        menuPanel &&
+        menuPanel.classList.contains('is-open')
+      );
+    }
+
+    function isPopupOpen(){
+      return Boolean(
+        popup &&
+        popup.classList.contains('is-open')
+      );
+    }
+
+    function stopEvent(event){
+      if(!event){
+        return;
+      }
+
+      if(event.cancelable !== false){
+        event.preventDefault();
+      }
+
+      event.stopPropagation();
+
+      if(typeof event.stopImmediatePropagation === 'function'){
+        event.stopImmediatePropagation();
+      }
+    }
+
+    function notifyParentAboutRider(pageFile, hash, url){
+      if(!window.parent || window.parent === window){
+        return;
+      }
+
+      try{
+        window.parent.postMessage(
+          {
+            source:'ip-static',
+            type:'ip-static-open-page',
+            page:pageFile,
+            hash:hash,
+            url:url
+          },
+          '*'
+        );
+      }catch(error){
+        /* noop */
+      }
+
+      try{
+        window.parent.postMessage(
+          {
+            source:'ip-static',
+            type:'ip-static-route',
+            page:pageFile,
+            hash:hash
+          },
+          '*'
+        );
+      }catch(error){
+        /* noop */
+      }
+    }
+
+    function openRider(link){
+      var url = getTargetUrlFromLink(link);
+      var pageFile = getPageFileFromUrl(url);
+      var hash = getHashForPage(pageFile, link);
+      var now = Date.now();
+
+      if(!url || (pageFile !== 'rider-bytovoy.html' && pageFile !== 'rider-technical.html')){
+        return;
+      }
+
+      if(isNavigatingToRider && url === lastNavigationUrl && now - lastNavigationAt < 1200){
+        return;
+      }
+
+      isNavigatingToRider = true;
+      lastNavigationAt = now;
+      lastNavigationUrl = url;
+
+      if(typeof link.blur === 'function'){
+        link.blur();
+      }
+
+      notifyParentAboutRider(pageFile, hash, url);
+
+      window.setTimeout(function(){
+        window.location.href = url;
+      }, 40);
+    }
+
+    function handleRiderEvent(event){
+      var target = event && event.target;
+      var link = getRiderLinkFromEvent(event);
+
+      if(isPopupOpen()){
+        if(link){
+          stopEvent(event);
+        }
+        return;
+      }
+
+      if(isMenuOpen()){
+        if(!isInsideMenu(target) || link){
+          stopEvent(event);
+        }
+        return;
+      }
+
+      if(!link){
+        return;
+      }
+
+      stopEvent(event);
+      openRider(link);
+    }
+
+    document.addEventListener('click', handleRiderEvent, true);
+
+    if(window.PointerEvent){
+      document.addEventListener('pointerup', handleRiderEvent, {
+        capture:true,
+        passive:false
+      });
+      return;
+    }
+
+    document.addEventListener('touchend', handleRiderEvent, {
+      capture:true,
+      passive:false
+    });
   }
 
 
