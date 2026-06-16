@@ -2,11 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-046-faster-mobile-reveal
+Версия: cooperation-html-048-mobile-popup-close-size
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster страницы «Сотрудничество» после ускорения входной анимации.
-- mobile: сохранены нативные HTML-ссылки райдеров из версии 045.
-- desktop, меню, попапы, hash-bridge и остальные страницы не изменялись.
+- mobile: обновлён cache-buster общего popups-mobile.css после уменьшения визуального крестика формы.
+- mobile: единый размер крестика теперь применяется ко всем формам-попапам сайта.
+- desktop, меню, галереи, отзывы, контент и логика страниц не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -73,7 +73,7 @@
 
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-radius-029">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-030">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 </head>
 
@@ -94,7 +94,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-faster-mobile-reveal-046';
+      var ASSET_VERSION = 'cooperation-mobile-popup-close-size-047';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';

@@ -2,13 +2,13 @@
 ==================================================
 POPUPS MOBILE CSS
 
-Версия: popups-mobile-css-030-card-close-button
+Версия: popups-mobile-css-048-unified-small-close-icon
 
 ИЗМЕНЕНИЯ:
-- mobile: крестик закрытия формы размещён внутри карточки попапа
-- mobile: отступ крестика от правого и верхнего края карточки — 5px
-- mobile: размер точки привязки и логика закрытия не менялись
-- desktop-версия по-прежнему скрывает крестик через popups.css
+- mobile: визуальный знак X у кнопки закрытия формы уменьшен до размера чекбокса согласия.
+- mobile: увеличенная кликабельная область кнопки закрытия сохранена для удобного тапа.
+- mobile: правка применена глобально ко всем формам-попапам сайта через общий popups-mobile.css.
+- desktop, меню, галереи, отзывы и логика попапов не изменялись.
 ==================================================
 */
 
@@ -38,14 +38,14 @@ POPUPS MOBILE CSS
     display:flex;
     top:5px;
     right:5px;
-    width:27px;
-    height:27px;
+    width:calc(27 / 350 * 100cqw);
+    height:calc(27 / 350 * 100cqw);
   }
 
   .ip-popup-close span::before,
   .ip-popup-close span::after{
-    width:27px;
-    height:3px;
+    width:calc(15 / 350 * 100cqw);
+    height:calc(2 / 350 * 100cqw);
   }
 
   .ip-popup-heading{
