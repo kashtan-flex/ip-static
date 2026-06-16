@@ -2,13 +2,12 @@
 ==================================================
 HOME MOBILE CSS
 
-Версия: home-mobile-css-032-unified-subtitle-animation
+Версия: home-mobile-css-033-stable-dot-layer
 
 ИЗМЕНЕНИЯ:
-- mobile: исправлен порядок появления подзаголовка
-- mobile: точка появляется после слова «Ведущий» и до слова «Музыкант»
-- mobile: убрана большая задержка появления слова «Музыкант»
-- mobile: пульсация точки синхронизирована с desktop
+- mobile: точка под подзаголовком разделена на контейнер появления и внутренний слой пульсации
+- mobile: появление точки больше не конфликтует с бесконечной пульсацией при reload
+- mobile: порядок сохраняется стабильным: «Ведущий» → точка → «Музыкант» → пульсация
 - desktop, меню, попапы, переходы и геометрия главной страницы не изменялись
 ==================================================
 */
@@ -166,13 +165,30 @@ HOME MOBILE CSS
     height:3px;
     flex:0 0 3px;
     margin-top:1px;
+    background:transparent;
     animation:none;
   }
 
+  .ip-subtitle-dot::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    display:block;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#fff;
+    opacity:1;
+    transform:scale(1);
+    transform-origin:center center;
+  }
+
   .ip-page-home.is-mobile-animation-ready .ip-subtitle-dot{
-    animation:
-      ipMobileSubtitleRevealSoft .38s cubic-bezier(.19,1,.22,1) forwards 1.52s,
-      ipDotPulse 1.8s ease-in-out infinite 2.10s;
+    animation:ipMobileSubtitleRevealSoft .38s cubic-bezier(.19,1,.22,1) forwards 1.52s;
+  }
+
+  .ip-page-home.is-mobile-animation-ready .ip-subtitle-dot::before{
+    animation:ipDotPulse 1.8s ease-in-out infinite 2.10s;
   }
 
   .ip-subtitle-word-two{
