@@ -1,4 +1,10 @@
-
+/*
+Версия: biography-css-055-carousel-controls
+ИЗМЕНЕНИЯ:
+- ускорена смена фотографий биографии в 1.5 раза.
+- убран движущийся zoom-эффект фотографий, сохранена статичная посадка кадра.
+- добавлены desktop-стрелки управления фотографиями внутри области карусели.
+*/
 
 .ip-biography,
 .ip-biography *{
@@ -243,7 +249,7 @@
   overflow:hidden;
   background:#080807;
   transform:translate3d(0,0,0);
-  transition:opacity 1.45s cubic-bezier(.19,1,.22,1);
+  transition:opacity .97s cubic-bezier(.19,1,.22,1);
   will-change:opacity;
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
@@ -261,14 +267,54 @@
   object-fit:cover;
   object-position:center;
   transform:translate3d(0,0,0) scale(1.045);
-  transition:transform 7.6s cubic-bezier(.19,1,.22,1);
-  will-change:transform;
+  transition:none;
+  will-change:auto;
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
 }
 
 .ip-biography-slide.is-active img{
-  transform:translate3d(0,0,0) scale(1.12);
+  transform:translate3d(0,0,0) scale(1.045);
+}
+
+.ip-biography-carousel-nav{
+  position:absolute;
+  top:50%;
+  z-index:8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:rgba(255,255,255,.5);
+  font-family:Arial,sans-serif;
+  font-size:28px;
+  line-height:1;
+  font-weight:300;
+  cursor:pointer;
+  opacity:1;
+  transform:translate3d(0,-50%,0);
+  -webkit-tap-highlight-color:transparent;
+}
+
+.ip-biography-carousel-nav-prev{
+  left:24px;
+}
+
+.ip-biography-carousel-nav-next{
+  right:24px;
+}
+
+.ip-biography-carousel-nav:focus{
+  outline:none;
+}
+
+.ip-biography-carousel-nav:focus-visible{
+  outline:1px solid rgba(255,255,255,.35);
+  outline-offset:2px;
 }
 
 .ip-biography-quote{

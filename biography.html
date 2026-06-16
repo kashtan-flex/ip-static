@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!--
-Версия: biography-html-048-mobile-popup-close-size
+Версия: biography-html-055-carousel-controls
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster общего popups-mobile.css после уменьшения визуального крестика формы.
-- mobile: единый размер крестика теперь применяется ко всем формам-попапам сайта.
-- desktop, меню, галереи, отзывы, контент и логика страниц не изменялись.
+- desktop/mobile: обновлены cache-buster для файлов биографии после ускорения смены фотографий.
+- desktop: подключена версия с внутренними стрелками управления фотографиями.
+- mobile: подключена версия с горизонтальным свайпом фотографий без изменения меню.
 -->
 <html lang="ru">
 <head>
@@ -77,8 +77,8 @@
   >
 
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
-  <link rel="stylesheet" href="./css/biography.css">
-  <link rel="stylesheet" href="./css/biography-mobile.css">
+  <link rel="stylesheet" href="./css/biography.css?v=biography-carousel-controls-055">
+  <link rel="stylesheet" href="./css/biography-mobile.css?v=biography-carousel-controls-055">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
   <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
@@ -138,7 +138,7 @@
   </script>
 
   <script>
-    fetch('./pages/biography/biography.html?v=popup-close-030')
+    fetch('./pages/biography/biography.html?v=biography-carousel-controls-055')
       .then(function(response){
         if(!response.ok){
           throw new Error(

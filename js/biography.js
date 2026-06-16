@@ -1,3 +1,11 @@
+/*
+Версия: biography-js-055-carousel-controls
+ИЗМЕНЕНИЯ:
+- ускорена автоматическая смена фотографий биографии в 1.5 раза.
+- desktop: добавлены обработчики стрелок внутри фотографии.
+- mobile: добавлен горизонтальный свайп фотографий без изменения логики меню.
+*/
+
 (function(){
   'use strict';
 
@@ -14,7 +22,7 @@
     breakpoint:767
   };
 
-  var SLIDE_INTERVAL = 6200;
+  var SLIDE_INTERVAL = 4130;
   var SCROLLTOP_REVEAL_OFFSET = 140;
 
   var page = document.querySelector('[data-biography-page]');
@@ -43,9 +51,17 @@
     document.querySelectorAll('.ip-biography-slide')
   );
 
+  var carousel = document.querySelector('[data-biography-carousel]');
+  var carouselPrevButton = document.querySelector('[data-biography-carousel-prev]');
+  var carouselNextButton = document.querySelector('[data-biography-carousel-next]');
+
   var currentSlideIndex = 0;
   var carouselTimer = null;
   var resizeFrame = null;
+
+  var carouselTouchStartX = null;
+  var carouselTouchStartY = null;
+  var carouselTouchStartTime = 0;
 
   var touchStartY = null;
   var touchStartedInsideMenu = false;
@@ -198,6 +214,55 @@
     resizeFrame = window.requestAnimationFrame(updateScale);
   }
 
+  function normalizeSlideIndex(index){
+    if(!slides.length){
+      return 0;
+    }
+
+    if(index < 0){
+      return slides.length - 1;
+    }
+
+    if(index >= slides.length){
+      return 0;
+    }
+
+    return index;
+  }
+
+  function showSlide(index){
+    if(slides.length <= 1){
+      return;
+    }
+
+    var nextIndex = normalizeSlideIndex(index);
+
+    if(nextIndex === currentSlideIndex){
+      return;
+    }
+
+    slides[currentSlideIndex].classList.remove('is-active');
+    currentSlideIndex = nextIndex;
+    slides[currentSlideIndex].classList.add('is-active');
+  }
+
+  function showNextSlide(){
+    showSlide(currentSlideIndex + 1);
+  }
+
+  function showPreviousSlide(){
+    showSlide(currentSlideIndex - 1);
+  }
+
+  function restartCarousel(){
+    if(slides.length <= 1){
+      return;
+    }
+
+    stopCarousel();
+    startCarousel();
+  }
+
   function startCarousel(){
     if(slides.length <= 1){
       return;
@@ -205,17 +270,7 @@
 
     stopCarousel();
 
-    carouselTimer = window.setInterval(function(){
-      slides[currentSlideIndex].classList.remove('is-active');
-
-      currentSlideIndex += 1;
-
-      if(currentSlideIndex >= slides.length){
-        currentSlideIndex = 0;
-      }
-
-      slides[currentSlideIndex].classList.add('is-active');
-    }, SLIDE_INTERVAL);
+    carouselTimer = window.setInterval(showNextSlide, SLIDE_INTERVAL);
   }
 
   function stopCarousel(){
@@ -223,6 +278,110 @@
       window.clearInterval(carouselTimer);
       carouselTimer = null;
     }
+  }
+
+  function setupCarouselControls(){
+    if(!carousel || slides.length <= 1){
+      if(carouselPrevButton){
+        carouselPrevButton.setAttribute('hidden', 'hidden');
+      }
+
+      if(carouselNextButton){
+        carouselNextButton.setAttribute('hidden', 'hidden');
+      }
+
+      return;
+    }
+
+    if(carouselPrevButton){
+      carouselPrevButton.addEventListener('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+
+        showPreviousSlide();
+        restartCarousel();
+      });
+    }
+
+    if(carouselNextButton){
+      carouselNextButton.addEventListener('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+
+        showNextSlide();
+        restartCarousel();
+      });
+    }
+
+    carousel.addEventListener(
+      'touchstart',
+      function(event){
+        if(!isMobile()){
+          return;
+        }
+
+        var touch = event.touches && event.touches[0];
+
+        if(!touch){
+          return;
+        }
+
+        carouselTouchStartX = touch.clientX;
+        carouselTouchStartY = touch.clientY;
+        carouselTouchStartTime = Date.now();
+      },
+      { passive:true }
+    );
+
+    carousel.addEventListener(
+      'touchend',
+      function(event){
+        if(
+          !isMobile() ||
+          carouselTouchStartX === null ||
+          carouselTouchStartY === null
+        ){
+          carouselTouchStartX = null;
+          carouselTouchStartY = null;
+          carouselTouchStartTime = 0;
+          return;
+        }
+
+        var touch = event.changedTouches && event.changedTouches[0];
+
+        if(!touch){
+          carouselTouchStartX = null;
+          carouselTouchStartY = null;
+          carouselTouchStartTime = 0;
+          return;
+        }
+
+        var deltaX = touch.clientX - carouselTouchStartX;
+        var deltaY = touch.clientY - carouselTouchStartY;
+        var elapsed = Date.now() - carouselTouchStartTime;
+
+        carouselTouchStartX = null;
+        carouselTouchStartY = null;
+        carouselTouchStartTime = 0;
+
+        if(
+          Math.abs(deltaX) < 42 ||
+          Math.abs(deltaX) <= Math.abs(deltaY) * 1.25 ||
+          elapsed > 900
+        ){
+          return;
+        }
+
+        if(deltaX < 0){
+          showNextSlide();
+        }else{
+          showPreviousSlide();
+        }
+
+        restartCarousel();
+      },
+      { passive:true }
+    );
   }
 
   function openMenu(){
@@ -678,6 +837,7 @@
 
     setupPopupTriggers();
     setupMenuCloseOnScroll();
+    setupCarouselControls();
     setupDateMask();
 
     if(scrollTopButton){

@@ -1,4 +1,10 @@
-
+/*
+Версия: biography-mobile-css-055-carousel-swipe
+ИЗМЕНЕНИЯ:
+- mobile: карусель фотографий подготовлена для горизонтального свайпа пальцем.
+- mobile: стрелки карусели скрыты, меню и вертикальный скролл страницы не изменялись.
+- mobile: сохранено ускоренное проявление фото без движущегося zoom-эффекта.
+*/
 
 .ip-biography-scrolltop{
   display:none;
@@ -131,6 +137,13 @@
     inset:0;
     z-index:1;
     overflow:hidden;
+    touch-action:pan-y;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+
+  .ip-biography-carousel-nav{
+    display:none !important;
   }
 
   .ip-biography-slide{

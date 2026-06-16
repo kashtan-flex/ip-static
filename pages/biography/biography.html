@@ -1,3 +1,10 @@
+<!--
+Версия: biography-fragment-055-carousel-controls
+ИЗМЕНЕНИЯ:
+- desktop: добавлены внутренние стрелки переключения фотографий внутри карусели.
+- mobile: HTML-структура карусели подготовлена для горизонтального свайпа без изменения меню.
+- контент, попапы и навигационное меню не изменялись.
+-->
 
 
 <section class="ip-biography" data-biography-page>
@@ -115,6 +122,24 @@
       <aside class="ip-biography-right" aria-label="Фотографии Ивана Перцева">
 
         <div class="ip-biography-carousel" data-biography-carousel>
+
+          <button
+            class="ip-biography-carousel-nav ip-biography-carousel-nav-prev"
+            type="button"
+            aria-label="Предыдущее фото"
+            data-biography-carousel-prev
+          >
+            ‹
+          </button>
+
+          <button
+            class="ip-biography-carousel-nav ip-biography-carousel-nav-next"
+            type="button"
+            aria-label="Следующее фото"
+            data-biography-carousel-next
+          >
+            ›
+          </button>
 
           <div class="ip-biography-slide is-active">
             <img src="./assets/img/biography/carousel/biography-slide-01.webp" alt="Иван Перцев">
