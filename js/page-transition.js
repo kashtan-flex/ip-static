@@ -1,3 +1,16 @@
+/*
+==================================================
+PAGE TRANSITION JS
+
+Версия: page-transition-js-007-tilda-hash-bridge
+
+ИЗМЕНЕНИЯ:
+- Tilda iframe: добавлен hash-bridge для сохранения текущей страницы в адресе родительской Tilda-страницы.
+- Tilda iframe: при переходах внутри iframe родитель получает hash вида #biography, #cooperation, #wedding и может восстановить страницу после reload.
+- Переходы страниц, desktop/mobile анимации, меню, попапы и обработка ссылок не изменялись.
+==================================================
+*/
+
 (function(){
   'use strict';
 
@@ -9,6 +22,19 @@
 
   var overlay = null;
   var isTransitioning = false;
+
+  var TILDA_HASH_BY_PAGE = {
+    'index.html':'#home',
+    'biography.html':'#biography',
+    'wedding.html':'#wedding',
+    'corporate.html':'#corporate',
+    'birthday.html':'#birthday',
+    'graduation.html':'#graduation',
+    'musical-show.html':'#musical-show',
+    'cooperation.html':'#cooperation',
+    'policy.html':'#policy',
+    'consent.html':'#consent'
+  };
 
   try{
     if('scrollRestoration' in window.history){
@@ -70,6 +96,109 @@
       viewportStableTimeout: mobile ? 160 : 0,
       stableFrames: mobile ? 4 : 3
     };
+  }
+
+  function getPageFileFromUrl(url){
+    var anchor = document.createElement('a');
+    anchor.href = url || window.location.href;
+
+    var path = anchor.pathname || '';
+    var file = path.split('/').pop() || '';
+
+    if(file === ''){
+      return 'index.html';
+    }
+
+    return file;
+  }
+
+  function getTildaHashForPage(pageFile){
+    return TILDA_HASH_BY_PAGE[pageFile] || '';
+  }
+
+  function notifyTildaParent(pageFile){
+    var hash = getTildaHashForPage(pageFile);
+
+    if(!hash || window.parent === window){
+      return;
+    }
+
+    try{
+      window.parent.postMessage({
+        source:'ip-static',
+        type:'ip-static-route',
+        page:pageFile,
+        hash:hash
+      }, '*');
+    }catch(error){
+      /* noop */
+    }
+  }
+
+  function notifyTildaParentCurrentPage(){
+    notifyTildaParent(getPageFileFromUrl(window.location.href));
+  }
+
+  function shouldSkipTildaRouteLink(link, event){
+    if(!link){
+      return true;
+    }
+
+    if(event && isModifiedClick(event)){
+      return true;
+    }
+
+    var href = link.getAttribute('href');
+
+    if(!href || href === '#'){
+      return true;
+    }
+
+    if(href.indexOf('tel:') === 0 || href.indexOf('mailto:') === 0){
+      return true;
+    }
+
+    if(link.hasAttribute('target')){
+      return true;
+    }
+
+    if(link.hasAttribute('data-popup-open')){
+      return true;
+    }
+
+    if(href.charAt(0) === '#'){
+      return true;
+    }
+
+    if(href.indexOf('.html') === -1 && href.indexOf('/') !== 0){
+      return true;
+    }
+
+    return false;
+  }
+
+  function bindTildaHashBridge(){
+    notifyTildaParentCurrentPage();
+
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', notifyTildaParentCurrentPage, { once:true });
+    }
+
+    window.addEventListener('pageshow', notifyTildaParentCurrentPage);
+
+    document.addEventListener('click', function(event){
+      var link = event.target.closest('a');
+
+      if(shouldSkipTildaRouteLink(link, event)){
+        return;
+      }
+
+      var pageFile = getPageFileFromUrl(link.href);
+
+      if(getTildaHashForPage(pageFile)){
+        notifyTildaParent(pageFile);
+      }
+    }, true);
   }
 
   function getOverlay(){
@@ -352,6 +481,7 @@
 
   function init(){
     getOverlay();
+    bindTildaHashBridge();
     bindLinks();
     bindBrowserNavigation();
     revealPage();

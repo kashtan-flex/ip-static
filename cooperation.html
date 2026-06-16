@@ -2,8 +2,9 @@
 
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-035-mobile-menu-rider-guard
+Версия: cooperation-html-036-tilda-hash-bridge
 ИЗМЕНЕНИЯ:
+- обновлён cache-buster для page-transition.js после добавления Tilda hash-bridge.
 - mobile: обновлён cache-buster для cooperation-mobile.js после защиты меню от перехвата ссылками райдеров.
 - desktop, разметка меню, попапы и контент страницы не изменялись.
 -->
@@ -219,7 +220,7 @@
           .then(function(){
             if(!document.querySelector('script[data-page-transition-script]')){
               var transitionScript = document.createElement('script');
-              transitionScript.src = './js/page-transition.js?v=tilda-balanced-006';
+              transitionScript.src = './js/page-transition.js?v=tilda-hash-bridge-036';
               transitionScript.defer = true;
               transitionScript.setAttribute('data-page-transition-script', 'true');
               document.body.appendChild(transitionScript);
