@@ -1,3 +1,17 @@
+/*
+==================================================
+HOME DESKTOP CSS
+
+Версия: home-css-030-desktop-smoother-intro-dot
+
+ИЗМЕНЕНИЯ:
+- desktop: анимация появления имени и подзаголовка приведена к более мягкой mobile-логике
+- desktop: точка уменьшена с 4px до 3px
+- desktop: резкое мигание точки заменено на мягкую равномерную пульсацию
+- mobile, меню, попапы, переходы и геометрия главной страницы не изменялись
+==================================================
+*/
+
 
 
 @font-face{
@@ -194,13 +208,13 @@ body,
 }
 
 .ip-title-line-first span{
-  animation:ipTextReveal .58s cubic-bezier(.19,1,.22,1) forwards;
+  animation:ipTextReveal .56s cubic-bezier(.19,1,.22,1) forwards;
   animation-delay:.9s;
 }
 
 .ip-title-line-second span{
-  animation:ipTextReveal .58s cubic-bezier(.19,1,.22,1) forwards;
-  animation-delay:1.16s;
+  animation:ipTextReveal .64s cubic-bezier(.19,1,.22,1) forwards;
+  animation-delay:1.12s;
 }
 
 .ip-home-subtitle-wrap{
@@ -237,26 +251,26 @@ body,
 }
 
 .ip-subtitle-word-one{
-  animation:ipSubtitleReveal .48s cubic-bezier(.19,1,.22,1) forwards;
-  animation-delay:1.42s;
+  animation:ipSubtitleReveal .38s cubic-bezier(.19,1,.22,1) forwards;
+  animation-delay:1.32s;
 }
 
 .ip-subtitle-dot{
   position:relative;
   top:1px;
-  width:4px;
-  height:4px;
-  flex:0 0 4px;
+  width:3px;
+  height:3px;
+  flex:0 0 3px;
   border-radius:50%;
   background:#fff;
   animation:
-    ipSubtitleReveal .48s cubic-bezier(.19,1,.22,1) forwards 1.54s,
-    ipDotBlink 1.4s ease-in-out infinite 2.15s;
+    ipSubtitleReveal .38s cubic-bezier(.19,1,.22,1) forwards 1.40s,
+    ipDotPulse 1.8s ease-in-out infinite 1.90s;
 }
 
 .ip-subtitle-word-two{
-  animation:ipSubtitleReveal .48s cubic-bezier(.19,1,.22,1) forwards;
-  animation-delay:1.66s;
+  animation:ipSubtitleReveal .38s cubic-bezier(.19,1,.22,1) forwards;
+  animation-delay:1.48s;
 }
 
 .ip-menu-toggle{
@@ -782,20 +796,15 @@ body,
   }
 }
 
-@keyframes ipDotBlink{
+@keyframes ipDotPulse{
   0%{
-    opacity:0;
-    transform:scale(.6);
-  }
-
-  25%{
     opacity:1;
     transform:scale(1);
   }
 
-  55%{
-    opacity:.35;
-    transform:scale(.8);
+  50%{
+    opacity:.58;
+    transform:scale(.92);
   }
 
   100%{
