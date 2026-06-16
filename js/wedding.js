@@ -1,3 +1,10 @@
+/*
+Версия: wedding-js-050-desktop-review-arrows
+ИЗМЕНЕНИЯ:
+- desktop: добавлены стрелки перелистывания назад/вперёд в открытом попапе отзывов.
+- закрытие кликом вне карточки отзыва сохранено.
+- mobile, меню, попапы форм и галерея не изменялись.
+*/
 (function(){
   'use strict';
 
@@ -71,6 +78,9 @@
   var videoRevealTimer = null;
   var scrollSpacer = null;
   var activeGalleryIndex = 0;
+  var activeReviewIndex = -1;
+  var reviewPrevButton = null;
+  var reviewNextButton = null;
   var galleryWheelLocked = false;
   var galleryCloseTimer = null;
 
@@ -475,6 +485,96 @@
     reviewPopupCard.appendChild(clone);
   }
 
+  function normalizeReviewIndex(index){
+    if(!reviewButtons.length){
+      return -1;
+    }
+
+    return (index + reviewButtons.length) % reviewButtons.length;
+  }
+
+  function setReviewNavigationState(){
+    var hasMultipleReviews = reviewButtons.length > 1;
+
+    if(reviewPrevButton){
+      reviewPrevButton.hidden = !hasMultipleReviews;
+    }
+
+    if(reviewNextButton){
+      reviewNextButton.hidden = !hasMultipleReviews;
+    }
+  }
+
+  function showReviewByIndex(index, useSourceOrigin){
+    var normalizedIndex = normalizeReviewIndex(index);
+
+    if(normalizedIndex < 0){
+      return;
+    }
+
+    activeReviewIndex = normalizedIndex;
+
+    var nextReviewButton = reviewButtons[activeReviewIndex];
+
+    if(!nextReviewButton){
+      return;
+    }
+
+    cloneReviewContent(nextReviewButton);
+
+    if(useSourceOrigin){
+      setReviewPopupOrigin(nextReviewButton);
+    } else if(reviewPopupCard){
+      reviewPopupCard.style.transformOrigin = '50% 50%';
+    }
+
+    setReviewNavigationState();
+  }
+
+  function showAdjacentReview(step){
+    if(activeReviewIndex < 0){
+      activeReviewIndex = 0;
+    }
+
+    showReviewByIndex(activeReviewIndex + step, false);
+  }
+
+  function createReviewNavButton(direction){
+    var button = document.createElement('button');
+
+    button.type = 'button';
+    button.className =
+      'ip-review-popup-nav ip-review-popup-nav-' + direction;
+    button.setAttribute(
+      'aria-label',
+      direction === 'prev' ? 'Предыдущий отзыв' : 'Следующий отзыв'
+    );
+    button.textContent = direction === 'prev' ? '‹' : '›';
+
+    button.addEventListener('click', function(event){
+      event.preventDefault();
+      event.stopPropagation();
+
+      showAdjacentReview(direction === 'prev' ? -1 : 1);
+    });
+
+    return button;
+  }
+
+  function ensureReviewNavigation(){
+    if(!reviewPopup || reviewPrevButton || reviewNextButton){
+      return;
+    }
+
+    reviewPrevButton = createReviewNavButton('prev');
+    reviewNextButton = createReviewNavButton('next');
+
+    reviewPopup.appendChild(reviewPrevButton);
+    reviewPopup.appendChild(reviewNextButton);
+
+    setReviewNavigationState();
+  }
+
   function openReviewPopup(reviewButton){
     if(!reviewPopup || !reviewPopupCard || !reviewButton){
       return;
@@ -483,8 +583,9 @@
     closeMenu();
     closeMainPopup();
 
-    cloneReviewContent(reviewButton);
-    setReviewPopupOrigin(reviewButton);
+    ensureReviewNavigation();
+    activeReviewIndex = reviewButtons.indexOf(reviewButton);
+    showReviewByIndex(activeReviewIndex, true);
 
     reviewPopup.classList.add('is-open');
     reviewPopup.setAttribute('aria-hidden', 'false');
@@ -500,6 +601,7 @@
 
     reviewPopup.classList.remove('is-open');
     reviewPopup.setAttribute('aria-hidden', 'true');
+    activeReviewIndex = -1;
 
     window.setTimeout(function(){
       if(!reviewPopup.classList.contains('is-open')){

@@ -1,5 +1,9 @@
-
-
+/*
+Версия: corporate-reviews-css-050-desktop-review-arrows
+ИЗМЕНЕНИЯ:
+- desktop: добавлены стили маленьких белых стрелок перелистывания в попапе отзывов.
+- фон, обводки, карточки отзывов, меню, попапы форм и mobile не изменялись.
+*/
 .ip-corporate-reviews,
 .ip-corporate-reviews{
   position:absolute;
@@ -222,6 +226,50 @@
 .ip-review-popup.is-open .ip-review-popup-card{
   opacity:1;
   transform:translate3d(0,0,0) scale(1);
+}
+
+.ip-review-popup-nav{
+  position:absolute;
+  top:50%;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:rgba(255,255,255,.5);
+  font-family:Arial,sans-serif;
+  font-size:28px;
+  line-height:1;
+  font-weight:300;
+  cursor:pointer;
+  opacity:1;
+  transform:translate3d(0,-50%,0);
+  -webkit-tap-highlight-color:transparent;
+}
+
+.ip-review-popup-nav[hidden]{
+  display:none;
+}
+
+.ip-review-popup-nav-prev{
+  left:calc(50% - 225px);
+}
+
+.ip-review-popup-nav-next{
+  right:calc(50% - 225px);
+}
+
+.ip-review-popup-nav:focus{
+  outline:none;
+}
+
+.ip-review-popup-nav:focus-visible{
+  outline:1px solid rgba(255,255,255,.35);
+  outline-offset:2px;
 }
 
 .ip-review-popup-card .ip-corporate-review,

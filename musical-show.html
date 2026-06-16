@@ -2,11 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: musical-show-html-049-mobile-video-sound
+Версия: musical-show-html-050-desktop-review-arrows
 ИЗМЕНЕНИЯ:
-- mobile: заменена ссылка Kinescope для блока видео на версию со звуком.
-- mobile: обновлён cache-buster фрагмента musical-show-mobile.html.
-- desktop, превью, меню, попапы, стили и JS не изменялись.
+- desktop: обновлён cache-buster CSS отзывов для стрелок перелистывания в открытом попапе отзывов.
+- mobile-видео со звуком из версии 049 сохранено.
+- меню, попапы форм, превью и остальные блоки не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -57,7 +57,7 @@
         if(mode === 'mobile'){
           return {css:['./css/musical-show-mobile.css'],html:'./pages/musical-show/musical-show-mobile.html?v=mobile-video-sound-049',js:'./js/musical-show-mobile.js',error:'Ошибка загрузки мобильной страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show-mobile.html'};
         }
-        return {css:['./css/musical-show.css','./css/musical-show-reviews.css'],html:'./pages/musical-show/musical-show.html?v=popup-close-030',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
+        return {css:['./css/musical-show.css','./css/musical-show-reviews.css?v=desktop-review-arrows-050'],html:'./pages/musical-show/musical-show.html?v=popup-close-030',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
       }
       function resetState(){
         document.documentElement.classList.remove('ip-popup-lock');
