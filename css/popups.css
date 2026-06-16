@@ -2,10 +2,10 @@
 ==================================================
 POPUPS CSS
 
-Версия: popups-css-029-desktop-radius-15
+Версия: popups-css-030-desktop-figma-radius-8
 
 ИЗМЕНЕНИЯ:
-- desktop: скругление основной карточки попапа приведено к макету Figma — 15px при базовой ширине 790px
+- desktop: визуальное скругление основной карточки попапа уменьшено до 8px при базовой ширине 790px, чтобы совпасть с отображением макета Figma
 - mobile: скругление и поведение мобильного попапа не изменялись
 - меню, попап-логика, закрытие по фону и Escape не изменялись
 ==================================================
@@ -80,7 +80,7 @@ body.ip-popup-lock{
   width:min(790px, calc(100vw - 48px), calc((100vh - 48px) * 1.490566));
   aspect-ratio:790 / 530;
   overflow:hidden;
-  border-radius:calc(15 / 790 * 100cqw);
+  border-radius:calc(8 / 790 * 100cqw);
   background-color:#101311;
   background-image:url('../assets/img/popups/popup-main-bg.webp');
   background-size:cover;
