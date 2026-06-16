@@ -2,13 +2,13 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-044-rider-button-navigation
+Версия: cooperation-mobile-js-045-native-rider-links
 
 ИЗМЕНЕНИЯ:
-- mobile riders: удалён document-level перехват бытового и технического райдера.
-- mobile riders: бытовой и технический райдеры открываются только прямым событием на button-контроле.
-- mobile riders: page-transition и ссылочный router больше не участвуют в открытии райдеров.
-- mobile portrait: scroll-класс портрета больше не используется для появления изображения.
+- mobile riders: удалена button + JS-навигация для бытового и технического райдера.
+- mobile riders: открытие райдеров передано нативным HTML-ссылкам из cooperation-mobile.html.
+- mobile menu: добавлен защитный перехват пустой области открытого меню, чтобы тапы не пробивались к ссылкам под меню.
+- mobile portrait: отдельная scroll-анимация портрета не используется.
 - desktop JS, popup, date mask, accordion и визуальная разметка меню не изменялись.
 ==================================================
 */
@@ -657,150 +657,56 @@ COOPERATION MOBILE JS
   }
 
 
-  function setupMobileRiderHtmlLinks(){
-    var riderButtons = Array.prototype.slice.call(
-      document.querySelectorAll('[data-ip-mobile-rider-button][data-ip-mobile-rider-page]')
-    );
-
-    var isOpeningRider = false;
-
-    function normalizeHash(hash){
-      var value = String(hash || '').trim();
-
-      if(value && value.charAt(0) !== '#'){
-        value = '#' + value;
-      }
-
-      return value;
+  function setupMenuEventShield(){
+    if(!menuPanel){
+      return;
     }
 
-    function getHashForPage(pageFile, button){
-      var explicitHash = normalizeHash(
-        button.getAttribute('data-ip-mobile-rider-hash') || ''
+    function isInteractiveMenuTarget(target){
+      if(!target || !menuPanel.contains(target)){
+        return false;
+      }
+
+      return Boolean(
+        target.closest('a, button, [role="button"], [data-popup-open]')
       );
-
-      if(explicitHash){
-        return explicitHash;
-      }
-
-      if(pageFile === 'rider-bytovoy.html'){
-        return '#rider-bytovoy';
-      }
-
-      if(pageFile === 'rider-technical.html'){
-        return '#rider-technical';
-      }
-
-      return '';
     }
 
-    function getSafePageFile(button){
-      var pageFile = String(
-        button.getAttribute('data-ip-mobile-rider-page') || ''
-      ).trim().split('?')[0].split('#')[0].split('/').pop();
-
-      if(pageFile !== 'rider-bytovoy.html' && pageFile !== 'rider-technical.html'){
-        return '';
-      }
-
-      return pageFile;
-    }
-
-    function notifyParent(pageFile, hash, url){
-      if(!window.parent || window.parent === window){
+    function shieldMenuEvent(event){
+      if(!menuPanel.classList.contains('is-open')){
         return;
       }
 
-      try{
-        window.parent.postMessage(
-          {
-            source:'ip-static',
-            type:'ip-static-open-page',
-            page:pageFile,
-            hash:hash,
-            url:url
-          },
-          '*'
-        );
-      }catch(error){
-        /* noop */
-      }
-
-      try{
-        window.parent.postMessage(
-          {
-            source:'ip-static',
-            type:'ip-static-route',
-            page:pageFile,
-            hash:hash
-          },
-          '*'
-        );
-      }catch(error){
-        /* noop */
-      }
-    }
-
-    function openRiderFromButton(button){
-      if(isOpeningRider){
+      if(isInteractiveMenuTarget(event.target)){
         return;
       }
 
-      var pageFile = getSafePageFile(button);
-
-      if(!pageFile){
-        return;
-      }
-
-      var url = new URL('./' + pageFile, window.location.href).href;
-      var hash = getHashForPage(pageFile, button);
-
-      isOpeningRider = true;
-
-      if(typeof button.blur === 'function'){
-        button.blur();
-      }
-
-      notifyParent(pageFile, hash, url);
-
-      window.setTimeout(function(){
-        window.location.assign(url);
-      }, 0);
-    }
-
-    function handleRiderButtonEvent(event){
-      var button = event.currentTarget;
-
-      if(event && event.cancelable !== false){
+      if(event.cancelable){
         event.preventDefault();
       }
 
-      if(event){
-        event.stopPropagation();
+      event.stopPropagation();
 
-        if(typeof event.stopImmediatePropagation === 'function'){
-          event.stopImmediatePropagation();
-        }
+      if(typeof event.stopImmediatePropagation === 'function'){
+        event.stopImmediatePropagation();
       }
-
-      openRiderFromButton(button);
     }
 
-    riderButtons.forEach(function(button){
-      button.addEventListener('click', handleRiderButtonEvent);
+    menuPanel.addEventListener('click', shieldMenuEvent, true);
 
-      if(window.PointerEvent){
-        button.addEventListener('pointerup', handleRiderButtonEvent, {
-          passive:false
-        });
-        return;
-      }
-
-      button.addEventListener('touchend', handleRiderButtonEvent, {
+    if(window.PointerEvent){
+      menuPanel.addEventListener('pointerup', shieldMenuEvent, {
+        capture:true,
         passive:false
       });
-    });
+    }else{
+      menuPanel.addEventListener('touchend', shieldMenuEvent, {
+        capture:true,
+        passive:false
+      });
+    }
   }
+
 
   function setupFileDownloads(){
     var fileDownloadLinks = Array.prototype.slice.call(
@@ -903,7 +809,7 @@ COOPERATION MOBILE JS
     setupMenuCloseOnScroll();
     setupDateMask();
     setupDisabledDownloads();
-    setupMobileRiderHtmlLinks();
+    setupMenuEventShield();
     setupFileDownloads();
     if(scrollTopButton){
       scrollTopButton.addEventListener('click', scrollToTop);

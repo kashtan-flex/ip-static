@@ -2,10 +2,10 @@
 
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-044-rider-button-navigation
+Версия: cooperation-html-045-native-rider-links
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster страницы «Сотрудничество» после перевода райдеров на button-навигацию.
-- mobile: открытие бытового и технического райдера вынесено из ссылочного роутера в отдельные кнопки.
+- mobile: обновлён cache-buster страницы «Сотрудничество» после возврата райдеров на нативные HTML-ссылки.
+- mobile: райдеры открываются обычной навигацией внутри GitHub-сайта, без bridge и без JS-навигации.
 - desktop, меню, попапы, hash-bridge и остальные страницы не изменялись.
 -->
 <html lang="ru">
@@ -94,7 +94,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-rider-buttons-044';
+      var ASSET_VERSION = 'cooperation-native-rider-links-045';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';

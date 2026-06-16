@@ -2,14 +2,15 @@
 ==================================================
 COOPERATION MOBILE CSS
 
-Версия: cooperation-mobile-css-044-rider-button-navigation
+Версия: cooperation-mobile-css-045-native-rider-links
 
 ИЗМЕНЕНИЯ:
 - mobile: портрет больше не появляется при скролле отдельной анимацией.
 - mobile: портрет появляется вместе с основными элементами страницы через общий fade-in.
 - mobile: положение портрета сохранено, transform-анимация не используется.
-- mobile riders: бытовой и технический райдеры оформлены как button-контролы, чтобы не зависеть от ссылочного роутера.
-- mobile menu: закрытое меню не принимает события, открытое меню остаётся выше райдеров по z-index.
+- mobile riders: бытовой и технический райдеры оформлены как нативные ссылки на HTML-страницы.
+- mobile menu: закрытая DOM-структура меню полностью отключена от pointer-events, чтобы не перекрывать райдеры.
+- mobile menu: открытое меню остаётся выше райдеров и перехватывает тапы по своей области.
 - desktop, попапы, hash-bridge и остальные страницы не изменялись.
 ==================================================
 */
@@ -460,8 +461,13 @@ COOPERATION MOBILE CSS
     touch-action:pan-y;
   }
 
+  .ip-cooperation-mobile .ip-menu-panel:not(.is-open),
+  .ip-cooperation-mobile .ip-menu-panel:not(.is-open) *{
+    pointer-events:none !important;
+  }
+
   .ip-cooperation-mobile .ip-menu-panel.is-open{
-    pointer-events:auto;
+    pointer-events:auto !important;
   }
 
   .ip-cooperation-mobile .ip-menu-panel::before{

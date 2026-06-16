@@ -1,5 +1,10 @@
-
-
+<!--
+Версия: cooperation-mobile-html-045-native-rider-links
+ИЗМЕНЕНИЯ:
+- mobile riders: бытовой и технический райдеры снова сделаны нативными ссылками на rider-bytovoy.html и rider-technical.html.
+- mobile riders: убрана зависимость от button + JS-навигации; открытие выполняет браузерная HTML-навигация.
+- desktop, меню, попапы и остальные страницы не изменялись.
+-->
 <section class="ip-cooperation-mobile" data-cooperation-mobile-page>
   <div class="ip-cooperation-mobile-bg-base" aria-hidden="true"></div>
   <div class="ip-cooperation-mobile-bg-glow" aria-hidden="true"></div>
@@ -21,15 +26,15 @@
         <span>Портфолио</span>
       </a>
 
-      <button class="ip-cooperation-mobile-download" type="button" data-ip-mobile-rider-button="true" data-ip-mobile-rider-page="rider-bytovoy.html" data-ip-mobile-rider-hash="#rider-bytovoy" aria-label="Открыть бытовой райдер для просмотра">
+      <a class="ip-cooperation-mobile-download" href="./rider-bytovoy.html" data-ip-rider-link="true" aria-label="Открыть бытовой райдер для просмотра">
         <span class="ip-cooperation-mobile-dot" aria-hidden="true">·</span>
         <span>Бытовой райдер</span>
-      </button>
+      </a>
 
-      <button class="ip-cooperation-mobile-download" type="button" data-ip-mobile-rider-button="true" data-ip-mobile-rider-page="rider-technical.html" data-ip-mobile-rider-hash="#rider-technical" aria-label="Открыть технический райдер для просмотра">
+      <a class="ip-cooperation-mobile-download" href="./rider-technical.html" data-ip-rider-link="true" aria-label="Открыть технический райдер для просмотра">
         <span class="ip-cooperation-mobile-dot" aria-hidden="true">·</span>
         <span>Технический райдер</span>
-      </button>
+      </a>
     </div>
 
     <div class="ip-cooperation-mobile-download-hint" aria-hidden="true">
