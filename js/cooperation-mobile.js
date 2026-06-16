@@ -2,12 +2,12 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-043-rider-stable-open
+Версия: cooperation-mobile-js-044-rider-button-navigation
 
 ИЗМЕНЕНИЯ:
-- mobile riders: удалена координатная и touch-only логика открытия райдеров.
-- mobile riders: переход выполняется только от реального клика/тапа по ссылке бытового или технического райдера.
-- mobile riders: открытое меню и попап полностью блокируют открытие подлежащих ссылок райдеров.
+- mobile riders: удалён document-level перехват бытового и технического райдера.
+- mobile riders: бытовой и технический райдеры открываются только прямым событием на button-контроле.
+- mobile riders: page-transition и ссылочный router больше не участвуют в открытии райдеров.
 - mobile portrait: scroll-класс портрета больше не используется для появления изображения.
 - desktop JS, popup, date mask, accordion и визуальная разметка меню не изменялись.
 ==================================================
@@ -658,16 +658,11 @@ COOPERATION MOBILE JS
 
 
   function setupMobileRiderHtmlLinks(){
-    var riderSelector = [
-      'a.ip-cooperation-mobile-download[data-ip-rider-link]',
-      'a.ip-cooperation-mobile-download[data-ip-mobile-rider-page]',
-      'a.ip-cooperation-mobile-download[href$="rider-bytovoy.html"]',
-      'a.ip-cooperation-mobile-download[href$="rider-technical.html"]'
-    ].join(',');
+    var riderButtons = Array.prototype.slice.call(
+      document.querySelectorAll('[data-ip-mobile-rider-button][data-ip-mobile-rider-page]')
+    );
 
-    var isNavigatingToRider = false;
-    var lastNavigationAt = 0;
-    var lastNavigationUrl = '';
+    var isOpeningRider = false;
 
     function normalizeHash(hash){
       var value = String(hash || '').trim();
@@ -679,27 +674,9 @@ COOPERATION MOBILE JS
       return value;
     }
 
-    function getPageFileFromUrl(url){
-      try{
-        return new URL(url, window.location.href).pathname.split('/').pop();
-      }catch(error){
-        return '';
-      }
-    }
-
-    function getTargetUrlFromLink(link){
-      try{
-        return new URL(link.getAttribute('href') || '', window.location.href).href;
-      }catch(error){
-        return link.href || '';
-      }
-    }
-
-    function getHashForPage(pageFile, link){
+    function getHashForPage(pageFile, button){
       var explicitHash = normalizeHash(
-        link.getAttribute('data-ip-mobile-rider-hash') ||
-        link.getAttribute('data-ip-rider-hash') ||
-        ''
+        button.getAttribute('data-ip-mobile-rider-hash') || ''
       );
 
       if(explicitHash){
@@ -717,58 +694,19 @@ COOPERATION MOBILE JS
       return '';
     }
 
-    function getRiderLinkFromEvent(event){
-      var target = event && event.target;
+    function getSafePageFile(button){
+      var pageFile = String(
+        button.getAttribute('data-ip-mobile-rider-page') || ''
+      ).trim().split('?')[0].split('#')[0].split('/').pop();
 
-      if(!target || !target.closest){
-        return null;
+      if(pageFile !== 'rider-bytovoy.html' && pageFile !== 'rider-technical.html'){
+        return '';
       }
 
-      return target.closest(riderSelector);
+      return pageFile;
     }
 
-    function isInsideMenu(target){
-      return Boolean(
-        target &&
-        target.closest &&
-        (
-          target.closest('.ip-menu-panel') ||
-          target.closest('.ip-menu-toggle')
-        )
-      );
-    }
-
-    function isMenuOpen(){
-      return Boolean(
-        menuPanel &&
-        menuPanel.classList.contains('is-open')
-      );
-    }
-
-    function isPopupOpen(){
-      return Boolean(
-        popup &&
-        popup.classList.contains('is-open')
-      );
-    }
-
-    function stopEvent(event){
-      if(!event){
-        return;
-      }
-
-      if(event.cancelable !== false){
-        event.preventDefault();
-      }
-
-      event.stopPropagation();
-
-      if(typeof event.stopImmediatePropagation === 'function'){
-        event.stopImmediatePropagation();
-      }
-    }
-
-    function notifyParentAboutRider(pageFile, hash, url){
+    function notifyParent(pageFile, hash, url){
       if(!window.parent || window.parent === window){
         return;
       }
@@ -803,77 +741,66 @@ COOPERATION MOBILE JS
       }
     }
 
-    function openRider(link){
-      var url = getTargetUrlFromLink(link);
-      var pageFile = getPageFileFromUrl(url);
-      var hash = getHashForPage(pageFile, link);
-      var now = Date.now();
-
-      if(!url || (pageFile !== 'rider-bytovoy.html' && pageFile !== 'rider-technical.html')){
+    function openRiderFromButton(button){
+      if(isOpeningRider){
         return;
       }
 
-      if(isNavigatingToRider && url === lastNavigationUrl && now - lastNavigationAt < 1200){
+      var pageFile = getSafePageFile(button);
+
+      if(!pageFile){
         return;
       }
 
-      isNavigatingToRider = true;
-      lastNavigationAt = now;
-      lastNavigationUrl = url;
+      var url = new URL('./' + pageFile, window.location.href).href;
+      var hash = getHashForPage(pageFile, button);
 
-      if(typeof link.blur === 'function'){
-        link.blur();
+      isOpeningRider = true;
+
+      if(typeof button.blur === 'function'){
+        button.blur();
       }
 
-      notifyParentAboutRider(pageFile, hash, url);
+      notifyParent(pageFile, hash, url);
 
       window.setTimeout(function(){
-        window.location.href = url;
-      }, 40);
+        window.location.assign(url);
+      }, 0);
     }
 
-    function handleRiderEvent(event){
-      var target = event && event.target;
-      var link = getRiderLinkFromEvent(event);
+    function handleRiderButtonEvent(event){
+      var button = event.currentTarget;
 
-      if(isPopupOpen()){
-        if(link){
-          stopEvent(event);
+      if(event && event.cancelable !== false){
+        event.preventDefault();
+      }
+
+      if(event){
+        event.stopPropagation();
+
+        if(typeof event.stopImmediatePropagation === 'function'){
+          event.stopImmediatePropagation();
         }
-        return;
       }
 
-      if(isMenuOpen()){
-        if(!isInsideMenu(target) || link){
-          stopEvent(event);
-        }
-        return;
-      }
-
-      if(!link){
-        return;
-      }
-
-      stopEvent(event);
-      openRider(link);
+      openRiderFromButton(button);
     }
 
-    document.addEventListener('click', handleRiderEvent, true);
+    riderButtons.forEach(function(button){
+      button.addEventListener('click', handleRiderButtonEvent);
 
-    if(window.PointerEvent){
-      document.addEventListener('pointerup', handleRiderEvent, {
-        capture:true,
+      if(window.PointerEvent){
+        button.addEventListener('pointerup', handleRiderButtonEvent, {
+          passive:false
+        });
+        return;
+      }
+
+      button.addEventListener('touchend', handleRiderButtonEvent, {
         passive:false
       });
-      return;
-    }
-
-    document.addEventListener('touchend', handleRiderEvent, {
-      capture:true,
-      passive:false
     });
   }
-
 
   function setupFileDownloads(){
     var fileDownloadLinks = Array.prototype.slice.call(

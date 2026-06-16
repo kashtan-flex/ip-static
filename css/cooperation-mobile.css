@@ -2,14 +2,14 @@
 ==================================================
 COOPERATION MOBILE CSS
 
-Версия: cooperation-mobile-css-043-rider-hit-area-and-portrait-reveal
+Версия: cooperation-mobile-css-044-rider-button-navigation
 
 ИЗМЕНЕНИЯ:
 - mobile: портрет больше не появляется при скролле отдельной анимацией.
 - mobile: портрет появляется вместе с основными элементами страницы через общий fade-in.
 - mobile: положение портрета сохранено, transform-анимация не используется.
-- mobile riders: кликабельная зона ссылок бытового и технического райдера явно поднята над декоративными слоями.
-- mobile menu: закрытое меню не принимает события, открытое меню блокирует подлежащие ссылки райдеров.
+- mobile riders: бытовой и технический райдеры оформлены как button-контролы, чтобы не зависеть от ссылочного роутера.
+- mobile menu: закрытое меню не принимает события, открытое меню остаётся выше райдеров по z-index.
 - desktop, попапы, hash-bridge и остальные страницы не изменялись.
 ==================================================
 */
@@ -180,6 +180,18 @@ COOPERATION MOBILE CSS
     touch-action:manipulation;
     transition:color .28s ease;
     -webkit-tap-highlight-color:transparent;
+  }
+
+  button.ip-cooperation-mobile-download{
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    appearance:none;
+    -webkit-appearance:none;
+    text-align:left;
+    cursor:pointer;
   }
 
   .ip-cooperation-mobile-download:active{
