@@ -2,11 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: wedding-html-050-desktop-review-arrows
+Версия: wedding-html-051-desktop-gallery-arrows
 ИЗМЕНЕНИЯ:
-- desktop: обновлён cache-buster CSS отзывов для стрелок перелистывания в открытом попапе отзывов.
-- mobile-видео со звуком из версии 049 сохранено.
-- меню, попапы форм, превью и остальные блоки не изменялись.
+- desktop: добавлены стрелки перелистывания фотографий в открытом lightbox галереи.
+- расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
+- mobile, меню, попапы форм, отзывы и видео не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -1128,10 +1128,10 @@
         return {
           mode:'desktop',
           css:[
-            './css/wedding.css',
+            './css/wedding.css?v=desktop-gallery-arrows-051',
             './css/project-reviews.css?v=desktop-review-arrows-050'
           ],
-          html:'./pages/wedding/wedding.html?v=popup-close-030',
+          html:'./pages/wedding/wedding.html?v=desktop-gallery-arrows-051',
           inlineHtml:null,
           js:'./js/wedding.js',
           error:'Ошибка загрузки страницы Свадьба. Проверь путь: pages/wedding/wedding.html'

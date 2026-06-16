@@ -2,11 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: graduation-html-050-desktop-review-arrows
+Версия: graduation-html-051-desktop-gallery-arrows
 ИЗМЕНЕНИЯ:
-- desktop: обновлён cache-buster CSS отзывов для стрелок перелистывания в открытом попапе отзывов.
-- mobile-видео со звуком из версии 049 сохранено.
-- меню, попапы форм, превью и остальные блоки не изменялись.
+- desktop: добавлены стрелки перелистывания фотографий в открытом lightbox галереи.
+- расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
+- mobile, меню, попапы форм, отзывы и видео не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -120,8 +120,8 @@
         }
 
         return {
-          css:['./css/graduation.css', './css/graduation-reviews.css?v=desktop-review-arrows-050'],
-          html:'./pages/graduation/graduation.html?v=popup-close-030',
+          css:['./css/graduation.css?v=desktop-gallery-arrows-051', './css/graduation-reviews.css?v=desktop-review-arrows-050'],
+          html:'./pages/graduation/graduation.html?v=desktop-gallery-arrows-051',
           js:'./js/graduation.js',
           error:'Ошибка загрузки страницы День рождения. Проверь путь: pages/graduation/graduation.html'
         };
