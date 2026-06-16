@@ -2,12 +2,12 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-011-rider-direct-open-v038
+Версия: cooperation-mobile-js-012-rider-native-links-v039
 
 ИЗМЕНЕНИЯ:
-- mobile riders: удалён глобальный document-level обработчик райдеров, который мог гасить обычное открытие ссылок.
-- mobile riders: оставлено только прямое открытие при клике по самим ссылкам «Бытовой райдер» и «Технический райдер».
-- mobile menu: при открытом меню ссылки райдеров не обрабатываются, поэтому пункт меню «Сотрудничество» не перехватывается подлежащими элементами.
+- mobile riders: удалён JS-перехват touchend/click для ссылок «Бытовой райдер» и «Технический райдер».
+- mobile riders: ссылки работают нативно через обычный href, без координатных обработчиков и без программного window.location.
+- mobile menu: защита от пробития меню сохранена за счёт отсутствия document-level перехвата райдеров.
 - desktop JS, popup, date mask, accordion, hash-bridge и визуальная разметка меню не изменялись.
 ==================================================
 */
@@ -670,98 +670,6 @@ COOPERATION MOBILE JS
   }
 
 
-  function setupMobileRiderHtmlLinks(){
-    var riderLinks = Array.prototype.slice.call(
-      document.querySelectorAll('a[data-rider-html-link="true"]')
-    ).filter(function(link){
-      return !link.classList.contains('is-disabled');
-    });
-
-    if(!riderLinks.length){
-      return;
-    }
-
-    function isMenuOpen(){
-      return Boolean(
-        menuPanel &&
-        menuPanel.classList.contains('is-open')
-      );
-    }
-
-    function shouldIgnoreRiderLink(event){
-      var target = event && event.target;
-
-      if(!isMobile()){
-        return true;
-      }
-
-      if(isMenuOpen()){
-        return true;
-      }
-
-      if(
-        target &&
-        target.closest &&
-        (
-          target.closest('.ip-menu-panel') ||
-          target.closest('.ip-menu-toggle')
-        )
-      ){
-        return true;
-      }
-
-      if(popup && popup.classList.contains('is-open')){
-        return true;
-      }
-
-      return false;
-    }
-
-    function openRiderLink(link){
-      var href = link && link.getAttribute('href');
-
-      if(!href){
-        return;
-      }
-
-      if(typeof link.blur === 'function'){
-        link.blur();
-      }
-
-      window.location.href = new URL(href, window.location.href).href;
-    }
-
-    var lastHandledAt = 0;
-
-    function handleDirectRiderEvent(event, link){
-      if(shouldIgnoreRiderLink(event)){
-        return;
-      }
-
-      if(Date.now() - lastHandledAt < 650){
-        event.preventDefault();
-        event.stopPropagation();
-        return;
-      }
-
-      lastHandledAt = Date.now();
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      openRiderLink(link);
-    }
-
-    riderLinks.forEach(function(link){
-      link.addEventListener('touchend', function(event){
-        handleDirectRiderEvent(event, link);
-      }, { passive:false });
-
-      link.addEventListener('click', function(event){
-        handleDirectRiderEvent(event, link);
-      });
-    });
-  }
 
 
   function setupFileDownloads(){
@@ -865,7 +773,6 @@ COOPERATION MOBILE JS
     setupMenuCloseOnScroll();
     setupDateMask();
     setupDisabledDownloads();
-    setupMobileRiderHtmlLinks();
     setupFileDownloads();
     if(scrollTopButton){
       scrollTopButton.addEventListener('click', scrollToTop);

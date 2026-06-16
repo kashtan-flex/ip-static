@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-038-mobile-rider-direct-open
+Версия: cooperation-html-039-rider-native-links
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster для страницы «Сотрудничество» после восстановления прямого открытия бытового и технического райдеров.
-- mobile: HTML-фрагмент, CSS и JS страницы «Сотрудничество» загружаются с единым новым cache-buster.
+- mobile: обновлён cache-buster для страницы «Сотрудничество» после удаления JS-перехвата ссылок райдеров.
+- mobile: «Бытовой райдер» и «Технический райдер» открываются нативным переходом по обычному href.
 - hash-bridge, desktop-версия, меню, попапы и визуальная геометрия страницы не изменялись.
 -->
 <html lang="ru">
@@ -92,7 +92,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-rider-direct-open-038';
+      var ASSET_VERSION = 'cooperation-rider-native-links-039';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
