@@ -2,13 +2,14 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-012-rider-native-links-v039
+Версия: cooperation-mobile-js-041-rider-parent-bridge
 
 ИЗМЕНЕНИЯ:
-- mobile riders: удалён JS-перехват touchend/click для ссылок «Бытовой райдер» и «Технический райдер».
-- mobile riders: ссылки работают нативно через обычный href, без координатных обработчиков и без программного window.location.
-- mobile menu: защита от пробития меню сохранена за счёт отсутствия document-level перехвата райдеров.
-- desktop JS, popup, date mask, accordion, hash-bridge и визуальная разметка меню не изменялись.
+- mobile riders: удалён старый координатный перехват ссылок райдеров через глобальный обработчик документа.
+- mobile riders: тапы по «Бытовому райдеру» и «Техническому райдеру» открывают HTML-страницы через Tilda iframe bridge с прямым fallback внутри iframe.
+- mobile riders: обработка ограничена только реальными ссылками райдеров и не срабатывает при открытом меню или попапе.
+- mobile portrait: scroll-класс портрета больше не используется для появления изображения.
+- desktop JS, popup, date mask, accordion и визуальная разметка меню не изменялись.
 ==================================================
 */
 
@@ -96,21 +97,7 @@ COOPERATION MOBILE JS
 
 
   function revealPortraitOnScroll(){
-    if(portraitRevealed || !isMobile()){
-      return;
-    }
-
-    var scrollTop =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      0;
-
-    if(scrollTop <= 0){
-      return;
-    }
-
-    portraitRevealed = true;
-    page.classList.add('is-portrait-visible');
+    return;
   }
 
   function updateScrollTopVisibility(){
@@ -670,7 +657,251 @@ COOPERATION MOBILE JS
   }
 
 
+  function setupMobileRiderHtmlLinks(){
+    var riderLinks = Array.prototype.slice.call(
+      document.querySelectorAll('a.ip-cooperation-mobile-download[data-ip-mobile-rider-page]')
+    ).filter(function(link){
+      return !link.classList.contains('is-disabled');
+    });
 
+    if(!riderLinks.length){
+      return;
+    }
+
+    var lastHandledAt = 0;
+    var lastHandledHref = '';
+
+    function isInsideParentFrame(){
+      return window.parent && window.parent !== window;
+    }
+
+    function normalizeHash(hash){
+      var value = String(hash || '').trim();
+
+      if(value && value.charAt(0) !== '#'){
+        value = '#' + value;
+      }
+
+      return value;
+    }
+
+    function getPageFileFromLink(link){
+      var pageFile = link.getAttribute('data-ip-mobile-rider-page');
+
+      if(pageFile){
+        return pageFile.split('/').pop();
+      }
+
+      try{
+        var url = new URL(link.getAttribute('href') || '', window.location.href);
+        return url.pathname.split('/').pop();
+      }catch(error){
+        return '';
+      }
+    }
+
+    function getTargetUrlFromLink(link){
+      try{
+        return new URL(link.getAttribute('href') || '', window.location.href).href;
+      }catch(error){
+        return link.href || '';
+      }
+    }
+
+    function getEventPoint(event){
+      var touch =
+        event.changedTouches &&
+        event.changedTouches.length &&
+        event.changedTouches[0];
+
+      if(touch){
+        return {
+          x:touch.clientX,
+          y:touch.clientY
+        };
+      }
+
+      if(typeof event.clientX === 'number' && typeof event.clientY === 'number'){
+        return {
+          x:event.clientX,
+          y:event.clientY
+        };
+      }
+
+      return null;
+    }
+
+    function getLinkFromEvent(event){
+      var target = event && event.target;
+      var directLink = target && target.closest
+        ? target.closest('a.ip-cooperation-mobile-download[data-ip-mobile-rider-page]')
+        : null;
+
+      if(directLink && riderLinks.indexOf(directLink) !== -1){
+        return directLink;
+      }
+
+      var point = getEventPoint(event);
+
+      if(!point || !document.elementFromPoint){
+        return null;
+      }
+
+      var pointTarget = document.elementFromPoint(point.x, point.y);
+      var pointLink = pointTarget && pointTarget.closest
+        ? pointTarget.closest('a.ip-cooperation-mobile-download[data-ip-mobile-rider-page]')
+        : null;
+
+      if(pointLink && riderLinks.indexOf(pointLink) !== -1){
+        return pointLink;
+      }
+
+      return null;
+    }
+
+    function shouldIgnoreRiderNavigation(event){
+      var target = event && event.target;
+
+      if(menuPanel && menuPanel.classList.contains('is-open')){
+        return true;
+      }
+
+      if(
+        target &&
+        target.closest &&
+        (
+          target.closest('.ip-menu-panel') ||
+          target.closest('.ip-menu-toggle')
+        )
+      ){
+        return true;
+      }
+
+      if(popup && popup.classList.contains('is-open')){
+        return true;
+      }
+
+      return false;
+    }
+
+    function notifyParentToOpenRider(pageFile, hash, url){
+      if(!isInsideParentFrame()){
+        return false;
+      }
+
+      try{
+        window.parent.postMessage(
+          {
+            source:'ip-static',
+            type:'ip-static-open-page',
+            page:pageFile,
+            hash:hash,
+            url:url
+          },
+          '*'
+        );
+
+        return true;
+      }catch(error){
+        return false;
+      }
+    }
+
+    function openRiderLink(link){
+      var targetUrl = getTargetUrlFromLink(link);
+      var pageFile = getPageFileFromLink(link);
+      var hash = normalizeHash(link.getAttribute('data-ip-mobile-rider-hash'));
+      var parentNotified;
+
+      if(!targetUrl){
+        return;
+      }
+
+      if(typeof link.blur === 'function'){
+        link.blur();
+      }
+
+      parentNotified = notifyParentToOpenRider(pageFile, hash, targetUrl);
+
+      if(parentNotified){
+        window.setTimeout(function(){
+          window.location.href = targetUrl;
+        }, 650);
+        return;
+      }
+
+      window.location.href = targetUrl;
+    }
+
+    function handleRiderNavigation(event){
+      if(!isMobile() || shouldIgnoreRiderNavigation(event)){
+        return;
+      }
+
+      var link = getLinkFromEvent(event);
+
+      if(!link){
+        return;
+      }
+
+      var href = getTargetUrlFromLink(link);
+      var now = Date.now();
+
+      if(href === lastHandledHref && now - lastHandledAt < 700){
+        event.preventDefault();
+        event.stopPropagation();
+
+        if(typeof event.stopImmediatePropagation === 'function'){
+          event.stopImmediatePropagation();
+        }
+
+        return;
+      }
+
+      lastHandledHref = href;
+      lastHandledAt = now;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      if(typeof event.stopImmediatePropagation === 'function'){
+        event.stopImmediatePropagation();
+      }
+
+      openRiderLink(link);
+    }
+
+    riderLinks.forEach(function(link){
+      link.addEventListener('click', handleRiderNavigation);
+    });
+
+    document.addEventListener(
+      'click',
+      handleRiderNavigation,
+      true
+    );
+
+    if(window.PointerEvent){
+      document.addEventListener(
+        'pointerup',
+        handleRiderNavigation,
+        {
+          capture:true,
+          passive:false
+        }
+      );
+      return;
+    }
+
+    document.addEventListener(
+      'touchend',
+      handleRiderNavigation,
+      {
+        capture:true,
+        passive:false
+      }
+    );
+  }
 
   function setupFileDownloads(){
     var fileDownloadLinks = Array.prototype.slice.call(
@@ -773,6 +1004,7 @@ COOPERATION MOBILE JS
     setupMenuCloseOnScroll();
     setupDateMask();
     setupDisabledDownloads();
+    setupMobileRiderHtmlLinks();
     setupFileDownloads();
     if(scrollTopButton){
       scrollTopButton.addEventListener('click', scrollToTop);

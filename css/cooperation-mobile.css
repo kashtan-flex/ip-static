@@ -2,12 +2,13 @@
 ==================================================
 COOPERATION MOBILE CSS
 
-Версия: cooperation-mobile-css-040-static-portrait
+Версия: cooperation-mobile-css-041-portrait-page-reveal
 
 ИЗМЕНЕНИЯ:
-- mobile: портрет на странице «Сотрудничество» отображается сразу в финальном положении.
-- mobile: убрана scroll-анимация появления портрета, opacity/transform/transition больше не зависят от класса is-portrait-visible.
-- desktop, меню, попапы, райдеры, hash-bridge и остальные страницы не изменялись.
+- mobile: портрет больше не появляется при скролле отдельной анимацией.
+- mobile: портрет появляется вместе с основными элементами страницы через общий fade-in.
+- mobile: положение портрета сохранено, transform-анимация не используется.
+- desktop, меню, попапы, hash-bridge и остальные страницы не изменялись.
 ==================================================
 */
 
@@ -109,7 +110,8 @@ COOPERATION MOBILE CSS
   .ip-cooperation-mobile-downloads,
   .ip-cooperation-mobile-download-hint,
   .ip-cooperation-mobile-cta,
-  .ip-cooperation-mobile-contacts{
+  .ip-cooperation-mobile-contacts,
+  .ip-cooperation-mobile-portrait{
     opacity:0;
     animation:ipCooperationMobileContentReveal .62s ease forwards;
     animation-delay:1.72s;
@@ -298,7 +300,6 @@ COOPERATION MOBILE CSS
     z-index:4;
     width:390px;
     height:690px;
-    opacity:1;
     background-image:url('../assets/img/cooperation/mobile/portrait/cooperation-mobile-portrait.webp');
     background-size:390px auto;
     background-position:top center;
@@ -306,14 +307,9 @@ COOPERATION MOBILE CSS
     transform:translate3d(0,0,0) scale(1);
     transition:none;
     pointer-events:none;
-    will-change:auto;
+    will-change:opacity;
     backface-visibility:hidden;
     -webkit-backface-visibility:hidden;
-  }
-
-  .ip-cooperation-mobile.is-portrait-visible .ip-cooperation-mobile-portrait{
-    opacity:1;
-    transform:translate3d(0,0,0) scale(1);
   }
 
   .ip-cooperation-mobile-scrolltop{
