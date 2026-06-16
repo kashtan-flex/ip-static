@@ -2,11 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: corporate-html-048-mobile-popup-close-size
+Версия: corporate-html-049-mobile-video-sound
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster общего popups-mobile.css после уменьшения визуального крестика формы.
-- mobile: единый размер крестика теперь применяется ко всем формам-попапам сайта.
-- desktop, меню, галереи, отзывы, контент и логика страниц не изменялись.
+- mobile: заменена ссылка Kinescope для блока видео на версию со звуком.
+- mobile: обновлён cache-buster фрагмента corporate-mobile.html.
+- desktop, превью, меню, попапы, стили и JS не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -113,7 +113,7 @@
         if(mode === 'mobile'){
           return {
             css:['./css/corporate-mobile.css'],
-            html:'./pages/corporate/corporate-mobile.html?v=popup-close-030',
+            html:'./pages/corporate/corporate-mobile.html?v=mobile-video-sound-049',
             js:'./js/corporate-mobile.js',
             error:'Ошибка загрузки мобильной страницы Корпоратив. Проверь путь: pages/corporate/corporate-mobile.html'
           };
