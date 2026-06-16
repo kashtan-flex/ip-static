@@ -1,5 +1,9 @@
-
-
+<!--
+Версия: cooperation-mobile-fragment-037-mobile-rider-direct-links
+ИЗМЕНЕНИЯ:
+- mobile riders: ссылки «Бытовой райдер» и «Технический райдер» очищены от inline-обработчиков и работают как прямые ссылки с JS-страховкой.
+- визуальная разметка, меню, попап и тексты страницы не изменялись.
+-->
 <section class="ip-cooperation-mobile" data-cooperation-mobile-page>
   <div class="ip-cooperation-mobile-bg-base" aria-hidden="true"></div>
   <div class="ip-cooperation-mobile-bg-glow" aria-hidden="true"></div>
@@ -21,12 +25,12 @@
         <span>Портфолио</span>
       </a>
 
-      <a class="ip-cooperation-mobile-download" href="https://kashtan-flex.github.io/ip-static/rider-bytovoy.html" target="_self" data-rider-html-link="true" onclick="event.preventDefault(); event.stopPropagation(); window.location.assign(this.href); return false;" aria-label="Открыть бытовой райдер для просмотра">
+      <a class="ip-cooperation-mobile-download" href="./rider-bytovoy.html" target="_self" data-rider-html-link="true" aria-label="Открыть бытовой райдер для просмотра">
         <span class="ip-cooperation-mobile-dot" aria-hidden="true">·</span>
         <span>Бытовой райдер</span>
       </a>
 
-      <a class="ip-cooperation-mobile-download" href="https://kashtan-flex.github.io/ip-static/rider-technical.html" target="_self" data-rider-html-link="true" onclick="event.preventDefault(); event.stopPropagation(); window.location.assign(this.href); return false;" aria-label="Открыть технический райдер для просмотра">
+      <a class="ip-cooperation-mobile-download" href="./rider-technical.html" target="_self" data-rider-html-link="true" aria-label="Открыть технический райдер для просмотра">
         <span class="ip-cooperation-mobile-dot" aria-hidden="true">·</span>
         <span>Технический райдер</span>
       </a>

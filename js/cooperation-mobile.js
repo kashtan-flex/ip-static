@@ -2,13 +2,13 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-010-mobile-menu-rider-guard-v038
+Версия: cooperation-mobile-js-011-mobile-rider-direct-links-v037
 
 ИЗМЕНЕНИЯ:
-- mobile menu: обработчик ссылок райдеров больше не срабатывает, когда открыто меню или тап происходит внутри меню.
-- mobile menu: пункт «Сотрудничество» больше не может быть перехвачен расположенными под меню ссылками «Бытовой райдер» и «Технический райдер».
-- mobile riders: прямое открытие HTML-страниц райдеров сохранено для обычных тапов по самим ссылкам райдеров.
-- desktop JS, popup, date mask, accordion и визуальная разметка меню не изменялись.
+- mobile riders: убран document-level обработчик с проверкой координат, который мог конфликтовать с обычным открытием ссылок райдеров.
+- mobile riders: бытовой и технический райдеры снова открываются прямым тапом по самим ссылкам.
+- mobile menu: защита от перехвата тапов меню сохранена за счёт того, что обработчики райдеров больше не слушают тапы по всему документу.
+- desktop JS, popup, date mask, accordion, hash-bridge и визуальная разметка меню не изменялись.
 ==================================================
 */
 
@@ -681,56 +681,16 @@ COOPERATION MOBILE JS
       return;
     }
 
-    var lastHandledAt = 0;
-
-    function getEventPoint(event){
-      var touch =
-        event.changedTouches &&
-        event.changedTouches.length &&
-        event.changedTouches[0];
-
-      if(touch){
-        return {
-          x:touch.clientX,
-          y:touch.clientY
-        };
+    function shouldIgnoreRiderNavigation(){
+      if(menuPanel && menuPanel.classList.contains('is-open')){
+        return true;
       }
 
-      if(typeof event.clientX === 'number' && typeof event.clientY === 'number'){
-        return {
-          x:event.clientX,
-          y:event.clientY
-        };
+      if(popup && popup.classList.contains('is-open')){
+        return true;
       }
 
-      return null;
-    }
-
-    function getLinkFromEvent(event){
-      var target = event.target;
-      var directLink = target && target.closest
-        ? target.closest('a.ip-cooperation-mobile-download[href*="rider-"]')
-        : null;
-
-      if(directLink && riderLinks.indexOf(directLink) !== -1){
-        return directLink;
-      }
-
-      var point = getEventPoint(event);
-
-      if(!point){
-        return null;
-      }
-
-      return riderLinks.find(function(link){
-        var rect = link.getBoundingClientRect();
-        var tolerance = 12;
-
-        return point.x >= rect.left - tolerance &&
-          point.x <= rect.right + tolerance &&
-          point.y >= rect.top - tolerance &&
-          point.y <= rect.bottom + tolerance;
-      }) || null;
+      return false;
     }
 
     function openRiderLink(link){
@@ -742,75 +702,25 @@ COOPERATION MOBILE JS
         link.blur();
       }
 
-      window.location.assign(link.href);
+      window.location.href = link.href;
     }
 
-    function shouldIgnoreRiderNavigation(event){
-      var target = event && event.target;
+    riderLinks.forEach(function(link){
+      link.addEventListener('click', function(event){
+        if(!isMobile() || shouldIgnoreRiderNavigation()){
+          return;
+        }
 
-      if(menuPanel && menuPanel.classList.contains('is-open')){
-        return true;
-      }
+        event.preventDefault();
+        event.stopPropagation();
 
-      if(
-        target &&
-        target.closest &&
-        (
-          target.closest('.ip-menu-panel') ||
-          target.closest('.ip-menu-toggle')
-        )
-      ){
-        return true;
-      }
+        if(typeof event.stopImmediatePropagation === 'function'){
+          event.stopImmediatePropagation();
+        }
 
-      if(popup && popup.classList.contains('is-open')){
-        return true;
-      }
-
-      return false;
-    }
-
-    function handleRiderNavigation(event){
-      if(!isMobile() || shouldIgnoreRiderNavigation(event)){
-        return;
-      }
-
-      if(event.type === 'click' && Date.now() - lastHandledAt < 650){
-        return;
-      }
-
-      var link = getLinkFromEvent(event);
-
-      if(!link){
-        return;
-      }
-
-      lastHandledAt = Date.now();
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      if(typeof event.stopImmediatePropagation === 'function'){
-        event.stopImmediatePropagation();
-      }
-
-      openRiderLink(link);
-    }
-
-    document.addEventListener(
-      'touchend',
-      handleRiderNavigation,
-      {
-        capture:true,
-        passive:false
-      }
-    );
-
-    document.addEventListener(
-      'click',
-      handleRiderNavigation,
-      true
-    );
+        openRiderLink(link);
+      });
+    });
   }
 
 

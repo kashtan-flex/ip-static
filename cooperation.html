@@ -2,11 +2,10 @@
 
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-036-tilda-hash-bridge
+Версия: cooperation-html-037-mobile-rider-direct-links
 ИЗМЕНЕНИЯ:
-- обновлён cache-buster для page-transition.js после добавления Tilda hash-bridge.
-- mobile: обновлён cache-buster для cooperation-mobile.js после защиты меню от перехвата ссылками райдеров.
-- desktop, разметка меню, попапы и контент страницы не изменялись.
+- mobile: обновлён cache-buster для cooperation-mobile.js и мобильного HTML-фрагмента после восстановления прямого открытия бытового и технического райдеров.
+- hash-bridge, desktop, разметка меню, попапы и визуальный контент страницы не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -94,7 +93,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-menu-rider-guard-035';
+      var ASSET_VERSION = 'cooperation-rider-direct-links-037';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
