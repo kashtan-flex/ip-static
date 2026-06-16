@@ -1,3 +1,17 @@
+/*
+==================================================
+POPUPS MOBILE CSS
+
+Версия: popups-mobile-css-028-mobile-only-close-button
+
+ИЗМЕНЕНИЯ:
+- mobile: крестик закрытия формы оставлен только на мобильной версии
+- mobile: крестик выровнен по правому краю карточки попапа
+- mobile: верхний отступ крестика от края карточки — 20px
+- desktop-версия скрывает крестик через popups.css
+==================================================
+*/
+
 
 
 @media (max-width:767px){
@@ -17,6 +31,21 @@
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
+  }
+
+
+  .ip-popup-close{
+    display:flex;
+    top:20px;
+    right:0;
+    width:27px;
+    height:27px;
+  }
+
+  .ip-popup-close span::before,
+  .ip-popup-close span::after{
+    width:27px;
+    height:3px;
   }
 
   .ip-popup-heading{

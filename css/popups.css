@@ -1,3 +1,16 @@
+/*
+==================================================
+POPUPS CSS
+
+Версия: popups-css-028-mobile-only-close-button
+
+ИЗМЕНЕНИЯ:
+- desktop: крестик закрытия формы скрыт
+- mobile: крестик продолжает управляться через popups-mobile.css
+- закрытие по фону и Escape на desktop сохраняется без изменений
+==================================================
+*/
+
 
 
 :root{
@@ -116,6 +129,66 @@ body.ip-popup-lock{
     opacity var(--popup-card-duration) var(--popup-ease) var(--popup-card-delay),
     transform var(--popup-card-duration) var(--popup-ease) var(--popup-card-delay);
 }
+
+
+.ip-popup-close{
+  display:none;
+  position:absolute;
+  top:20px;
+  right:0;
+  z-index:4;
+  width:32px;
+  height:32px;
+  padding:0;
+  margin:0;
+  border:0;
+  outline:none;
+  background:transparent;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  box-shadow:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+.ip-popup-close span,
+.ip-popup-close::before,
+.ip-popup-close::after{
+  pointer-events:none;
+}
+
+.ip-popup-close span{
+  display:block;
+  position:absolute;
+  inset:0;
+}
+
+.ip-popup-close span::before,
+.ip-popup-close span::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:27px;
+  height:3px;
+  border-radius:10px;
+  background:#fff;
+  transform-origin:center center;
+}
+
+.ip-popup-close span::before{
+  transform:translate(-50%,-50%) rotate(45deg);
+}
+
+.ip-popup-close span::after{
+  transform:translate(-50%,-50%) rotate(-45deg);
+}
+
+.ip-popup-close:hover{
+  opacity:.75;
+}
+
 
 .ip-popup-form{
   position:absolute;
