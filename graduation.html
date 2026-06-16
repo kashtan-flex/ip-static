@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="./css/home.css">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-radius-029">
-  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-030">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 </head>
 
@@ -106,7 +106,7 @@
         if(mode === 'mobile'){
           return {
             css:['./css/graduation-mobile.css'],
-            html:'./pages/graduation/graduation-mobile.html',
+            html:'./pages/graduation/graduation-mobile.html?v=popup-close-030',
             js:'./js/graduation-mobile.js',
             error:'Ошибка загрузки мобильной страницы День рождения. Проверь путь: pages/graduation/graduation-mobile.html'
           };
@@ -114,7 +114,7 @@
 
         return {
           css:['./css/graduation.css', './css/graduation-reviews.css'],
-          html:'./pages/graduation/graduation.html',
+          html:'./pages/graduation/graduation.html?v=popup-close-030',
           js:'./js/graduation.js',
           error:'Ошибка загрузки страницы День рождения. Проверь путь: pages/graduation/graduation.html'
         };

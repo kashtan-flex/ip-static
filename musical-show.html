@@ -22,7 +22,7 @@
   <link rel="preload" href="./assets/img/musical/video/musical-show-video-poster.webp" as="image">
   <link rel="stylesheet" href="./css/home.css">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-radius-029">
-  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-030">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 </head>
 <body>
@@ -48,9 +48,9 @@
       }
       function getConfig(mode){
         if(mode === 'mobile'){
-          return {css:['./css/musical-show-mobile.css'],html:'./pages/musical-show/musical-show-mobile.html',js:'./js/musical-show-mobile.js',error:'Ошибка загрузки мобильной страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show-mobile.html'};
+          return {css:['./css/musical-show-mobile.css'],html:'./pages/musical-show/musical-show-mobile.html?v=popup-close-030',js:'./js/musical-show-mobile.js',error:'Ошибка загрузки мобильной страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show-mobile.html'};
         }
-        return {css:['./css/musical-show.css','./css/musical-show-reviews.css'],html:'./pages/musical-show/musical-show.html',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
+        return {css:['./css/musical-show.css','./css/musical-show-reviews.css'],html:'./pages/musical-show/musical-show.html?v=popup-close-030',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
       }
       function resetState(){
         document.documentElement.classList.remove('ip-popup-lock');

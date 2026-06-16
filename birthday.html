@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="./css/home.css">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-radius-029">
-  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-030">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 </head>
 
@@ -106,7 +106,7 @@
         if(mode === 'mobile'){
           return {
             css:['./css/birthday-mobile.css'],
-            html:'./pages/birthday/birthday-mobile.html',
+            html:'./pages/birthday/birthday-mobile.html?v=popup-close-030',
             js:'./js/birthday-mobile.js',
             error:'Ошибка загрузки мобильной страницы День рождения. Проверь путь: pages/birthday/birthday-mobile.html'
           };
@@ -114,7 +114,7 @@
 
         return {
           css:['./css/birthday.css', './css/birthday-reviews.css'],
-          html:'./pages/birthday/birthday.html',
+          html:'./pages/birthday/birthday.html?v=popup-close-030',
           js:'./js/birthday.js',
           error:'Ошибка загрузки страницы День рождения. Проверь путь: pages/birthday/birthday.html'
         };

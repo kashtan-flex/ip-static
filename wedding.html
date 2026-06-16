@@ -74,7 +74,7 @@
 
   <link rel="stylesheet" href="./css/home.css">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-radius-029">
-  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-030">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 
 </head>
@@ -891,6 +891,15 @@
     aria-label="Форма связи"
   >
 
+    <button
+      class="ip-popup-close"
+      type="button"
+      data-popup-close
+      aria-label="Закрыть форму"
+    >
+      <span></span>
+    </button>
+
     <form
       class="ip-popup-form"
       data-form-email="ya@ivanpertsev.ru"
@@ -1101,7 +1110,7 @@
             css:[
               './css/wedding-mobile.css'
             ],
-            html:'./pages/wedding/wedding-mobile.html',
+            html:'./pages/wedding/wedding-mobile.html?v=popup-close-030',
             inlineHtml:null,
             js:'./js/wedding-mobile.js',
             error:'Ошибка загрузки мобильной страницы Свадьба. Проверь путь: pages/wedding/wedding-mobile.html'
@@ -1114,7 +1123,7 @@
             './css/wedding.css',
             './css/project-reviews.css'
           ],
-          html:'./pages/wedding/wedding.html',
+          html:'./pages/wedding/wedding.html?v=popup-close-030',
           inlineHtml:null,
           js:'./js/wedding.js',
           error:'Ошибка загрузки страницы Свадьба. Проверь путь: pages/wedding/wedding.html'

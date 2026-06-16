@@ -66,7 +66,7 @@
 
   <link rel="stylesheet" href="./css/home.css">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-radius-029">
-  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-030">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 </head>
 
@@ -108,7 +108,7 @@
         if(mode === 'mobile'){
           return {
             css:['./css/cooperation-mobile.css'],
-            html:'./pages/cooperation/cooperation-mobile.html',
+            html:'./pages/cooperation/cooperation-mobile.html?v=popup-close-030',
             js:'./js/cooperation-mobile.js',
             error:'Ошибка загрузки мобильной страницы Сотрудничество. Проверь путь: pages/cooperation/cooperation-mobile.html'
           };
@@ -116,7 +116,7 @@
 
         return {
           css:['./css/cooperation.css'],
-          html:'./pages/cooperation/cooperation.html',
+          html:'./pages/cooperation/cooperation.html?v=popup-close-030',
           js:'./js/cooperation.js',
           error:'Ошибка загрузки страницы Сотрудничество. Проверь путь: pages/cooperation/cooperation.html'
         };

@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="./css/home.css">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-radius-029">
-  <link rel="stylesheet" href="./css/popups-mobile.css">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-030">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 </head>
 
@@ -106,7 +106,7 @@
         if(mode === 'mobile'){
           return {
             css:['./css/corporate-mobile.css'],
-            html:'./pages/corporate/corporate-mobile.html',
+            html:'./pages/corporate/corporate-mobile.html?v=popup-close-030',
             js:'./js/corporate-mobile.js',
             error:'Ошибка загрузки мобильной страницы Корпоратив. Проверь путь: pages/corporate/corporate-mobile.html'
           };
@@ -114,7 +114,7 @@
 
         return {
           css:['./css/corporate.css', './css/corporate-reviews.css'],
-          html:'./pages/corporate/corporate.html',
+          html:'./pages/corporate/corporate.html?v=popup-close-030',
           js:'./js/corporate.js',
           error:'Ошибка загрузки страницы Корпоратив. Проверь путь: pages/corporate/corporate.html'
         };
