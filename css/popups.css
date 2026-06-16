@@ -2,12 +2,12 @@
 ==================================================
 POPUPS CSS
 
-Версия: popups-css-028-mobile-only-close-button
+Версия: popups-css-029-desktop-radius-15
 
 ИЗМЕНЕНИЯ:
-- desktop: крестик закрытия формы скрыт
-- mobile: крестик продолжает управляться через popups-mobile.css
-- закрытие по фону и Escape на desktop сохраняется без изменений
+- desktop: скругление основной карточки попапа приведено к макету Figma — 15px при базовой ширине 790px
+- mobile: скругление и поведение мобильного попапа не изменялись
+- меню, попап-логика, закрытие по фону и Escape не изменялись
 ==================================================
 */
 
@@ -80,7 +80,7 @@ body.ip-popup-lock{
   width:min(790px, calc(100vw - 48px), calc((100vh - 48px) * 1.490566));
   aspect-ratio:790 / 530;
   overflow:hidden;
-  border-radius:calc(12 / 790 * 100cqw);
+  border-radius:calc(15 / 790 * 100cqw);
   background-color:#101311;
   background-image:url('../assets/img/popups/popup-main-bg.webp');
   background-size:cover;
