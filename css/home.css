@@ -2,12 +2,12 @@
 ==================================================
 HOME DESKTOP CSS
 
-Версия: home-css-030-desktop-smoother-intro-dot
+Версия: home-css-032-unified-subtitle-animation
 
 ИЗМЕНЕНИЯ:
-- desktop: анимация появления имени и подзаголовка приведена к более мягкой mobile-логике
-- desktop: точка уменьшена с 4px до 3px
-- desktop: резкое мигание точки заменено на мягкую равномерную пульсацию
+- desktop: подзаголовок синхронизирован с mobile по таймингу появления
+- desktop: точка уменьшена до 3px
+- desktop: пульсация точки приведена к единой мягкой логике
 - mobile, меню, попапы, переходы и геометрия главной страницы не изменялись
 ==================================================
 */
@@ -264,13 +264,13 @@ body,
   border-radius:50%;
   background:#fff;
   animation:
-    ipSubtitleReveal .38s cubic-bezier(.19,1,.22,1) forwards 1.40s,
-    ipDotPulse 1.8s ease-in-out infinite 1.90s;
+    ipSubtitleReveal .38s cubic-bezier(.19,1,.22,1) forwards 1.52s,
+    ipDotPulse 1.8s ease-in-out infinite 2.10s;
 }
 
 .ip-subtitle-word-two{
   animation:ipSubtitleReveal .38s cubic-bezier(.19,1,.22,1) forwards;
-  animation-delay:1.48s;
+  animation-delay:1.68s;
 }
 
 .ip-menu-toggle{
