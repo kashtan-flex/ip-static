@@ -1332,9 +1332,18 @@
 }
 
 
-.ip-gallery-lightbox-close,
-.ip-gallery-lightbox-nav{
+.ip-gallery-lightbox-close{
   display:none !important;
+}
+
+@media (min-width:768px){
+  .ip-gallery-lightbox.is-open .ip-gallery-lightbox-nav{
+    display:flex !important;
+  }
+
+  .ip-gallery-lightbox.is-open .ip-gallery-lightbox-nav[hidden]{
+    display:none !important;
+  }
 }
 
 .ip-gallery-lightbox-counter{

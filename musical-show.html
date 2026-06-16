@@ -2,9 +2,9 @@
 
 <!DOCTYPE html>
 <!--
-Версия: musical-show-html-051-desktop-gallery-arrows
+Версия: musical-show-html-052-desktop-gallery-lightbox-arrows-visible
 ИЗМЕНЕНИЯ:
-- desktop: добавлены стрелки перелистывания фотографий в открытом lightbox галереи.
+- desktop: добавлены и принудительно отображены стрелки перелистывания фотографий в открытом lightbox галереи.
 - расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
 - mobile, меню, попапы форм, отзывы и видео не изменялись.
 -->
@@ -57,7 +57,7 @@
         if(mode === 'mobile'){
           return {css:['./css/musical-show-mobile.css'],html:'./pages/musical-show/musical-show-mobile.html?v=mobile-video-sound-049',js:'./js/musical-show-mobile.js',error:'Ошибка загрузки мобильной страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show-mobile.html'};
         }
-        return {css:['./css/musical-show.css?v=desktop-gallery-arrows-051','./css/musical-show-reviews.css?v=desktop-review-arrows-050'],html:'./pages/musical-show/musical-show.html?v=desktop-gallery-arrows-051',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
+        return {css:['./css/musical-show.css?v=desktop-gallery-arrows-052','./css/musical-show-reviews.css?v=desktop-review-arrows-050'],html:'./pages/musical-show/musical-show.html?v=desktop-gallery-arrows-052',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
       }
       function resetState(){
         document.documentElement.classList.remove('ip-popup-lock');
