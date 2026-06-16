@@ -2,12 +2,15 @@
 ==================================================
 HOME MOBILE CSS
 
-Версия: home-mobile-css-025-reload-animation-sync
+Версия: home-mobile-css-029-smoother-intro-dot
 
 ИЗМЕНЕНИЯ:
 - mobile-only: синхронизирован запуск анимации имени, подзаголовка и точки при обновлении страницы
 - точка под подзаголовком больше не стартует раньше имени при reload
 - desktop, меню, попапы, переходы и геометрия главной страницы не изменялись
+- mobile: появление имени и подзаголовка сделано чуть плавнее
+- mobile: точка уменьшена с 4px до 3px
+- mobile: резкое мигание точки заменено на мягкую равномерную пульсацию
 ==================================================
 */
 
@@ -118,11 +121,11 @@ HOME MOBILE CSS
   }
 
   .ip-page-home.is-mobile-animation-ready .ip-title-line-first span{
-    animation:ipMobileTextRevealSoft .42s cubic-bezier(.19,1,.22,1) forwards .9s;
+    animation:ipMobileTextRevealSoft .56s cubic-bezier(.19,1,.22,1) forwards .9s;
   }
 
   .ip-page-home.is-mobile-animation-ready .ip-title-line-second span{
-    animation:ipMobileTextRevealSoft .5s cubic-bezier(.19,1,.22,1) forwards 1.12s;
+    animation:ipMobileTextRevealSoft .64s cubic-bezier(.19,1,.22,1) forwards 1.12s;
   }
 
   .ip-home-subtitle-wrap{
@@ -154,23 +157,23 @@ HOME MOBILE CSS
   }
 
   .ip-page-home.is-mobile-animation-ready .ip-subtitle-word-one{
-    animation:ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.32s;
+    animation:ipMobileSubtitleRevealSoft .38s cubic-bezier(.19,1,.22,1) forwards 1.32s;
   }
 
   .ip-subtitle-dot{
     position:relative;
     top:0;
-    width:4px;
-    height:4px;
-    flex:0 0 4px;
+    width:3px;
+    height:3px;
+    flex:0 0 3px;
     margin-top:1px;
     animation:none;
   }
 
   .ip-page-home.is-mobile-animation-ready .ip-subtitle-dot{
     animation:
-      ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.40s,
-      ipDotBlink 1.4s ease-in-out infinite 1.82s;
+      ipMobileSubtitleRevealSoft .38s cubic-bezier(.19,1,.22,1) forwards 1.40s,
+      ipDotPulse 1.8s ease-in-out infinite 1.90s;
   }
 
   .ip-subtitle-word-two{
@@ -178,7 +181,7 @@ HOME MOBILE CSS
   }
 
   .ip-page-home.is-mobile-animation-ready .ip-subtitle-word-two{
-    animation:ipMobileSubtitleRevealSoft .26s cubic-bezier(.19,1,.22,1) forwards 1.48s;
+    animation:ipMobileSubtitleRevealSoft .38s cubic-bezier(.19,1,.22,1) forwards 1.48s;
   }
 
 
@@ -266,5 +269,23 @@ HOME MOBILE CSS
   100%{
     opacity:1;
     transform:translate3d(0,0,0);
+  }
+}
+
+
+@keyframes ipDotPulse{
+  0%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:.58;
+    transform:scale(.92);
+  }
+
+  100%{
+    opacity:1;
+    transform:scale(1);
   }
 }
