@@ -2,15 +2,13 @@
 ==================================================
 COOPERATION MOBILE CSS
 
-Версия: cooperation-mobile-css-045-native-rider-links
+Версия: cooperation-mobile-css-046-faster-mobile-reveal
 
 ИЗМЕНЕНИЯ:
-- mobile: портрет больше не появляется при скролле отдельной анимацией.
-- mobile: портрет появляется вместе с основными элементами страницы через общий fade-in.
-- mobile: положение портрета сохранено, transform-анимация не используется.
-- mobile riders: бытовой и технический райдеры оформлены как нативные ссылки на HTML-страницы.
-- mobile menu: закрытая DOM-структура меню полностью отключена от pointer-events, чтобы не перекрывать райдеры.
-- mobile menu: открытое меню остаётся выше райдеров и перехватывает тапы по своей области.
+- mobile: входная анимация страницы «Сотрудничество» ускорена примерно в 1.5 раза.
+- mobile: пропорционально уменьшены duration и delay у glow-фона и общего появления контента.
+- mobile: портрет продолжает появляться вместе с основными элементами страницы, без отдельной scroll-анимации.
+- mobile riders/menu: логика версии 045 сохранена без изменений.
 - desktop, попапы, hash-bridge и остальные страницы не изменялись.
 ==================================================
 */
@@ -90,8 +88,8 @@ COOPERATION MOBILE CSS
     z-index:2;
     opacity:0;
     background-image:url('../assets/img/cooperation/mobile/background/cooperation-mobile-bg-glow@2x.webp');
-    animation:ipCooperationMobileGlowReveal 1.25s ease forwards;
-    animation-delay:1.1s;
+    animation:ipCooperationMobileGlowReveal .83s ease forwards;
+    animation-delay:.73s;
   }
 
   .ip-cooperation-mobile-content{
@@ -116,8 +114,8 @@ COOPERATION MOBILE CSS
   .ip-cooperation-mobile-contacts,
   .ip-cooperation-mobile-portrait{
     opacity:0;
-    animation:ipCooperationMobileContentReveal .62s ease forwards;
-    animation-delay:1.72s;
+    animation:ipCooperationMobileContentReveal .41s ease forwards;
+    animation-delay:1.15s;
   }
 
   .ip-cooperation-mobile-header{

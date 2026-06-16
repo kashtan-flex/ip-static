@@ -2,10 +2,10 @@
 
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-045-native-rider-links
+Версия: cooperation-html-046-faster-mobile-reveal
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster страницы «Сотрудничество» после возврата райдеров на нативные HTML-ссылки.
-- mobile: райдеры открываются обычной навигацией внутри GitHub-сайта, без bridge и без JS-навигации.
+- mobile: обновлён cache-buster страницы «Сотрудничество» после ускорения входной анимации.
+- mobile: сохранены нативные HTML-ссылки райдеров из версии 045.
 - desktop, меню, попапы, hash-bridge и остальные страницы не изменялись.
 -->
 <html lang="ru">
@@ -94,7 +94,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-native-rider-links-045';
+      var ASSET_VERSION = 'cooperation-faster-mobile-reveal-046';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
