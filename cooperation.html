@@ -2,10 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-040-static-mobile-portrait
+Версия: cooperation-html-042-rider-native-links
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster страницы «Сотрудничество» после отключения scroll-анимации портрета.
-- desktop, меню, попапы, райдеры, hash-bridge и контент страницы не изменялись.
+- mobile: обновлён cache-buster страницы «Сотрудничество» после перевода HTML-райдеров на нативные ссылки.
+- mobile: обновлён cache-buster page-transition.js, чтобы общий router не перехватывал бытовой и технический райдер.
+- desktop, меню, попапы, hash-bridge и контент страницы не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -93,7 +94,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-mobile-rider-bridge-041';
+      var ASSET_VERSION = 'cooperation-mobile-native-rider-042';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
@@ -219,7 +220,7 @@
           .then(function(){
             if(!document.querySelector('script[data-page-transition-script]')){
               var transitionScript = document.createElement('script');
-              transitionScript.src = './js/page-transition.js?v=tilda-hash-bridge-036';
+              transitionScript.src = './js/page-transition.js?v=rider-native-links-042';
               transitionScript.defer = true;
               transitionScript.setAttribute('data-page-transition-script', 'true');
               document.body.appendChild(transitionScript);

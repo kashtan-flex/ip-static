@@ -2,12 +2,13 @@
 ==================================================
 PAGE TRANSITION JS
 
-Версия: page-transition-js-007-tilda-hash-bridge
+Версия: page-transition-js-008-rider-native-links
 
 ИЗМЕНЕНИЯ:
-- Tilda iframe: добавлен hash-bridge для сохранения текущей страницы в адресе родительской Tilda-страницы.
-- Tilda iframe: при переходах внутри iframe родитель получает hash вида #biography, #cooperation, #wedding и может восстановить страницу после reload.
-- Переходы страниц, desktop/mobile анимации, меню, попапы и обработка ссылок не изменялись.
+- Tilda iframe: добавлена отправка hash для rider-страниц #rider-bytovoy и #rider-technical.
+- Общий transition-router больше не перехватывает ссылки на rider-bytovoy.html и rider-technical.html.
+- Rider-ссылки открываются нативно браузером, без preventDefault и без кастомной JS-навигации.
+- Основные переходы страниц, desktop/mobile анимации, меню и попапы не изменялись.
 ==================================================
 */
 
@@ -33,7 +34,9 @@ PAGE TRANSITION JS
     'musical-show.html':'#musical-show',
     'cooperation.html':'#cooperation',
     'policy.html':'#policy',
-    'consent.html':'#consent'
+    'consent.html':'#consent',
+    'rider-bytovoy.html':'#rider-bytovoy',
+    'rider-technical.html':'#rider-technical'
   };
 
   try{
@@ -114,6 +117,10 @@ PAGE TRANSITION JS
 
   function getTildaHashForPage(pageFile){
     return TILDA_HASH_BY_PAGE[pageFile] || '';
+  }
+
+  function isRiderPageFile(pageFile){
+    return pageFile === 'rider-bytovoy.html' || pageFile === 'rider-technical.html';
   }
 
   function notifyTildaParent(pageFile){
@@ -427,6 +434,13 @@ PAGE TRANSITION JS
     }
 
     if(href.indexOf('.html') === -1 && href.indexOf('/') !== 0){
+      return true;
+    }
+
+    if(
+      link.hasAttribute('data-ip-mobile-rider-page') ||
+      isRiderPageFile(getPageFileFromUrl(link.href))
+    ){
       return true;
     }
 
