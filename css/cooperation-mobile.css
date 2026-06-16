@@ -1,5 +1,15 @@
+/*
+==================================================
+COOPERATION MOBILE CSS
 
+Версия: cooperation-mobile-css-011-rider-direct-open-v038
 
+ИЗМЕНЕНИЯ:
+- mobile riders: ссылки «Бытовой райдер» и «Технический райдер» закреплены как отдельная кликабельная зона поверх фоновых слоёв страницы.
+- mobile menu: закрытое меню явно не принимает события, открытое меню сохраняет прежнее поведение.
+- desktop-версия, визуальная геометрия, попапы и hash-bridge не изменялись.
+==================================================
+*/
 .ip-cooperation-mobile-scrolltop{
   display:none;
 }
@@ -139,14 +149,17 @@
     position:absolute;
     left:86px;
     top:164px;
-    z-index:5;
+    z-index:12;
     display:flex;
     flex-direction:column;
     gap:24px;
     width:250px;
+    pointer-events:auto;
   }
 
   .ip-cooperation-mobile-download{
+    position:relative;
+    z-index:1;
     display:flex;
     align-items:baseline;
     gap:18px;
@@ -160,6 +173,8 @@
     text-decoration:none !important;
     transition:color .28s ease;
     -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+    pointer-events:auto;
   }
 
   .ip-cooperation-mobile-download:active{
@@ -168,6 +183,7 @@
 
   .ip-cooperation-mobile-download.is-disabled{
     cursor:default;
+    pointer-events:none;
   }
 
   .ip-cooperation-mobile-dot{
@@ -433,6 +449,11 @@
     -webkit-backdrop-filter:none;
     backdrop-filter:none;
     touch-action:pan-y;
+    pointer-events:none;
+  }
+
+  .ip-cooperation-mobile .ip-menu-panel.is-open{
+    pointer-events:auto;
   }
 
   .ip-cooperation-mobile .ip-menu-panel::before{

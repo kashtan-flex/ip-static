@@ -1,11 +1,10 @@
-
-
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-037-mobile-rider-direct-links
+Версия: cooperation-html-038-mobile-rider-direct-open
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster для cooperation-mobile.js и мобильного HTML-фрагмента после восстановления прямого открытия бытового и технического райдеров.
-- hash-bridge, desktop, разметка меню, попапы и визуальный контент страницы не изменялись.
+- mobile: обновлён cache-buster для страницы «Сотрудничество» после восстановления прямого открытия бытового и технического райдеров.
+- mobile: HTML-фрагмент, CSS и JS страницы «Сотрудничество» загружаются с единым новым cache-buster.
+- hash-bridge, desktop-версия, меню, попапы и визуальная геометрия страницы не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -93,7 +92,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-rider-direct-links-037';
+      var ASSET_VERSION = 'cooperation-rider-direct-open-038';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
@@ -114,7 +113,7 @@
         if(mode === 'mobile'){
           return {
             css:['./css/cooperation-mobile.css'],
-            html:'./pages/cooperation/cooperation-mobile.html?v=popup-close-030',
+            html:'./pages/cooperation/cooperation-mobile.html',
             js:'./js/cooperation-mobile.js',
             error:'Ошибка загрузки мобильной страницы Сотрудничество. Проверь путь: pages/cooperation/cooperation-mobile.html'
           };
@@ -122,7 +121,7 @@
 
         return {
           css:['./css/cooperation.css'],
-          html:'./pages/cooperation/cooperation.html?v=popup-close-030',
+          html:'./pages/cooperation/cooperation.html',
           js:'./js/cooperation.js',
           error:'Ошибка загрузки страницы Сотрудничество. Проверь путь: pages/cooperation/cooperation.html'
         };

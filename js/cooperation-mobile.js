@@ -2,12 +2,12 @@
 ==================================================
 COOPERATION MOBILE JS
 
-Версия: cooperation-mobile-js-011-mobile-rider-direct-links-v037
+Версия: cooperation-mobile-js-011-rider-direct-open-v038
 
 ИЗМЕНЕНИЯ:
-- mobile riders: убран document-level обработчик с проверкой координат, который мог конфликтовать с обычным открытием ссылок райдеров.
-- mobile riders: бытовой и технический райдеры снова открываются прямым тапом по самим ссылкам.
-- mobile menu: защита от перехвата тапов меню сохранена за счёт того, что обработчики райдеров больше не слушают тапы по всему документу.
+- mobile riders: удалён глобальный document-level обработчик райдеров, который мог гасить обычное открытие ссылок.
+- mobile riders: оставлено только прямое открытие при клике по самим ссылкам «Бытовой райдер» и «Технический райдер».
+- mobile menu: при открытом меню ссылки райдеров не обрабатываются, поэтому пункт меню «Сотрудничество» не перехватывается подлежащими элементами.
 - desktop JS, popup, date mask, accordion, hash-bridge и визуальная разметка меню не изменялись.
 ==================================================
 */
@@ -672,7 +672,7 @@ COOPERATION MOBILE JS
 
   function setupMobileRiderHtmlLinks(){
     var riderLinks = Array.prototype.slice.call(
-      document.querySelectorAll('a.ip-cooperation-mobile-download[href*="rider-"]')
+      document.querySelectorAll('a[data-rider-html-link="true"]')
     ).filter(function(link){
       return !link.classList.contains('is-disabled');
     });
@@ -681,8 +681,32 @@ COOPERATION MOBILE JS
       return;
     }
 
-    function shouldIgnoreRiderNavigation(){
-      if(menuPanel && menuPanel.classList.contains('is-open')){
+    function isMenuOpen(){
+      return Boolean(
+        menuPanel &&
+        menuPanel.classList.contains('is-open')
+      );
+    }
+
+    function shouldIgnoreRiderLink(event){
+      var target = event && event.target;
+
+      if(!isMobile()){
+        return true;
+      }
+
+      if(isMenuOpen()){
+        return true;
+      }
+
+      if(
+        target &&
+        target.closest &&
+        (
+          target.closest('.ip-menu-panel') ||
+          target.closest('.ip-menu-toggle')
+        )
+      ){
         return true;
       }
 
@@ -694,7 +718,9 @@ COOPERATION MOBILE JS
     }
 
     function openRiderLink(link){
-      if(!link || !link.href){
+      var href = link && link.getAttribute('href');
+
+      if(!href){
         return;
       }
 
@@ -702,23 +728,37 @@ COOPERATION MOBILE JS
         link.blur();
       }
 
-      window.location.href = link.href;
+      window.location.href = new URL(href, window.location.href).href;
+    }
+
+    var lastHandledAt = 0;
+
+    function handleDirectRiderEvent(event, link){
+      if(shouldIgnoreRiderLink(event)){
+        return;
+      }
+
+      if(Date.now() - lastHandledAt < 650){
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      lastHandledAt = Date.now();
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      openRiderLink(link);
     }
 
     riderLinks.forEach(function(link){
+      link.addEventListener('touchend', function(event){
+        handleDirectRiderEvent(event, link);
+      }, { passive:false });
+
       link.addEventListener('click', function(event){
-        if(!isMobile() || shouldIgnoreRiderNavigation()){
-          return;
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        if(typeof event.stopImmediatePropagation === 'function'){
-          event.stopImmediatePropagation();
-        }
-
-        openRiderLink(link);
+        handleDirectRiderEvent(event, link);
       });
     });
   }
