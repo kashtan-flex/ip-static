@@ -2,13 +2,12 @@
 ==================================================
 HOME DESKTOP CSS
 
-Версия: home-css-032-unified-subtitle-animation
+Версия: home-css-034-mobile-social-icons-stable-return
 
 ИЗМЕНЕНИЯ:
-- desktop: подзаголовок синхронизирован с mobile по таймингу появления
-- desktop: точка уменьшена до 3px
-- desktop: пульсация точки приведена к единой мягкой логике
-- mobile, меню, попапы, переходы и геометрия главной страницы не изменялись
+- mobile/touch: иконки соцсетей ВК, Telegram и Instagram больше не пропадают после возврата с внешней социальной сети
+- mobile/touch: состояние hover/focus/active принудительно возвращает обычный слой иконки и отключает hover-слой
+- desktop hover, меню, геометрия, попапы, переходы и контент страниц не изменялись
 ==================================================
 */
 
@@ -836,41 +835,41 @@ body,
   }
 }
 /* ==========================================================
-   SOCIAL ICONS RETURN RESTORE SUPPORT
-   Версия: home-css-033-tilda-social-icons-return-restore
+   MOBILE SOCIAL ICONS STABLE RETURN
+   Версия: home-css-034-mobile-social-icons-stable-return
 
    ИЗМЕНЕНИЯ:
-   - mobile/touch: добавлена точечная страховка только после возврата
-     из внешней социальной сети внутри Tilda iframe;
-   - первичная анимация появления иконок при открытии меню сохранена;
-   - постоянное принудительное отображение иконок удалено;
-   - геометрия, размеры, ссылки, меню и контент не меняются.
+   - mobile/touch: обычный слой иконки остаётся видимым после tap,
+     возврата назад и восстановления страницы из браузерного кэша;
+   - hover-слой отключён для mobile/touch, чтобы состояние :hover/:focus
+     не оставляло пустую иконку после возврата из Instagram, Telegram или VK;
+   - desktop hover-анимация и раскрытие меню не изменялись.
 ========================================================== */
-@media (hover:none), (pointer:coarse){
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:active,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:focus,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:focus-visible{
-    visibility:visible !important;
-    opacity:1 !important;
-    transform:none !important;
-    animation:none !important;
-    pointer-events:auto !important;
+@media (max-width:767px), (hover:none), (pointer:coarse){
+  .ip-menu-panel.is-open .ip-social,
+  .ip-menu-panel.is-open .ip-social:active,
+  .ip-menu-panel.is-open .ip-social:focus,
+  .ip-menu-panel.is-open .ip-social:focus-visible,
+  .ip-menu-panel.is-open .ip-social:hover{
+    visibility:visible;
+    opacity:1;
+    pointer-events:auto;
   }
 
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social::before,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:active::before,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:focus::before,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:focus-visible::before,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:hover::before{
+  .ip-menu-panel.is-open .ip-social::before,
+  .ip-menu-panel.is-open .ip-social:active::before,
+  .ip-menu-panel.is-open .ip-social:focus::before,
+  .ip-menu-panel.is-open .ip-social:focus-visible::before,
+  .ip-menu-panel.is-open .ip-social:hover::before{
     opacity:1 !important;
   }
 
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social::after,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:active::after,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:focus::after,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:focus-visible::after,
-  .ip-menu-panel.is-open.is-social-return-restore .ip-social:hover::after{
+  .ip-menu-panel.is-open .ip-social::after,
+  .ip-menu-panel.is-open .ip-social:active::after,
+  .ip-menu-panel.is-open .ip-social:focus::after,
+  .ip-menu-panel.is-open .ip-social:focus-visible::after,
+  .ip-menu-panel.is-open .ip-social:hover::after{
+    display:none !important;
     opacity:0 !important;
   }
 }
