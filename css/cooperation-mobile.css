@@ -2,14 +2,15 @@
 ==================================================
 COOPERATION MOBILE CSS
 
-Версия: cooperation-mobile-css-011-rider-direct-open-v038
+Версия: cooperation-mobile-css-040-static-portrait
 
 ИЗМЕНЕНИЯ:
-- mobile riders: ссылки «Бытовой райдер» и «Технический райдер» закреплены как отдельная кликабельная зона поверх фоновых слоёв страницы.
-- mobile menu: закрытое меню явно не принимает события, открытое меню сохраняет прежнее поведение.
-- desktop-версия, визуальная геометрия, попапы и hash-bridge не изменялись.
+- mobile: портрет на странице «Сотрудничество» отображается сразу в финальном положении.
+- mobile: убрана scroll-анимация появления портрета, opacity/transform/transition больше не зависят от класса is-portrait-visible.
+- desktop, меню, попапы, райдеры, hash-bridge и остальные страницы не изменялись.
 ==================================================
 */
+
 .ip-cooperation-mobile-scrolltop{
   display:none;
 }
@@ -149,17 +150,14 @@ COOPERATION MOBILE CSS
     position:absolute;
     left:86px;
     top:164px;
-    z-index:12;
+    z-index:5;
     display:flex;
     flex-direction:column;
     gap:24px;
     width:250px;
-    pointer-events:auto;
   }
 
   .ip-cooperation-mobile-download{
-    position:relative;
-    z-index:1;
     display:flex;
     align-items:baseline;
     gap:18px;
@@ -173,8 +171,6 @@ COOPERATION MOBILE CSS
     text-decoration:none !important;
     transition:color .28s ease;
     -webkit-tap-highlight-color:transparent;
-    touch-action:manipulation;
-    pointer-events:auto;
   }
 
   .ip-cooperation-mobile-download:active{
@@ -183,7 +179,6 @@ COOPERATION MOBILE CSS
 
   .ip-cooperation-mobile-download.is-disabled{
     cursor:default;
-    pointer-events:none;
   }
 
   .ip-cooperation-mobile-dot{
@@ -303,17 +298,15 @@ COOPERATION MOBILE CSS
     z-index:4;
     width:390px;
     height:690px;
-    opacity:0;
+    opacity:1;
     background-image:url('../assets/img/cooperation/mobile/portrait/cooperation-mobile-portrait.webp');
     background-size:390px auto;
     background-position:top center;
     background-repeat:no-repeat;
-    transform:translate3d(0,14px,0) scale(1.01);
-    transition:
-      opacity 1.05s cubic-bezier(.19,1,.22,1),
-      transform 1.05s cubic-bezier(.19,1,.22,1);
+    transform:translate3d(0,0,0) scale(1);
+    transition:none;
     pointer-events:none;
-    will-change:opacity,transform;
+    will-change:auto;
     backface-visibility:hidden;
     -webkit-backface-visibility:hidden;
   }
@@ -449,11 +442,6 @@ COOPERATION MOBILE CSS
     -webkit-backdrop-filter:none;
     backdrop-filter:none;
     touch-action:pan-y;
-    pointer-events:none;
-  }
-
-  .ip-cooperation-mobile .ip-menu-panel.is-open{
-    pointer-events:auto;
   }
 
   .ip-cooperation-mobile .ip-menu-panel::before{
