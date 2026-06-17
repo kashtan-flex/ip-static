@@ -1,11 +1,10 @@
 /*
-Версия: cookie-notice-js-061
+Версия: cookie-notice-js-062
 ИЗМЕНЕНИЯ:
-- home: cookie-баннер на главной странице появляется после завершения анимации имени и подзаголовка с дополнительной паузой на чтение.
-- остальные страницы: прежнее появление cookie-баннера сохранено без задержки.
-- mobile/desktop: текст и расположение баннера не менялись.
-- согласие сохраняется локально в браузере, чтобы баннер не появлялся повторно.
-- баннер автоматически скрывается, пока открыты меню, попапы, отзывы или lightbox.
+- cookie-баннер теперь появляется с единой задержкой на всех страницах сайта.
+- показ запускается после загрузки страницы, чтобы баннер не перекрывал стартовые анимации и первый визуальный блок.
+- задержка появления увеличена до 3600ms для desktop и mobile.
+- логика сохранения согласия, скрытия под меню/попапами/лайтбоксами и текст баннера сохранены.
 */
 
 (function(){
@@ -15,8 +14,11 @@
   var COOKIE_MAX_AGE = 31536000;
   var notice = null;
   var observer = null;
-  var HOME_NOTICE_DELAY = 3100;
-  var HOME_WAIT_TIMEOUT = 5000;
+  var NOTICE_DELAY = 3600;
+  var LOAD_WAIT_TIMEOUT = 6500;
+  var loadTimer = null;
+  var delayTimer = null;
+  var showScheduled = false;
 
   function canUseStorage(){
     try{
@@ -104,7 +106,7 @@
           observer.disconnect();
           observer = null;
         }
-      }, 300);
+      }, 650);
     });
 
     document.body.appendChild(notice);
@@ -133,31 +135,11 @@
     });
   }
 
-  function isHomePage(){
-    return Boolean(document.getElementById('ip-home-root'));
-  }
-
-  function waitForHomePage(callback){
-    var startTime = Date.now();
-
-    function checkHomePageReady(){
-      if(document.querySelector('.ip-page-home')){
-        callback();
-        return;
-      }
-
-      if(Date.now() - startTime >= HOME_WAIT_TIMEOUT){
-        callback();
-        return;
-      }
-
-      window.setTimeout(checkHomePageReady, 50);
+  function showNotice(){
+    if(hasAcceptedNotice() || notice){
+      return;
     }
 
-    checkHomePageReady();
-  }
-
-  function showNotice(){
     createNotice();
     setupObserver();
 
@@ -165,25 +147,42 @@
     window.addEventListener('orientationchange', updateNoticeLayer, { passive:true });
   }
 
-  function initCookieNotice(){
+  function scheduleNotice(){
+    if(showScheduled || hasAcceptedNotice()){
+      return;
+    }
+
+    showScheduled = true;
+
+    if(loadTimer){
+      window.clearTimeout(loadTimer);
+      loadTimer = null;
+    }
+
+    delayTimer = window.setTimeout(showNotice, NOTICE_DELAY);
+  }
+
+  function waitForPageLoad(){
     if(hasAcceptedNotice()){
       return;
     }
 
-    if(isHomePage()){
-      waitForHomePage(function(){
-        window.setTimeout(showNotice, HOME_NOTICE_DELAY);
-      });
+    if(document.readyState === 'complete'){
+      scheduleNotice();
       return;
     }
 
-    showNotice();
+    window.addEventListener('load', scheduleNotice, { once:true });
+
+    loadTimer = window.setTimeout(function(){
+      scheduleNotice();
+    }, LOAD_WAIT_TIMEOUT);
   }
 
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', initCookieNotice, { once:true });
+    document.addEventListener('DOMContentLoaded', waitForPageLoad, { once:true });
     return;
   }
 
-  initCookieNotice();
+  waitForPageLoad();
 })();

@@ -1,9 +1,9 @@
 /*
-Версия: cookie-notice-css-060
+Версия: cookie-notice-css-062
 ИЗМЕНЕНИЯ:
-- mobile: текст cookie-баннера разложен на четыре строки по утверждённому переносу.
-- desktop: расположение текста cookie-баннера сохранено без изменений.
-- визуальный слой баннера не меняет меню, попапы, формы, видео и page-transition.
+- desktop/mobile: появление cookie-баннера сделано более плавным через opacity и выезд снизу.
+- расстояние стартового выезда увеличено, чтобы баннер мягче появлялся из нижней части экрана.
+- текстовые переносы desktop/mobile сохранены без изменений.
 */
 
 .ip-cookie-notice,
@@ -31,13 +31,13 @@
   box-shadow:0 18px 52px rgba(0,0,0,.42);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
-  transform:translate3d(-50%, 16px, 0);
+  transform:translate3d(-50%, 32px, 0);
   opacity:0;
   pointer-events:none;
   transition:
-    opacity .28s ease,
-    transform .28s ease,
-    visibility .28s ease;
+    opacity .64s cubic-bezier(.19,1,.22,1),
+    transform .64s cubic-bezier(.19,1,.22,1),
+    visibility .64s cubic-bezier(.19,1,.22,1);
   visibility:hidden;
 }
 
@@ -51,7 +51,7 @@
 .ip-cookie-notice.is-covered,
 .ip-cookie-notice.is-closing{
   opacity:0;
-  transform:translate3d(-50%, 16px, 0);
+  transform:translate3d(-50%, 32px, 0);
   pointer-events:none;
   visibility:hidden;
 }
@@ -138,7 +138,7 @@
     min-height:0;
     display:block;
     padding:14px;
-    transform:translate3d(0, 14px, 0);
+    transform:translate3d(0, 26px, 0);
   }
 
   .ip-cookie-notice.is-visible{
@@ -147,7 +147,7 @@
 
   .ip-cookie-notice.is-covered,
   .ip-cookie-notice.is-closing{
-    transform:translate3d(0, 14px, 0);
+    transform:translate3d(0, 26px, 0);
   }
 
   .ip-cookie-notice__text{

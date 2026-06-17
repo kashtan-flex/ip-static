@@ -2,8 +2,9 @@
 
 <!DOCTYPE html>
 <!--
-Версия: musical-show-html-061-cookie-notice-home-delay
+Версия: musical-show-html-062-cookie-notice-smooth-delay
 ИЗМЕНЕНИЯ:
+- cookie-баннер на главной странице появляется после hero-анимации с чуть большей паузой и более плавным выездом снизу.
 - home: cookie-баннер на главной странице появляется после завершения анимации имени и подзаголовка с дополнительной паузой.
 - mobile: cookie-баннер получил отдельные переносы текста, desktop-раскладка сохранена.
 - global: подключён единый cookie-баннер без изменения desktop/mobile проекта.
@@ -34,7 +35,7 @@
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
   <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
-  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-060">
+  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-062">
 </head>
 <body>
   <div class="ip-page-transition is-enter" aria-hidden="true"></div>
@@ -97,7 +98,7 @@
       if(window.visualViewport){window.visualViewport.addEventListener('resize', function(){setViewportHeight();scheduleModeCheck();}, {passive:true});}
     })();
   </script>
-  <script src="./js/cookie-notice.js?v=cookie-notice-061" defer></script>
+  <script src="./js/cookie-notice.js?v=cookie-notice-062" defer></script>
 
 </body>
 </html>
