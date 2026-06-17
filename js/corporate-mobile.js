@@ -1,3 +1,11 @@
+/*
+Версия: corporate-mobile-js-070-video-ready
+ИЗМЕНЕНИЯ:
+- Mobile-видео переведено на desktop-подобный сценарий: is-video-ready включается после единой задержки 3200ms.
+- Убрана зависимость скрытия poster от iframe load, чтобы исключить мобильный рывок poster → первый кадр → poster.
+- Отправка форм, маска даты, меню, галерея и lightbox не изменялись.
+*/
+
 (function(){
   'use strict';
 
@@ -12,8 +20,7 @@
   };
 
   var SCROLLTOP_REVEAL_OFFSET = 140;
-  var VIDEO_POSTER_FALLBACK_DELAY = 2800;
-  var VIDEO_POSTER_LOAD_DELAY = 2200;
+  var VIDEO_REVEAL_DELAY = 3200;
 
   var page = document.querySelector('[data-corporate-mobile-page]');
   var stage = document.querySelector('.ip-corporate-mobile-content');
@@ -740,13 +747,19 @@
     }
   }
 
-  function hideVideoPoster(){
-    if(!videoPoster || videoPosterHidden){
+  function revealVideo(){
+    if(
+      !page ||
+      !videoFrame ||
+      !videoPoster ||
+      videoPosterHidden ||
+      page.classList.contains('is-video-ready')
+    ){
       return;
     }
 
     videoPosterHidden = true;
-    videoPoster.classList.add('is-hidden');
+    page.classList.add('is-video-ready');
   }
 
   function setupVideoPoster(){
@@ -754,11 +767,9 @@
       return;
     }
 
-    videoFrame.addEventListener('load', function(){
-      window.setTimeout(hideVideoPoster, VIDEO_POSTER_LOAD_DELAY);
-    });
-
-    window.setTimeout(hideVideoPoster, VIDEO_POSTER_FALLBACK_DELAY);
+    window.setTimeout(function(){
+      revealVideo();
+    }, VIDEO_REVEAL_DELAY);
   }
 
 

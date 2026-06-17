@@ -2,8 +2,10 @@
 
 <!DOCTYPE html>
 <!--
-Версия: wedding-html-068-menu-current-page-close
+Версия: wedding-html-070-video-ready
 ИЗМЕНЕНИЯ:
+- Mobile-видео: обновлены cache-buster для mobile CSS/JS и подключена логика мягкого показа через is-video-ready.
+- Desktop-видео, меню, попапы, формы, cookie-баннер и Tilda hash-bridge не изменялись.
 - Меню: обновлён cache-buster page-transition.js для закрытия меню при клике по текущей странице.
 - Desktop/mobile: сохранены ранее подключённые mobile-попапы 066 и маска телефона 067.
 - Визуал меню, попапы, формы, видео, cookie-баннер и Tilda hash-bridge не изменялись.
@@ -1104,7 +1106,7 @@
         return new Promise(function(resolve, reject){
           var script = document.createElement('script');
 
-          script.src = src + '?v=' + Date.now();
+          script.src = src + (src.indexOf('?') === -1 ? '?v=' : '&v=') + Date.now();
           script.defer = true;
           script.setAttribute('data-wedding-page-script', 'true');
 
@@ -1124,11 +1126,11 @@
           return {
             mode:'mobile',
             css:[
-              './css/wedding-mobile.css'
+              './css/wedding-mobile.css?v=mobile-video-ready-070'
             ],
             html:'./pages/wedding/wedding-mobile.html?v=mobile-video-sound-049',
             inlineHtml:null,
-            js:'./js/wedding-mobile.js',
+            js:'./js/wedding-mobile.js?v=mobile-video-ready-070',
             error:'Ошибка загрузки мобильной страницы Свадьба. Проверь путь: pages/wedding/wedding-mobile.html'
           };
         }

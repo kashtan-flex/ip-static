@@ -1,4 +1,10 @@
-
+/*
+Версия: graduation-mobile-css-070-video-ready
+ИЗМЕНЕНИЯ:
+- Mobile-видео приведено к desktop-логике показа: iframe скрыт до состояния is-video-ready.
+- Poster сохраняется поверх видео и плавно скрывается только после готовности страницы.
+- Desktop-логика, размеры видео, Kinescope-ссылки, меню, попапы и формы не изменялись.
+*/
 
 .ip-graduation-mobile-scrolltop{
   display:none;
@@ -169,6 +175,7 @@
     pointer-events:none;
   }
 
+  .ip-graduation-mobile.is-video-ready .ip-graduation-mobile-video-poster,
   .ip-graduation-mobile-video-poster.is-hidden{
     opacity:0;
     visibility:hidden;
@@ -182,8 +189,14 @@
     width:390px;
     height:666px;
     border:0;
+    opacity:0;
     transform:translate3d(0,0,0);
+    transition:opacity .72s cubic-bezier(.19,1,.22,1);
     background:#080807;
+  }
+
+  .ip-graduation-mobile.is-video-ready .ip-graduation-mobile-video{
+    opacity:1;
   }
 
   

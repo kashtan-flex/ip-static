@@ -2,8 +2,10 @@
 
 <!DOCTYPE html>
 <!--
-Версия: corporate-html-068-menu-current-page-close
+Версия: corporate-html-070-video-ready
 ИЗМЕНЕНИЯ:
+- Mobile-видео: обновлены cache-buster для mobile CSS/JS и подключена логика мягкого показа через is-video-ready.
+- Desktop-видео, меню, попапы, формы, cookie-баннер и Tilda hash-bridge не изменялись.
 - Меню: обновлён cache-buster page-transition.js для закрытия меню при клике по текущей странице.
 - Desktop/mobile: сохранены ранее подключённые mobile-попапы 066 и маска телефона 067.
 - Визуал меню, попапы, формы, видео, cookie-баннер и Tilda hash-bridge не изменялись.
@@ -120,9 +122,9 @@
       function getConfig(mode){
         if(mode === 'mobile'){
           return {
-            css:['./css/corporate-mobile.css'],
+            css:['./css/corporate-mobile.css?v=mobile-video-ready-070'],
             html:'./pages/corporate/corporate-mobile.html?v=mobile-video-sound-049',
-            js:'./js/corporate-mobile.js',
+            js:'./js/corporate-mobile.js?v=mobile-video-ready-070',
             error:'Ошибка загрузки мобильной страницы Корпоратив. Проверь путь: pages/corporate/corporate-mobile.html'
           };
         }
@@ -180,7 +182,7 @@
       function loadScript(src){
         return new Promise(function(resolve, reject){
           var script = document.createElement('script');
-          script.src = src + '?v=' + Date.now();
+          script.src = src + (src.indexOf('?') === -1 ? '?v=' : '&v=') + Date.now();
           script.defer = true;
           script.setAttribute('data-corporate-page-script', 'true');
           script.onload = function(){
