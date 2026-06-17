@@ -2,12 +2,12 @@
 ==================================================
 PAGE TRANSITION JS
 
-Версия: page-transition-js-043-rider-bypass
+Версия: page-transition-js-044-menu-current-page-close
 
 ИЗМЕНЕНИЯ:
-- Tilda iframe: hash-bridge сохранён для основных страниц.
-- Tilda iframe: добавлены hash-маршруты rider-страниц #rider-bytovoy и #rider-technical.
-- Общий transition-router больше не перехватывает ссылки бытового и технического райдеров.
+- Меню: при клике по ссылке текущей страницы открытое меню закрывается штатной кнопкой меню.
+- Router: сравнение текущей страницы теперь учитывает эквивалентность корня сайта и index.html.
+- Tilda hash-bridge, rider bypass, визуальные transition-настройки и переходы на другие страницы не изменялись.
 ==================================================
 */
 
@@ -403,14 +403,48 @@ PAGE TRANSITION JS
     return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
   }
 
-  function normalizeUrl(url){
+  function normalizePageKey(url){
     var anchor = document.createElement('a');
     anchor.href = url;
-    return anchor.href.split('#')[0];
+
+    var path = anchor.pathname || '/';
+    var file = path.split('/').pop() || 'index.html';
+
+    if(file === ''){
+      file = 'index.html';
+    }
+
+    return anchor.origin + '/' + file.toLowerCase();
   }
 
   function isSamePage(url){
-    return normalizeUrl(window.location.href) === normalizeUrl(url);
+    return normalizePageKey(window.location.href) === normalizePageKey(url);
+  }
+
+  function closeMenuForCurrentPageLink(link){
+    if(!link || !isSamePage(link.href)){
+      return false;
+    }
+
+    var menuPanel = link.closest('.ip-menu-panel');
+
+    if(!menuPanel || !menuPanel.classList.contains('is-open')){
+      return false;
+    }
+
+    var menuButton = document.querySelector('.ip-menu-toggle.is-open') ||
+      document.querySelector('.ip-menu-toggle');
+
+    if(menuButton){
+      menuButton.click();
+      return true;
+    }
+
+    menuPanel.classList.remove('is-open');
+    menuPanel.classList.remove('is-closing');
+    menuPanel.style.pointerEvents = 'none';
+
+    return true;
   }
 
   function shouldSkipLink(link){
@@ -483,6 +517,11 @@ PAGE TRANSITION JS
       }
 
       event.preventDefault();
+
+      if(closeMenuForCurrentPageLink(link)){
+        return;
+      }
+
       goToPage(link.href);
     }, true);
   }

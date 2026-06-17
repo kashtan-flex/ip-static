@@ -2,9 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: policy-html-067-phone-mask
+Версия: policy-html-068-menu-current-page-close
 ИЗМЕНЕНИЯ:
-- desktop/mobile: подключена единая маска телефона с автоподстановкой +7 при фокусе на поле «Телефон».
+- Меню: обновлён cache-buster page-transition.js для закрытия меню при клике по текущей странице.
+- Desktop/mobile: сохранены ранее подключённые mobile-попапы 066 и маска телефона 067.
+- Визуал меню, попапы, формы, видео, cookie-баннер и Tilda hash-bridge не изменялись.
 - обновлён cache-buster фрагмента политики для точечных переносов текста в разделе 2.1 о cookie.
 - desktop: слово «не» во фразе про неподключённые рекламные сервисы перенесено на новую строку.
 - mobile: последний абзац раздела 2.1 получил согласованные переносы без влияния на desktop.
@@ -39,7 +41,7 @@
 
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
   <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
   <link rel="stylesheet" href="./css/legal.css?v=062-mobile-text-linebreaks-only">
@@ -63,7 +65,7 @@
         document.body.appendChild(pageScript);
 
         var transitionScript = document.createElement('script');
-        transitionScript.src = './js/page-transition.js?v=tilda-hash-bridge-036';
+        transitionScript.src = './js/page-transition.js?v=page-transition-menu-current-close-068';
         document.body.appendChild(transitionScript);
       });
   </script>

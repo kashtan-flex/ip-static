@@ -2,9 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: musical-show-html-067-phone-mask
+Версия: musical-show-html-068-menu-current-page-close
 ИЗМЕНЕНИЯ:
-- desktop/mobile: подключена единая маска телефона с автоподстановкой +7 при фокусе на поле «Телефон».
+- Меню: обновлён cache-buster page-transition.js для закрытия меню при клике по текущей странице.
+- Desktop/mobile: сохранены ранее подключённые mobile-попапы 066 и маска телефона 067.
+- Визуал меню, попапы, формы, видео, cookie-баннер и Tilda hash-bridge не изменялись.
 - cookie-баннер на всех страницах мягко проявляется и выезжает снизу после единой задержки.
 - появление сделано зеркальным к плавному исчезновению под меню/попапами без резкого скачка.
 - mobile: cookie-баннер получил отдельные переносы текста, desktop-раскладка сохранена.
@@ -34,7 +36,7 @@
   <link rel="preload" href="./assets/img/musical/video/musical-show-video-poster.webp" as="image">
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
   <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
 </head>
@@ -89,7 +91,7 @@
       function loadPage(mode){
         var config=getConfig(mode); var token=loadToken+1; loadToken=token; currentMode=mode;
         resetState(); clearPageAssets(); root.innerHTML='';
-        Promise.all(config.css.map(loadStylesheet)).then(function(links){if(token!==loadToken){throw new Error('stale-load');} loadedStyles=links; return fetch(config.html);}).then(function(response){if(!response.ok){throw new Error(config.error);} return response.text();}).then(function(html){if(token!==loadToken){throw new Error('stale-load');} root.innerHTML=html; return loadScript(config.js);}).then(function(){if(!document.querySelector('script[data-page-transition-script]')){var transitionScript=document.createElement('script');transitionScript.src='./js/page-transition.js?v=tilda-hash-bridge-036';transitionScript.defer=true;transitionScript.setAttribute('data-page-transition-script','true');document.body.appendChild(transitionScript);}}).catch(function(error){if(error && error.message==='stale-load'){return;} console.error(error); root.innerHTML='<pre style="color:#fff;padding:40px;font-family:Arial,sans-serif;">'+config.error+'</pre>';});
+        Promise.all(config.css.map(loadStylesheet)).then(function(links){if(token!==loadToken){throw new Error('stale-load');} loadedStyles=links; return fetch(config.html);}).then(function(response){if(!response.ok){throw new Error(config.error);} return response.text();}).then(function(html){if(token!==loadToken){throw new Error('stale-load');} root.innerHTML=html; return loadScript(config.js);}).then(function(){if(!document.querySelector('script[data-page-transition-script]')){var transitionScript=document.createElement('script');transitionScript.src='./js/page-transition.js?v=page-transition-menu-current-close-068';transitionScript.defer=true;transitionScript.setAttribute('data-page-transition-script','true');document.body.appendChild(transitionScript);}}).catch(function(error){if(error && error.message==='stale-load'){return;} console.error(error); root.innerHTML='<pre style="color:#fff;padding:40px;font-family:Arial,sans-serif;">'+config.error+'</pre>';});
       }
       function scheduleModeCheck(){if(resizeTimer){window.clearTimeout(resizeTimer);} resizeTimer=window.setTimeout(function(){var nextMode=getMode(); if(nextMode!==currentMode){loadPage(nextMode);}}, BREAKPOINT_DEBOUNCE);}
       if(!root){return;}
