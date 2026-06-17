@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!--
-Версия: biography-html-055-carousel-controls
+Версия: biography-html-058-cookie-notice
 ИЗМЕНЕНИЯ:
+- global: подключён единый cookie-баннер без изменения карусели, меню и попапов.
 - desktop/mobile: обновлены cache-buster для файлов биографии после ускорения смены фотографий.
 - desktop: подключена версия с внутренними стрелками управления фотографиями.
 - mobile: подключена версия с горизонтальным свайпом фотографий без изменения меню.
@@ -83,6 +84,7 @@
   <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 
+  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-058">
 </head>
 
 <body>
@@ -183,6 +185,8 @@
           '<pre style="color:#fff;padding:40px;font-family:Arial,sans-serif;">Ошибка загрузки страницы Биография. Проверь путь: pages/biography/biography.html</pre>';
       });
   </script>
+
+  <script src="./js/cookie-notice.js?v=cookie-notice-058" defer></script>
 
 </body>
 </html>

@@ -2,8 +2,9 @@
 
 <!DOCTYPE html>
 <!--
-Версия: policy-html-048-mobile-popup-close-size
+Версия: policy-html-058-cookie-notice
 ИЗМЕНЕНИЯ:
+- legal/global: подключён cookie-баннер и обновлена загрузка политики с разделом про cookie.
 - mobile: обновлён cache-buster общего popups-mobile.css после уменьшения визуального крестика формы.
 - mobile: единый размер крестика теперь применяется ко всем формам-попапам сайта.
 - desktop, меню, галереи, отзывы, контент и логика страниц не изменялись.
@@ -39,6 +40,7 @@
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
   <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
+  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-058">
   <link rel="stylesheet" href="./css/legal.css?v=062-mobile-text-linebreaks-only">
 </head>
 
@@ -48,7 +50,7 @@
   <div id="ip-policy-root"></div>
 
   <script>
-    fetch('./pages/legal/policy.html?v=popup-close-030')
+    fetch('./pages/legal/policy.html?v=cookie-notice-058')
       .then(function(response){
         return response.text();
       })
@@ -64,6 +66,8 @@
         document.body.appendChild(transitionScript);
       });
   </script>
+
+  <script src="./js/cookie-notice.js?v=cookie-notice-058" defer></script>
 
 </body>
 </html>
