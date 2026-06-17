@@ -2,13 +2,13 @@
 ==================================================
 POPUPS MOBILE CSS
 
-Версия: popups-mobile-css-048-unified-small-close-icon
+Версия: popups-mobile-css-066-figma-card-ratio-transparent-submit
 
 ИЗМЕНЕНИЯ:
-- mobile: визуальный знак X у кнопки закрытия формы уменьшен до размера чекбокса согласия.
-- mobile: увеличенная кликабельная область кнопки закрытия сохранена для удобного тапа.
-- mobile: правка применена глобально ко всем формам-попапам сайта через общий popups-mobile.css.
-- desktop, меню, галереи, отзывы и логика попапов не изменялись.
+- mobile: пропорция карточки формы приведена к макету Figma 350×620 вместо прежней более высокой карточки.
+- mobile: за счёт новой пропорции карточка на экране 390×700 получает отступы около 40px сверху и снизу без ручного смещения отдельных элементов.
+- mobile: кнопка отправки стала прозрачной с тонкой белой обводкой вместо белой заливки.
+- desktop, меню, логика формы, чекбокс, success message, поля ввода и JavaScript не изменялись.
 ==================================================
 */
 
@@ -22,8 +22,8 @@ POPUPS MOBILE CSS
 
   .ip-popup-card{
     container-type:inline-size;
-    width:min(350px, calc(100vw - 40px), calc((100vh - 40px) * .535));
-    aspect-ratio:350 / 654;
+    width:min(350px, calc(100vw - 40px), calc((100vh - 40px) * .5645));
+    aspect-ratio:350 / 620;
     border-radius:calc(12 / 350 * 100cqw);
     background-image:
       linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.18)),
@@ -116,9 +116,9 @@ POPUPS MOBILE CSS
     width:calc(294 / 350 * 100cqw);
     height:calc(57 / 350 * 100cqw);
     border-radius:calc(9 / 350 * 100cqw);
-    background:#fff;
-    color:#111;
-    border-color:#fff;
+    background:transparent;
+    color:#fff;
+    border-color:rgba(255,255,255,.30);
     font-size:calc(16 / 350 * 100cqw);
     transform:translate3d(0,0,0) scale(1);
     transition:
@@ -131,9 +131,9 @@ POPUPS MOBILE CSS
   }
 
   .ip-popup-submit:hover{
-    background:#fff;
-    color:#111;
-    border-color:#fff;
+    background:transparent;
+    color:#fff;
+    border-color:rgba(255,255,255,.30);
   }
 
   .ip-popup-submit:active{
