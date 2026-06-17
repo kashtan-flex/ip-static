@@ -1,9 +1,9 @@
 /*
-Версия: cookie-notice-css-062
+Версия: cookie-notice-css-063
 ИЗМЕНЕНИЯ:
-- desktop/mobile: появление cookie-баннера сделано более плавным через opacity и выезд снизу.
-- расстояние стартового выезда увеличено, чтобы баннер мягче появлялся из нижней части экрана.
-- текстовые переносы desktop/mobile сохранены без изменений.
+- desktop/mobile: появление cookie-баннера сделано зеркальным к плавному исчезновению под меню/попапами.
+- баннер стартует ниже нижнего края экрана и мягко выезжает снизу без резкого скачка.
+- текстовые переносы desktop/mobile, кнопка и ссылка сохранены без изменений.
 */
 
 .ip-cookie-notice,
@@ -31,14 +31,19 @@
   box-shadow:0 18px 52px rgba(0,0,0,.42);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
-  transform:translate3d(-50%, 32px, 0);
+  transform:translate3d(-50%, calc(100% + 42px), 0);
   opacity:0;
   pointer-events:none;
+  will-change:opacity,transform;
   transition:
-    opacity .64s cubic-bezier(.19,1,.22,1),
-    transform .64s cubic-bezier(.19,1,.22,1),
-    visibility .64s cubic-bezier(.19,1,.22,1);
+    opacity .86s cubic-bezier(.19,1,.22,1),
+    transform .86s cubic-bezier(.19,1,.22,1),
+    visibility 0s linear .86s;
   visibility:hidden;
+}
+
+.ip-cookie-notice.is-ready{
+  visibility:visible;
 }
 
 .ip-cookie-notice.is-visible{
@@ -46,12 +51,13 @@
   transform:translate3d(-50%, 0, 0);
   pointer-events:auto;
   visibility:visible;
+  transition-delay:0s;
 }
 
 .ip-cookie-notice.is-covered,
 .ip-cookie-notice.is-closing{
   opacity:0;
-  transform:translate3d(-50%, 32px, 0);
+  transform:translate3d(-50%, calc(100% + 42px), 0);
   pointer-events:none;
   visibility:hidden;
 }
@@ -138,7 +144,7 @@
     min-height:0;
     display:block;
     padding:14px;
-    transform:translate3d(0, 26px, 0);
+    transform:translate3d(0, calc(100% + 28px), 0);
   }
 
   .ip-cookie-notice.is-visible{
@@ -147,7 +153,7 @@
 
   .ip-cookie-notice.is-covered,
   .ip-cookie-notice.is-closing{
-    transform:translate3d(0, 26px, 0);
+    transform:translate3d(0, calc(100% + 28px), 0);
   }
 
   .ip-cookie-notice__text{

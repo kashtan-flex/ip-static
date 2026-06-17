@@ -1,10 +1,9 @@
 /*
-Версия: cookie-notice-js-062
+Версия: cookie-notice-js-063
 ИЗМЕНЕНИЯ:
-- cookie-баннер теперь появляется с единой задержкой на всех страницах сайта.
-- показ запускается после загрузки страницы, чтобы баннер не перекрывал стартовые анимации и первый визуальный блок.
-- задержка появления увеличена до 3600ms для desktop и mobile.
-- логика сохранения согласия, скрытия под меню/попапами/лайтбоксами и текст баннера сохранены.
+- появление cookie-баннера разделено на подготовку слоя и видимый старт анимации, чтобы убрать резкий скачок.
+- баннер сначала монтируется в скрытом положении, затем плавно проявляется и выезжает снизу.
+- единая задержка, текст, логика сохранения согласия и скрытия под меню/попапами/лайтбоксами сохранены.
 */
 
 (function(){
@@ -93,6 +92,7 @@
 
     notice.querySelector('.ip-cookie-notice__button').addEventListener('click', function(){
       saveAcceptedNotice();
+      notice.classList.remove('is-visible');
       notice.classList.add('is-closing');
 
       window.setTimeout(function(){
@@ -106,7 +106,7 @@
           observer.disconnect();
           observer = null;
         }
-      }, 650);
+      }, 900);
     });
 
     document.body.appendChild(notice);
@@ -116,8 +116,16 @@
         return;
       }
 
-      notice.classList.add('is-visible');
-      updateNoticeLayer();
+      notice.classList.add('is-ready');
+
+      window.requestAnimationFrame(function(){
+        if(!notice){
+          return;
+        }
+
+        notice.classList.add('is-visible');
+        updateNoticeLayer();
+      });
     });
   }
 
