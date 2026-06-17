@@ -1,4 +1,10 @@
-
+/*
+  Версия: legal.css — 069
+  ИЗМЕНЕНИЯ:
+  - Исправлено закрытие нижних правовых ссылок в мобильном меню страниц политики и согласия.
+  - При закрытии мобильного меню блок .ip-menu-legal теперь уходит вместе с меню.
+  - Desktop-логика, разметка меню, JS и визуальная геометрия меню не изменялись.
+*/
 
 html,
 body,
@@ -1318,9 +1324,20 @@ body,
   }
 
   .ip-policy-page > .ip-menu-panel.is-closing .ip-social,
-  .ip-policy-page > .ip-menu-panel.is-closing .ip-menu-list > *,
-  .ip-policy-page > .ip-menu-panel.is-closing .ip-menu-legal{
+  .ip-policy-page > .ip-menu-panel.is-closing .ip-menu-list > *{
     animation-play-state:paused !important;
+    pointer-events:none !important;
+  }
+
+  .ip-policy-page > .ip-menu-panel.is-closing .ip-menu-legal{
+    animation:none !important;
+    opacity:0 !important;
+    visibility:hidden !important;
+    transform:translate3d(18px,0,0) !important;
+    transition:
+      opacity .24s ease,
+      transform .32s cubic-bezier(.19,1,.22,1),
+      visibility 0s linear .32s !important;
     pointer-events:none !important;
   }
 }
