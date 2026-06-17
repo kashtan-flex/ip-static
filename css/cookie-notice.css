@@ -1,8 +1,8 @@
 /*
-Версия: cookie-notice-css-059
+Версия: cookie-notice-css-060
 ИЗМЕНЕНИЯ:
-- скорректирована ширина cookie-баннера: desktop-плашка стала уже.
-- текст cookie-баннера разложен на отдельные строки: основной текст, продолжение и ссылка на политику.
+- mobile: текст cookie-баннера разложен на четыре строки по утверждённому переносу.
+- desktop: расположение текста cookie-баннера сохранено без изменений.
 - визуальный слой баннера не меняет меню, попапы, формы, видео и page-transition.
 */
 
@@ -66,7 +66,20 @@
   letter-spacing:-.02em;
 }
 
+.ip-cookie-notice__desktop-text{
+  display:block;
+}
+
+.ip-cookie-notice__mobile-text{
+  display:none;
+}
+
 .ip-cookie-notice__line{
+  display:block;
+  white-space:nowrap;
+}
+
+.ip-cookie-notice__mobile-line{
   display:block;
   white-space:nowrap;
 }
@@ -142,9 +155,17 @@
     line-height:1.28;
   }
 
-  .ip-cookie-notice__line,
-  .ip-cookie-notice__text a{
-    white-space:normal;
+  .ip-cookie-notice__desktop-text{
+    display:none;
+  }
+
+  .ip-cookie-notice__mobile-text{
+    display:block;
+  }
+
+  .ip-cookie-notice__mobile-line,
+  .ip-cookie-notice__mobile-text a{
+    white-space:nowrap;
   }
 
   .ip-cookie-notice__button{

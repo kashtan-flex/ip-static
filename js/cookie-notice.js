@@ -1,7 +1,8 @@
 /*
-Версия: cookie-notice-js-059
+Версия: cookie-notice-js-060
 ИЗМЕНЕНИЯ:
-- текст cookie-баннера разделён на три визуальные строки.
+- mobile: текст cookie-баннера разделён на четыре утверждённые строки.
+- desktop: текст cookie-баннера остаётся в прежнем трёхстрочном расположении.
 - согласие сохраняется локально в браузере, чтобы баннер не появлялся повторно.
 - баннер автоматически скрывается, пока открыты меню, попапы, отзывы или lightbox.
 */
@@ -70,9 +71,17 @@
 
     notice.innerHTML = [
       '<p class="ip-cookie-notice__text">',
-        '<span class="ip-cookie-notice__line">Сайт использует cookie для корректной работы страниц и видео.</span>',
-        '<span class="ip-cookie-notice__line">Продолжая просмотр, вы соглашаетесь с их использованием.</span>',
-        '<a href="./policy.html">Политика обработки персональных данных</a>',
+        '<span class="ip-cookie-notice__desktop-text">',
+          '<span class="ip-cookie-notice__line">Сайт использует cookie для корректной работы страниц и видео.</span>',
+          '<span class="ip-cookie-notice__line">Продолжая просмотр, вы соглашаетесь с их использованием.</span>',
+          '<a href="./policy.html">Политика обработки персональных данных</a>',
+        '</span>',
+        '<span class="ip-cookie-notice__mobile-text">',
+          '<span class="ip-cookie-notice__mobile-line">Сайт использует cookie для корректной работы</span>',
+          '<span class="ip-cookie-notice__mobile-line">страниц и видео. Продолжая просмотр,</span>',
+          '<span class="ip-cookie-notice__mobile-line">вы соглашаетесь с их использованием.</span>',
+          '<a href="./policy.html">Политика обработки персональных данных</a>',
+        '</span>',
       '</p>',
       '<button class="ip-cookie-notice__button" type="button">Понятно</button>'
     ].join('');
