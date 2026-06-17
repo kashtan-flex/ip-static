@@ -2,9 +2,9 @@
 
 <!DOCTYPE html>
 <!--
-Версия: policy-html-066-mobile-popup-figma-card
+Версия: policy-html-067-phone-mask
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster общего popups-mobile.css для пропорции карточки 350×620 и прозрачной кнопки формы.
+- desktop/mobile: подключена единая маска телефона с автоподстановкой +7 при фокусе на поле «Телефон».
 - обновлён cache-buster фрагмента политики для точечных переносов текста в разделе 2.1 о cookie.
 - desktop: слово «не» во фразе про неподключённые рекламные сервисы перенесено на новую строку.
 - mobile: последний абзац раздела 2.1 получил согласованные переносы без влияния на desktop.
@@ -39,7 +39,7 @@
 
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
   <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
   <link rel="stylesheet" href="./css/legal.css?v=062-mobile-text-linebreaks-only">
@@ -67,6 +67,8 @@
         document.body.appendChild(transitionScript);
       });
   </script>
+
+  <script src="./js/phone-mask.js?v=phone-mask-067" defer></script>
 
   <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 

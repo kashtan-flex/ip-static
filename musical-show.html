@@ -2,16 +2,16 @@
 
 <!DOCTYPE html>
 <!--
-Версия: musical-show-html-066-mobile-popup-figma-card
+Версия: musical-show-html-067-phone-mask
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster общего popups-mobile.css для пропорции карточки 350×620 и прозрачной кнопки формы.
+- desktop/mobile: подключена единая маска телефона с автоподстановкой +7 при фокусе на поле «Телефон».
 - cookie-баннер на всех страницах мягко проявляется и выезжает снизу после единой задержки.
 - появление сделано зеркальным к плавному исчезновению под меню/попапами без резкого скачка.
 - mobile: cookie-баннер получил отдельные переносы текста, desktop-раскладка сохранена.
 - global: подключён единый cookie-баннер без изменения desktop/mobile проекта.
 - desktop: добавлены и принудительно отображены стрелки перелистывания фотографий в открытом lightbox галереи.
 - расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
-- desktop, меню, отзывы и видео не изменялись.
+- mobile, меню, попапы форм, отзывы и видео не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -34,7 +34,7 @@
   <link rel="preload" href="./assets/img/musical/video/musical-show-video-poster.webp" as="image">
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
   <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
 </head>
@@ -99,6 +99,8 @@
       if(window.visualViewport){window.visualViewport.addEventListener('resize', function(){setViewportHeight();scheduleModeCheck();}, {passive:true});}
     })();
   </script>
+  <script src="./js/phone-mask.js?v=phone-mask-067" defer></script>
+
   <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 
 </body>
