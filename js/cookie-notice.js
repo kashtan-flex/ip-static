@@ -1,8 +1,9 @@
 /*
-Версия: cookie-notice-js-060
+Версия: cookie-notice-js-061
 ИЗМЕНЕНИЯ:
-- mobile: текст cookie-баннера разделён на четыре утверждённые строки.
-- desktop: текст cookie-баннера остаётся в прежнем трёхстрочном расположении.
+- home: cookie-баннер на главной странице появляется после завершения анимации имени и подзаголовка с дополнительной паузой на чтение.
+- остальные страницы: прежнее появление cookie-баннера сохранено без задержки.
+- mobile/desktop: текст и расположение баннера не менялись.
 - согласие сохраняется локально в браузере, чтобы баннер не появлялся повторно.
 - баннер автоматически скрывается, пока открыты меню, попапы, отзывы или lightbox.
 */
@@ -14,6 +15,8 @@
   var COOKIE_MAX_AGE = 31536000;
   var notice = null;
   var observer = null;
+  var HOME_NOTICE_DELAY = 3100;
+  var HOME_WAIT_TIMEOUT = 5000;
 
   function canUseStorage(){
     try{
@@ -130,16 +133,51 @@
     });
   }
 
-  function initCookieNotice(){
-    if(hasAcceptedNotice()){
-      return;
+  function isHomePage(){
+    return Boolean(document.getElementById('ip-home-root'));
+  }
+
+  function waitForHomePage(callback){
+    var startTime = Date.now();
+
+    function checkHomePageReady(){
+      if(document.querySelector('.ip-page-home')){
+        callback();
+        return;
+      }
+
+      if(Date.now() - startTime >= HOME_WAIT_TIMEOUT){
+        callback();
+        return;
+      }
+
+      window.setTimeout(checkHomePageReady, 50);
     }
 
+    checkHomePageReady();
+  }
+
+  function showNotice(){
     createNotice();
     setupObserver();
 
     window.addEventListener('resize', updateNoticeLayer, { passive:true });
     window.addEventListener('orientationchange', updateNoticeLayer, { passive:true });
+  }
+
+  function initCookieNotice(){
+    if(hasAcceptedNotice()){
+      return;
+    }
+
+    if(isHomePage()){
+      waitForHomePage(function(){
+        window.setTimeout(showNotice, HOME_NOTICE_DELAY);
+      });
+      return;
+    }
+
+    showNotice();
   }
 
   if(document.readyState === 'loading'){
