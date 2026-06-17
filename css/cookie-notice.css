@@ -1,8 +1,8 @@
 /*
-Версия: cookie-notice-css-058
+Версия: cookie-notice-css-059
 ИЗМЕНЕНИЯ:
-- добавлен единый лёгкий cookie-баннер для сайта Ивана Перцева.
-- баннер расположен снизу по центру, адаптирован для desktop и mobile.
+- скорректирована ширина cookie-баннера: desktop-плашка стала уже.
+- текст cookie-баннера разложен на отдельные строки: основной текст, продолжение и ссылка на политику.
 - визуальный слой баннера не меняет меню, попапы, формы, видео и page-transition.
 */
 
@@ -19,8 +19,8 @@
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:18px;
-  width:min(720px, calc(100vw - 48px));
+  gap:16px;
+  width:min(610px, calc(100vw - 48px));
   min-height:62px;
   padding:16px 18px 16px 20px;
   color:#fff;
@@ -61,14 +61,23 @@
   margin:0;
   color:rgba(255,255,255,.86);
   font-size:13px;
-  line-height:1.25;
+  line-height:1.28;
   font-weight:400;
   letter-spacing:-.02em;
 }
 
+.ip-cookie-notice__line{
+  display:block;
+  white-space:nowrap;
+}
+
 .ip-cookie-notice__text a{
+  display:block;
+  width:max-content;
+  max-width:100%;
   color:#69C9FF;
   text-decoration:none;
+  white-space:nowrap;
   transition:opacity .2s ease;
 }
 
@@ -131,6 +140,11 @@
   .ip-cookie-notice__text{
     font-size:12px;
     line-height:1.28;
+  }
+
+  .ip-cookie-notice__line,
+  .ip-cookie-notice__text a{
+    white-space:normal;
   }
 
   .ip-cookie-notice__button{
