@@ -2,20 +2,10 @@
 
 <!DOCTYPE html>
 <!--
-Версия: wedding-html-070-video-ready
+Версия: wedding-html-071-desktop-media-guard
 ИЗМЕНЕНИЯ:
-- Mobile-видео: обновлены cache-buster для mobile CSS/JS и подключена логика мягкого показа через is-video-ready.
-- Desktop-видео, меню, попапы, формы, cookie-баннер и Tilda hash-bridge не изменялись.
-- Меню: обновлён cache-buster page-transition.js для закрытия меню при клике по текущей странице.
-- Desktop/mobile: сохранены ранее подключённые mobile-попапы 066 и маска телефона 067.
-- Визуал меню, попапы, формы, видео, cookie-баннер и Tilda hash-bridge не изменялись.
-- cookie-баннер на всех страницах мягко проявляется и выезжает снизу после единой задержки.
-- появление сделано зеркальным к плавному исчезновению под меню/попапами без резкого скачка.
-- mobile: cookie-баннер получил отдельные переносы текста, desktop-раскладка сохранена.
-- global: подключён единый cookie-баннер без изменения desktop/mobile проекта.
-- desktop: добавлены и принудительно отображены стрелки перелистывания фотографий в открытом lightbox галереи.
-- расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
-- mobile, меню, попапы форм, отзывы и видео не изменялись.
+- desktop: обновлён cache-buster wedding.css для прозрачного защитного слоя поверх видео.
+- mobile-видео 070, меню, попапы, формы, cookie-баннер и Tilda hash-bridge сохранены.
 -->
 <html lang="ru">
 <head>
@@ -1138,7 +1128,7 @@
         return {
           mode:'desktop',
           css:[
-            './css/wedding.css?v=desktop-gallery-arrows-052',
+            './css/wedding.css?v=desktop-media-guard-071',
             './css/project-reviews.css?v=desktop-review-arrows-050'
           ],
           html:'./pages/wedding/wedding.html?v=desktop-gallery-arrows-052',

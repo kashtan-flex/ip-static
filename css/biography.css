@@ -1,10 +1,8 @@
 /*
-Версия: biography-css-056-carousel-arrows-shadow
+Версия: biography-css-071-desktop-media-guard
 ИЗМЕНЕНИЯ:
-- ускорена смена фотографий биографии в 1.5 раза.
-- убран движущийся zoom-эффект фотографий, сохранена статичная посадка кадра.
-- добавлены desktop-стрелки управления фотографиями внутри области карусели.
-- стрелкам карусели добавлена точно такая же drop-shadow тень, как у burger-menu.
+- desktop: добавлен прозрачный защитный слой поверх фотокарусели, чтобы Яндекс.Браузер не показывал встроенное меню на фото.
+- стрелки карусели, бургер, меню, mobile-версия и структура страницы не изменялись.
 */
 
 .ip-biography,
@@ -241,6 +239,27 @@
   transform:translate3d(0,0,0);
   backface-visibility:hidden;
   -webkit-backface-visibility:hidden;
+}
+
+
+@media (min-width:768px){
+  .ip-biography-carousel::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:6;
+    display:block;
+    background:rgba(255,255,255,0);
+    pointer-events:auto;
+    cursor:default;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+
+  .ip-biography-slide img{
+    -webkit-user-drag:none;
+    user-select:none;
+  }
 }
 
 .ip-biography-slide{

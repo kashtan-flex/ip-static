@@ -1,3 +1,10 @@
+/*
+Версия: musical-show-css-071-desktop-media-guard
+ИЗМЕНЕНИЯ:
+- desktop: добавлен прозрачный защитный слой поверх области видео/poster, чтобы Яндекс.Браузер не показывал встроенное меню на видео.
+- галерея, lightbox, mobile-видео, меню, попапы и размеры видео не изменялись.
+*/
+
 
 
 .ip-musical-show,
@@ -389,6 +396,22 @@
   inset:0;
   overflow:hidden;
   background:#050603;
+}
+
+
+@media (min-width:768px){
+  .ip-musical-show-video-wrap::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:4;
+    display:block;
+    background:rgba(255,255,255,0);
+    pointer-events:auto;
+    cursor:default;
+    -webkit-user-select:none;
+    user-select:none;
+  }
 }
 
 .ip-musical-show-video-poster{
