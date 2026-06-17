@@ -2,15 +2,12 @@
 
 <!DOCTYPE html>
 <!--
-Версия: policy-html-063-cookie-notice-soft-reveal
+Версия: policy-html-064-cookie-section-line-breaks
 ИЗМЕНЕНИЯ:
-- cookie-баннер на всех страницах мягко проявляется и выезжает снизу после единой задержки.
-- появление сделано зеркальным к плавному исчезновению под меню/попапами без резкого скачка.
-- mobile: cookie-баннер получил отдельные переносы текста, desktop-раскладка сохранена.
-- legal/global: подключён cookie-баннер и обновлена загрузка политики с разделом про cookie.
-- mobile: обновлён cache-buster общего popups-mobile.css после уменьшения визуального крестика формы.
-- mobile: единый размер крестика теперь применяется ко всем формам-попапам сайта.
-- desktop, меню, галереи, отзывы, контент и логика страниц не изменялись.
+- обновлён cache-buster фрагмента политики для точечных переносов текста в разделе 2.1 о cookie.
+- desktop: слово «не» во фразе про неподключённые рекламные сервисы перенесено на новую строку.
+- mobile: последний абзац раздела 2.1 получил согласованные переносы без влияния на desktop.
+- cookie-баннер, меню, попапы, формы, видео, Tilda и hash-bridge не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -53,7 +50,7 @@
   <div id="ip-policy-root"></div>
 
   <script>
-    fetch('./pages/legal/policy.html?v=cookie-notice-058')
+    fetch('./pages/legal/policy.html?v=policy-cookie-breaks-064')
       .then(function(response){
         return response.text();
       })
