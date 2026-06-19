@@ -1,10 +1,16 @@
 /*
-Версия: biography-mobile-css-055-carousel-swipe
+==================================================
+BIOGRAPHY MOBILE CSS 072 MOBILE MENU CLOSE CROSS
+
+Версия: biography-mobile-css-072-mobile-menu-close-cross
+
 ИЗМЕНЕНИЯ:
-- mobile: карусель фотографий подготовлена для горизонтального свайпа пальцем.
-- mobile: стрелки карусели скрыты, меню и вертикальный скролл страницы не изменялись.
-- mobile: сохранено ускоренное проявление фото без движущегося zoom-эффекта.
+- mobile: крестик закрытия меню в открытом состоянии приведён к размеру крестика мобильных попапов.
+- mobile: цвет крестика в меню синхронизирован с цветом нумерации фотографий в мобильном lightbox — rgba(255,255,255,.72).
+- desktop, положение меню, бургер в закрытом состоянии, попапы, галереи и JavaScript не изменялись.
+==================================================
 */
+
 
 .ip-biography-scrolltop{
   display:none;
@@ -616,5 +622,14 @@
     font-size:8px;
     line-height:150%;
     text-decoration:none !important;
+  }
+}
+
+@media (max-width:767px){
+  .ip-biography .ip-menu-toggle.is-open .ip-menu-line{
+    left:6px;
+    width:15px;
+    height:2px;
+    background:rgba(255,255,255,.72);
   }
 }

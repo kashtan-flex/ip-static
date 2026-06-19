@@ -2,13 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-065-tilda-lead-bridge
+Версия: cooperation-html-072-mobile-menu-close-cross
 ИЗМЕНЕНИЯ:
-- добавлено подключение js/tilda-lead-bridge.js для отправки заявок из собственных попапов в скрытую Tilda-форму через postMessage.
-- визуальная вёрстка, меню, попапы, видео и Tilda hash-bridge не изменялись.
-- mobile: обновлён cache-buster общего popups-mobile.css после уменьшения визуального крестика формы.
-- mobile: единый размер крестика теперь применяется ко всем формам-попапам сайта.
-- desktop, меню, галереи, отзывы, контент и логика страниц не изменялись.
+- mobile: обновлён cache-buster CSS после правки крестика закрытия меню.
+- mobile: размер и цвет крестика в открытом меню синхронизированы с мобильными попапами и нумерацией фотографий.
+- desktop, контент, меню-логика, попапы, формы, видео и Tilda hash-bridge не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -97,7 +95,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-mobile-popup-close-size-047';
+      var ASSET_VERSION = 'mobile-menu-close-cross-072';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';

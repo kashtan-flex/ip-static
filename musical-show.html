@@ -2,13 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: musical-show-html-065-tilda-lead-bridge
+Версия: musical-show-html-072-mobile-menu-close-cross
 ИЗМЕНЕНИЯ:
-- добавлено подключение js/tilda-lead-bridge.js для отправки заявок из собственных попапов в скрытую Tilda-форму через postMessage.
-- визуальная вёрстка, меню, попапы, видео и Tilda hash-bridge не изменялись.
-- desktop: добавлены и принудительно отображены стрелки перелистывания фотографий в открытом lightbox галереи.
-- расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
-- mobile, меню, попапы форм, отзывы и видео не изменялись.
+- mobile: обновлён cache-buster CSS после правки крестика закрытия меню.
+- mobile: размер и цвет крестика в открытом меню синхронизированы с мобильными попапами и нумерацией фотографий.
+- desktop, контент, меню-логика, попапы, формы, видео и Tilda hash-bridge не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -58,7 +56,7 @@
       }
       function getConfig(mode){
         if(mode === 'mobile'){
-          return {css:['./css/musical-show-mobile.css'],html:'./pages/musical-show/musical-show-mobile.html?v=mobile-video-sound-049',js:'./js/musical-show-mobile.js',error:'Ошибка загрузки мобильной страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show-mobile.html'};
+          return {css:['./css/musical-show-mobile.css?v=mobile-menu-close-cross-072'],html:'./pages/musical-show/musical-show-mobile.html?v=mobile-video-sound-049',js:'./js/musical-show-mobile.js',error:'Ошибка загрузки мобильной страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show-mobile.html'};
         }
         return {css:['./css/musical-show.css?v=desktop-gallery-arrows-052','./css/musical-show-reviews.css?v=desktop-review-arrows-050'],html:'./pages/musical-show/musical-show.html?v=desktop-gallery-arrows-052',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
       }

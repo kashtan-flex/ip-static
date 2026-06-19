@@ -1,10 +1,16 @@
 /*
-Версия: graduation-mobile-css-070-video-ready
+==================================================
+GRADUATION MOBILE CSS 072 MOBILE MENU CLOSE CROSS
+
+Версия: graduation-mobile-css-072-mobile-menu-close-cross
+
 ИЗМЕНЕНИЯ:
-- Mobile-видео приведено к desktop-логике показа: iframe скрыт до состояния is-video-ready.
-- Poster сохраняется поверх видео и плавно скрывается только после готовности страницы.
-- Desktop-логика, размеры видео, Kinescope-ссылки, меню, попапы и формы не изменялись.
+- mobile: крестик закрытия меню в открытом состоянии приведён к размеру крестика мобильных попапов.
+- mobile: цвет крестика в меню синхронизирован с цветом нумерации фотографий в мобильном lightbox — rgba(255,255,255,.72).
+- desktop, положение меню, бургер в закрытом состоянии, попапы, галереи и JavaScript не изменялись.
+==================================================
 */
+
 
 .ip-graduation-mobile-scrolltop{
   display:none;
@@ -1889,5 +1895,15 @@
   .ip-graduation-mobile .ip-menu-panel::before,
   .ip-graduation-mobile .ip-menu-panel::after{
     height:840px !important;
+  }
+}
+
+
+@media (max-width:767px){
+  .ip-graduation-mobile .ip-menu-toggle.is-open .ip-menu-line{
+    left:6px;
+    width:15px;
+    height:2px;
+    background:rgba(255,255,255,.72);
   }
 }

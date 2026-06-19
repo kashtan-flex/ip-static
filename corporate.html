@@ -2,13 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: corporate-html-065-tilda-lead-bridge
+Версия: corporate-html-072-mobile-menu-close-cross
 ИЗМЕНЕНИЯ:
-- добавлено подключение js/tilda-lead-bridge.js для отправки заявок из собственных попапов в скрытую Tilda-форму через postMessage.
-- визуальная вёрстка, меню, попапы, видео и Tilda hash-bridge не изменялись.
-- desktop: добавлены и принудительно отображены стрелки перелистывания фотографий в открытом lightbox галереи.
-- расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
-- mobile, меню, попапы форм, отзывы и видео не изменялись.
+- mobile: обновлён cache-buster CSS после правки крестика закрытия меню.
+- mobile: размер и цвет крестика в открытом меню синхронизированы с мобильными попапами и нумерацией фотографий.
+- desktop, контент, меню-логика, попапы, формы, видео и Tilda hash-bridge не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -115,7 +113,7 @@
       function getConfig(mode){
         if(mode === 'mobile'){
           return {
-            css:['./css/corporate-mobile.css'],
+            css:['./css/corporate-mobile.css?v=mobile-menu-close-cross-072'],
             html:'./pages/corporate/corporate-mobile.html?v=mobile-video-sound-049',
             js:'./js/corporate-mobile.js',
             error:'Ошибка загрузки мобильной страницы Корпоратив. Проверь путь: pages/corporate/corporate-mobile.html'

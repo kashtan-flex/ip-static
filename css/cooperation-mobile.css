@@ -1,17 +1,16 @@
 /*
 ==================================================
-COOPERATION MOBILE CSS
+COOPERATION MOBILE CSS 072 MOBILE MENU CLOSE CROSS
 
-Версия: cooperation-mobile-css-046-faster-mobile-reveal
+Версия: cooperation-mobile-css-072-mobile-menu-close-cross
 
 ИЗМЕНЕНИЯ:
-- mobile: входная анимация страницы «Сотрудничество» ускорена примерно в 1.5 раза.
-- mobile: пропорционально уменьшены duration и delay у glow-фона и общего появления контента.
-- mobile: портрет продолжает появляться вместе с основными элементами страницы, без отдельной scroll-анимации.
-- mobile riders/menu: логика версии 045 сохранена без изменений.
-- desktop, попапы, hash-bridge и остальные страницы не изменялись.
+- mobile: крестик закрытия меню в открытом состоянии приведён к размеру крестика мобильных попапов.
+- mobile: цвет крестика в меню синхронизирован с цветом нумерации фотографий в мобильном lightbox — rgba(255,255,255,.72).
+- desktop, положение меню, бургер в закрытом состоянии, попапы, галереи и JavaScript не изменялись.
 ==================================================
 */
+
 
 .ip-cooperation-mobile-scrolltop{
   display:none;
@@ -661,5 +660,15 @@ COOPERATION MOBILE CSS
       opacity:1;
       transform:translate3d(0,0,0) scale(1);
     }
+  }
+}
+
+
+@media (max-width:767px){
+  .ip-cooperation-mobile .ip-menu-toggle.is-open .ip-menu-line{
+    left:6px;
+    width:15px;
+    height:2px;
+    background:rgba(255,255,255,.72);
   }
 }
