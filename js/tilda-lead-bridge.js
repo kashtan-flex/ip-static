@@ -2,14 +2,16 @@
 ==================================================
 TILDA LEAD BRIDGE JS
 
-Версия: tilda-lead-bridge-js-080-success-montserrat-duration
+Версия: tilda-lead-bridge-js-082-success-text-only
 
 ИЗМЕНЕНИЯ:
 - убрана техническая строка source из payload заявки.
 - убран оптимистичный success-сценарий: успешное состояние показывается только после реального success-ответа от Tilda.
 - добавлено кастомное уведомление об успешной отправке внутри фирменного попапа сайта.
 - увеличено время отображения кастомного success-сообщения: 2.4s → 4.2s, чтобы пользователь успевал прочитать текст.
-- слово «Спасибо!» в кастомном success-сообщении переведено на Montserrat с сохранением текущего размера и веса.
+- кастомное success-сообщение переведено в текстовый формат без галочки/иконки.
+- текст success-сообщения: «Спасибо, я скоро с вами свяжусь».
+- success-текст выровнен по центру в desktop и mobile, время отображения 4.2s сохранено.
 - стандартное окно успеха Tilda скрывается на стороне Tilda Lead Bridge; GitHub-попап показывает собственное сообщение.
 - отправка в Tilda через postMessage сохранена: Tilda остаётся почтовым шлюзом через скрытую форму.
 - сохранена маска телефона +7 (___) ___-__-__ для всех попап-форм.
@@ -366,9 +368,8 @@ TILDA LEAD BRIDGE JS
       overlay.className = 'ip-lead-success';
       overlay.setAttribute('aria-live', 'polite');
       overlay.innerHTML = [
-        '<div class="ip-lead-success__icon">✓</div>',
-        '<div class="ip-lead-success__title">Спасибо!</div>',
-        '<div class="ip-lead-success__text">Я скоро свяжусь с вами.</div>'
+        '<div class="ip-lead-success__title">Спасибо,</div>',
+        '<div class="ip-lead-success__text">я скоро с вами свяжусь</div>'
       ].join('');
       form.appendChild(overlay);
     }
@@ -384,7 +385,7 @@ TILDA LEAD BRIDGE JS
       'flex-direction:column',
       'align-items:center',
       'justify-content:center',
-      'gap:' + (isMobile ? 'calc(11 / 350 * 100cqw)' : 'calc(12 / 790 * 100cqw)'),
+      'gap:' + (isMobile ? 'calc(8 / 350 * 100cqw)' : 'calc(8 / 790 * 100cqw)'),
       'color:#fff',
       'text-align:center',
       'font-family:Montserrat,sans-serif',
@@ -394,25 +395,8 @@ TILDA LEAD BRIDGE JS
       'pointer-events:none'
     ].join(';') + ';';
 
-    var icon = overlay.querySelector('.ip-lead-success__icon');
     var title = overlay.querySelector('.ip-lead-success__title');
     var text = overlay.querySelector('.ip-lead-success__text');
-
-    if(icon){
-      icon.style.cssText = [
-        'width:' + (isMobile ? 'calc(34 / 350 * 100cqw)' : 'calc(34 / 790 * 100cqw)'),
-        'height:' + (isMobile ? 'calc(34 / 350 * 100cqw)' : 'calc(34 / 790 * 100cqw)'),
-        'border:1px solid rgba(255,255,255,.62)',
-        'border-radius:50%',
-        'display:flex',
-        'align-items:center',
-        'justify-content:center',
-        'font-size:' + (isMobile ? 'calc(18 / 350 * 100cqw)' : 'calc(18 / 790 * 100cqw)'),
-        'font-weight:600',
-        'line-height:1',
-        'box-shadow:0 8px 24px rgba(0,0,0,.22)'
-      ].join(';') + ';';
-    }
 
     if(title){
       title.style.cssText = [
