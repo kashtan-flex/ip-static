@@ -1,9 +1,9 @@
 /*
-Версия: cookie-notice-css-063
+Версия: cookie-notice-css-086
 ИЗМЕНЕНИЯ:
-- desktop/mobile: появление cookie-баннера сделано зеркальным к плавному исчезновению под меню/попапами.
-- баннер стартует ниже нижнего края экрана и мягко выезжает снизу без резкого скачка.
-- текстовые переносы desktop/mobile, кнопка и ссылка сохранены без изменений.
+- desktop/mobile: скрытие cookie-баннера под открытым меню/попапами снова выполняется обратной выезжающей анимацией.
+- исправлено мгновенное исчезновение из-за преждевременного visibility:hidden при состоянии is-covered.
+- текст, размеры, кнопка и ссылка сохранены без изменений.
 */
 
 .ip-cookie-notice,
@@ -60,6 +60,10 @@
   transform:translate3d(-50%, calc(100% + 42px), 0);
   pointer-events:none;
   visibility:hidden;
+  transition:
+    opacity .86s cubic-bezier(.19,1,.22,1),
+    transform .86s cubic-bezier(.19,1,.22,1),
+    visibility 0s linear .86s;
 }
 
 .ip-cookie-notice__text{
