@@ -2,12 +2,16 @@
 ==================================================
 TILDA LEAD BRIDGE JS
 
-Версия: tilda-lead-bridge-js-078-tilda-success-wait
+Версия: tilda-lead-bridge-js-080-success-montserrat-duration
 
 ИЗМЕНЕНИЯ:
-- сохранена отправка заявок через Tilda Lead Bridge v5/v6 без технического поля source.
-- увеличено время ожидания ответа от Tilda до 45 секунд, чтобы не сбрасывать отправку при появлении антиспам-проверки Tilda/Яндекса.
-- кастомное сообщение успеха внутри фирменного попапа показывается только после реального success-ответа от Tilda.
+- убрана техническая строка source из payload заявки.
+- убран оптимистичный success-сценарий: успешное состояние показывается только после реального success-ответа от Tilda.
+- добавлено кастомное уведомление об успешной отправке внутри фирменного попапа сайта.
+- увеличено время отображения кастомного success-сообщения: 2.4s → 4.2s, чтобы пользователь успевал прочитать текст.
+- слово «Спасибо!» в кастомном success-сообщении переведено на Montserrat с сохранением текущего размера и веса.
+- стандартное окно успеха Tilda скрывается на стороне Tilda Lead Bridge; GitHub-попап показывает собственное сообщение.
+- отправка в Tilda через postMessage сохранена: Tilda остаётся почтовым шлюзом через скрытую форму.
 - сохранена маска телефона +7 (___) ___-__-__ для всех попап-форм.
 - меню, cookie-баннер, видео, hash-bridge и визуальная верстка попапов не изменяются.
 ==================================================
@@ -28,8 +32,8 @@ TILDA LEAD BRIDGE JS
     'https://project25835926.tilda.ws'
   ]);
 
-  var SUBMIT_TIMEOUT = 45000;
-  var SUCCESS_CLOSE_DELAY = 2400;
+  var SUBMIT_TIMEOUT = 9000;
+  var SUCCESS_CLOSE_DELAY = 4200;
 
   var pendingRequest = null;
 
@@ -412,7 +416,7 @@ TILDA LEAD BRIDGE JS
 
     if(title){
       title.style.cssText = [
-        'font-family:Benzin,Arial,sans-serif',
+        'font-family:Montserrat,sans-serif',
         'font-size:' + (isMobile ? 'calc(20 / 350 * 100cqw)' : 'calc(20 / 790 * 100cqw)'),
         'line-height:.95',
         'font-weight:700',
