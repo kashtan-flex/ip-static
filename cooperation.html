@@ -2,13 +2,12 @@
 
 <!DOCTYPE html>
 <!--
-Версия: cooperation-html-082-success-text-only
+Версия: cooperation-html-085-desktop-yandex-direct-download
 ИЗМЕНЕНИЯ:
-- обновлены cache-buster для mobile CSS версии 081.
-- для страниц с мобильной галереей обновлён cache-buster mobile JS версии 081.
-- обновлён cache-buster js/tilda-lead-bridge.js до версии 082.
-- success-сообщение формы: убрана галочка, текст центрирован и оставлен на 4.2s.
-- cookie, видео, Tilda T123 и desktop-режим не изменялись.
+- desktop-райдеры на странице «Сотрудничество» переведены на прямое скачивание через публичные ссылки Яндекс.Диска без открытия страницы Яндекс.Диска.
+- мобильная версия райдеров возвращена к отдельным внутренним страницам просмотра.
+- обновлены cache-buster только для страницы «Сотрудничество» и desktop JS.
+- формы, Tilda Lead Bridge, cookie, меню, галереи, видео и остальные страницы не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -97,7 +96,7 @@
       var loadedStyles = [];
       var loadedScript = null;
       var loadToken = 0;
-      var ASSET_VERSION = 'cooperation-mobile-popup-close-size-047';
+      var ASSET_VERSION = 'cooperation-desktop-yandex-direct-085';
 
       function getMode(){
         return window.innerWidth <= MOBILE_BREAKPOINT ? 'mobile' : 'desktop';
@@ -118,7 +117,7 @@
         if(mode === 'mobile'){
           return {
             css:['./css/cooperation-mobile.css?v=mobile-menu-gallery-cross-081'],
-            html:'./pages/cooperation/cooperation-mobile.html?v=popup-close-030',
+            html:'./pages/cooperation/cooperation-mobile.html?v=mobile-rider-pages-085',
             js:'./js/cooperation-mobile.js',
             error:'Ошибка загрузки мобильной страницы Сотрудничество. Проверь путь: pages/cooperation/cooperation-mobile.html'
           };
@@ -126,8 +125,8 @@
 
         return {
           css:['./css/cooperation.css'],
-          html:'./pages/cooperation/cooperation.html?v=popup-close-030',
-          js:'./js/cooperation.js',
+          html:'./pages/cooperation/cooperation.html?v=desktop-yandex-direct-download-085',
+          js:'./js/cooperation.js?v=desktop-yandex-direct-download-085',
           error:'Ошибка загрузки страницы Сотрудничество. Проверь путь: pages/cooperation/cooperation.html'
         };
       }

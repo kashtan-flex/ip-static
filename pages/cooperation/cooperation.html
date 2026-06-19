@@ -1,5 +1,10 @@
-
-
+<!--
+Версия: cooperation-page-html-085-desktop-yandex-direct-download
+ИЗМЕНЕНИЯ:
+- desktop-кнопки бытового и технического райдеров запускают прямое скачивание через публичные ссылки Яндекс.Диска.
+- переход на страницу Яндекс.Диска используется только как резервный fallback, если прямой download API недоступен.
+- мобильная версия и отдельные rider-страницы не изменялись.
+-->
 <section class="ip-page-cooperation" data-cooperation-page>
 
   <div class="ip-cooperation-stage">
@@ -23,12 +28,12 @@
           <span>Портфолио</span>
         </a>
 
-        <a class="ip-cooperation-download" href="./docs/cooperation/ivan-pertsev-bytovoy-rider.pdf" download>
+        <a class="ip-cooperation-download" href="https://disk.yandex.ru/i/Vj_wqRP3ASVaQA" data-ip-yandex-rider-download="true" data-ip-yandex-public-url="https://disk.yandex.ru/i/Vj_wqRP3ASVaQA" data-ip-yandex-download-name="ivan-pertsev-bytovoy-rider.pdf" aria-label="Скачать бытовой райдер">
           <span class="ip-cooperation-dot" aria-hidden="true">·</span>
           <span>Бытовой райдер</span>
         </a>
 
-        <a class="ip-cooperation-download" href="./docs/cooperation/ivan-pertsev-technical-rider.pdf" download>
+        <a class="ip-cooperation-download" href="https://disk.yandex.ru/i/QwuSbvFYSIitrQ" data-ip-yandex-rider-download="true" data-ip-yandex-public-url="https://disk.yandex.ru/i/QwuSbvFYSIitrQ" data-ip-yandex-download-name="ivan-pertsev-technical-rider.pdf" aria-label="Скачать технический райдер">
           <span class="ip-cooperation-dot" aria-hidden="true">·</span>
           <span>Технический райдер</span>
         </a>

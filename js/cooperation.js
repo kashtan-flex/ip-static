@@ -1,3 +1,11 @@
+/*
+Версия: cooperation-js-085-desktop-yandex-direct-download
+ИЗМЕНЕНИЯ:
+- добавлена desktop-логика прямого скачивания райдеров через публичные ссылки Яндекс.Диска.
+- при недоступности direct-download API оставлен безопасный fallback на публичную страницу Яндекс.Диска.
+- формы, попапы, меню и масштабирование страницы не изменялись.
+*/
+
 (function(){
   'use strict';
 
@@ -336,6 +344,102 @@
     }
   }
 
+
+  function setupYandexRiderDownloads(){
+    const riderLinks = document.querySelectorAll('[data-ip-yandex-rider-download="true"]');
+
+    if(!riderLinks.length){
+      return;
+    }
+
+    const apiBase = 'https://cloud-api.yandex.net/v1/disk/public/resources/download';
+
+    function setLoadingState(link, isLoading){
+      if(!link){
+        return;
+      }
+
+      if(isLoading){
+        link.setAttribute('aria-busy', 'true');
+        link.classList.add('is-loading');
+        return;
+      }
+
+      link.removeAttribute('aria-busy');
+      link.classList.remove('is-loading');
+    }
+
+    function buildApiUrl(publicUrl){
+      return apiBase + '?public_key=' + encodeURIComponent(publicUrl);
+    }
+
+    function startDownload(downloadUrl, filename){
+      const anchor = document.createElement('a');
+      anchor.href = downloadUrl;
+      anchor.download = filename || '';
+      anchor.rel = 'noopener noreferrer';
+      anchor.style.position = 'fixed';
+      anchor.style.left = '-9999px';
+      anchor.style.top = '0';
+      anchor.style.width = '1px';
+      anchor.style.height = '1px';
+      anchor.style.opacity = '0';
+
+      document.body.appendChild(anchor);
+      anchor.click();
+
+      window.setTimeout(function(){
+        if(anchor.parentNode){
+          anchor.parentNode.removeChild(anchor);
+        }
+      }, 1000);
+    }
+
+    function openFallback(publicUrl){
+      window.open(publicUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    riderLinks.forEach(function(link){
+      link.addEventListener('click', function(event){
+        const publicUrl = link.getAttribute('data-ip-yandex-public-url') || link.href;
+        const filename = link.getAttribute('data-ip-yandex-download-name') || '';
+
+        if(!publicUrl){
+          return;
+        }
+
+        event.preventDefault();
+
+        if(link.getAttribute('aria-busy') === 'true'){
+          return;
+        }
+
+        setLoadingState(link, true);
+
+        fetch(buildApiUrl(publicUrl), { cache:'no-store' })
+          .then(function(response){
+            if(!response.ok){
+              throw new Error('Yandex download link request failed');
+            }
+            return response.json();
+          })
+          .then(function(data){
+            if(!data || !data.href){
+              throw new Error('Yandex download href not found');
+            }
+
+            startDownload(data.href, filename);
+          })
+          .catch(function(){
+            openFallback(publicUrl);
+          })
+          .finally(function(){
+            setLoadingState(link, false);
+          });
+      });
+    });
+  }
+
   function setupDisabledDownloads(){
     const disabledLinks = document.querySelectorAll('.ip-cooperation-download.is-disabled');
 
@@ -406,6 +510,7 @@
   setupPopupTriggers();
   setupDateMask();
   setupDisabledDownloads();
+  setupYandexRiderDownloads();
 
   window.addEventListener('resize', requestScaleUpdate);
 
