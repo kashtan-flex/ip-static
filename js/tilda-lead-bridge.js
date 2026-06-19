@@ -2,7 +2,7 @@
 ==================================================
 TILDA LEAD BRIDGE JS
 
-Версия: tilda-lead-bridge-js-073-phone-mask-mobile-cross
+Версия: tilda-lead-bridge-js-075-parent-origin-fallback
 
 ИЗМЕНЕНИЯ:
 - добавлена отправка заявок из собственных попапов GitHub-сайта в родительскую Tilda-страницу через postMessage.
@@ -11,7 +11,12 @@ TILDA LEAD BRIDGE JS
 - добавлена явная маска телефона +7 (___) ___-__-__ для всех полей phone в попап-формах.
 - маска работает через делегирование и MutationObserver, поэтому сохраняется после динамической загрузки HTML-фрагментов.
 - меню, попап-вёрстка, hash-bridge, дата, cookie-баннер и визуальная логика страниц не изменяются.
-- версия объединена с mobile-правками 072 без изменения логики отправки и маски телефона.
+- усилен перехват отправки: добавлен capture-click по .ip-popup-submit, чтобы старые submit-заглушки страниц не блокировали отправку.
+- targetOrigin родительской Tilda-страницы определяется через document.referrer с fallback на домен Ивана и временный Tilda-домен.
+- добавлены дополнительные допустимые parent-origin для домена с www и временной страницы Tilda.
+- версия объединена с mobile-правками 072 без изменения логики маски телефона.
+- отправка postMessage в Tilda усилена: сообщение отправляется по всем доверенным parent-origin, включая punycode/www/Tilda-preview домены.
+- проверка ответов от parent-страницы теперь нормализует origin, чтобы кириллический домен и punycode не ломали получение success.
 ==================================================
 */
 
@@ -21,12 +26,14 @@ TILDA LEAD BRIDGE JS
   var MESSAGE_SUBMIT = 'IP_LEAD_FORM_SUBMIT';
   var MESSAGE_RESULT = 'IP_LEAD_FORM_RESULT';
 
-  var TRUSTED_PARENT_ORIGINS = [
+  var TRUSTED_PARENT_ORIGINS = normalizeOriginList([
     'https://иванперцев.рф',
-    'https://xn--80adblao1bqk4d.xn--p1ai'
-  ];
-
-  var TARGET_PARENT_ORIGIN = 'https://xn--80adblao1bqk4d.xn--p1ai';
+    'https://xn--80adblao1bqk4d.xn--p1ai',
+    'https://www.иванперцев.рф',
+    'https://www.xn--80adblao1bqk4d.xn--p1ai',
+    'https://millionth-employable-skating.tilda.ws',
+    'https://project25835926.tilda.ws'
+  ]);
   var SUBMIT_TIMEOUT = 9000;
   var SUCCESS_CLOSE_DELAY = 1200;
 
@@ -359,8 +366,85 @@ TILDA LEAD BRIDGE JS
     };
   }
 
+  function normalizeOrigin(origin){
+    if(!origin){
+      return '';
+    }
+
+    try{
+      return new URL(origin).origin;
+    }catch(error){
+      return String(origin || '').replace(/\/$/, '');
+    }
+  }
+
+  function normalizeOriginList(origins){
+    var result = [];
+
+    origins.forEach(function(origin){
+      var normalizedOrigin = normalizeOrigin(origin);
+
+      if(normalizedOrigin && result.indexOf(normalizedOrigin) === -1){
+        result.push(normalizedOrigin);
+      }
+    });
+
+    return result;
+  }
+
   function isTrustedParentOrigin(origin){
-    return TRUSTED_PARENT_ORIGINS.indexOf(origin) !== -1;
+    var normalizedOrigin = normalizeOrigin(origin);
+
+    return normalizedOrigin && TRUSTED_PARENT_ORIGINS.indexOf(normalizedOrigin) !== -1;
+  }
+
+  function getParentTargetOrigins(){
+    var referrerOrigin = normalizeOrigin(document.referrer);
+    var targetOrigins = [];
+
+    if(referrerOrigin && isTrustedParentOrigin(referrerOrigin)){
+      targetOrigins.push(referrerOrigin);
+    }
+
+    TRUSTED_PARENT_ORIGINS.forEach(function(origin){
+      if(targetOrigins.indexOf(origin) === -1){
+        targetOrigins.push(origin);
+      }
+    });
+
+    return targetOrigins;
+  }
+
+  function postLeadMessage(payload){
+    var message = {
+      type: MESSAGE_SUBMIT,
+      payload: payload
+    };
+    var parentWindow = window.parent;
+
+    getParentTargetOrigins().forEach(function(origin){
+      try{
+        parentWindow.postMessage(message, origin);
+      }catch(error){
+        console.warn('[Tilda Lead Bridge] postMessage failed for origin:', origin, error);
+      }
+    });
+  }
+
+  function getSubmitFormFromTarget(target){
+    var submitButton = target && target.closest ? target.closest('.ip-popup-submit, button[type="submit"], input[type="submit"]') : null;
+
+    if(!submitButton){
+      return null;
+    }
+
+    var form = submitButton.form || submitButton.closest('form');
+
+    if(!form || !form.classList || !form.classList.contains('ip-popup-form')){
+      return null;
+    }
+
+    return form;
   }
 
   function clearPendingRequest(){
@@ -436,16 +520,26 @@ TILDA LEAD BRIDGE JS
       }, SUBMIT_TIMEOUT)
     };
 
-    window.parent.postMessage(
-      {
-        type: MESSAGE_SUBMIT,
-        payload: buildPayload(form)
-      },
-      TARGET_PARENT_ORIGIN
-    );
+    postLeadMessage(buildPayload(form));
   }
 
   initPhoneMask();
+
+  document.addEventListener(
+    'click',
+    function(event){
+      var form = getSubmitFormFromTarget(event.target);
+
+      if(!form){
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      submitLead(form);
+    },
+    true
+  );
 
   document.addEventListener(
     'submit',

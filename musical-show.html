@@ -5,6 +5,7 @@
 Версия: musical-show-html-073-phone-mask-mobile-cross-merge
 ИЗМЕНЕНИЯ:
 - сохранена версия js/tilda-lead-bridge.js с отправкой заявок в Tilda и явной маской телефона +7 (___) ___-__-__.
+- обновлён cache-buster Tilda lead bridge для надёжной отправки postMessage в домен Tilda.
 - сохранены mobile-правки 072: размер и цвет крестика закрытия меню/галереи в мобильной версии.
 - обновлены cache-buster для объединённой версии без отката cookie-баннера, политики, форм и Tilda hash-bridge.
 - desktop, контент, видео, меню-логика, попап-вёрстка и cookie-логика не изменялись.
@@ -95,7 +96,7 @@
       if(window.visualViewport){window.visualViewport.addEventListener('resize', function(){setViewportHeight();scheduleModeCheck();}, {passive:true});}
     })();
   </script>
-  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-073-phone-mask-mobile-cross" defer></script>
+  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-075-parent-origin-fallback" defer></script>
   <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 
 </body>
