@@ -1,14 +1,13 @@
 /*
 ==================================================
-COOPERATION MOBILE CSS 073 PHONE MASK MOBILE CROSS
+COOPERATION MOBILE CSS 081 MENU GALLERY CROSS SPLIT
 
-Версия: cooperation-mobile-css-073-phone-mask-mobile-cross
+Версия: cooperation-mobile-css-081-menu-gallery-cross-split
 
 ИЗМЕНЕНИЯ:
-- mobile: крестик закрытия меню в открытом состоянии приведён к размеру крестика мобильных попапов.
-- mobile: цвет крестика в меню синхронизирован с цветом нумерации фотографий в мобильном lightbox — rgba(255,255,255,.72).
-- desktop, положение меню, бургер в закрытом состоянии, попапы, галереи и JavaScript не изменялись.
-- версия объединена с маской телефона 066 без изменения CSS-логики.
+- mobile: крестик открытого меню возвращён к approved-размеру через базовые параметры .ip-menu-line.
+- mobile: маленький крестик оставлен только для lightbox-галереи, селекторы меню и галереи разведены.
+- desktop, формы, Tilda Lead Bridge, cookie, видео и структура страниц не изменялись.
 ==================================================
 */
 
@@ -664,12 +663,3 @@ COOPERATION MOBILE CSS 073 PHONE MASK MOBILE CROSS
   }
 }
 
-
-@media (max-width:767px){
-  .ip-cooperation-mobile .ip-menu-toggle.is-open .ip-menu-line{
-    left:6px;
-    width:15px;
-    height:2px;
-    background:rgba(255,255,255,.72);
-  }
-}

@@ -2,13 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: corporate-html-076-stable-tilda-lead-success
+Версия: corporate-html-081-menu-gallery-lightbox
 ИЗМЕНЕНИЯ:
-- обновлён cache-buster js/tilda-lead-bridge.js до версии 080.
-- сохранена отправка заявок в Tilda через iframe/postMessage.
-- source больше не передаётся в заявку.
-- добавлен стабильный пользовательский success-сценарий внутри собственного попапа сайта.
-- сохранены маска телефона, cookie-баннер, меню, видео и утверждённая верстка страниц.
+- обновлены cache-buster для mobile CSS версии 081.
+- для страниц с мобильной галереей обновлён cache-buster mobile JS версии 081.
+- формы, Tilda Lead Bridge, cookie и desktop-режим не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -115,9 +113,9 @@
       function getConfig(mode){
         if(mode === 'mobile'){
           return {
-            css:['./css/corporate-mobile.css?v=mobile-menu-close-cross-073'],
+            css:['./css/corporate-mobile.css?v=mobile-menu-gallery-cross-081'],
             html:'./pages/corporate/corporate-mobile.html?v=mobile-video-sound-049',
-            js:'./js/corporate-mobile.js',
+            js:'./js/corporate-mobile.js?v=mobile-gallery-tap-081',
             error:'Ошибка загрузки мобильной страницы Корпоратив. Проверь путь: pages/corporate/corporate-mobile.html'
           };
         }

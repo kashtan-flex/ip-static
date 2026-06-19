@@ -1,9 +1,9 @@
 /*
-Версия: wedding-mobile-js-070-video-ready
+Версия: wedding-mobile-js-081-lightbox-tap
 ИЗМЕНЕНИЯ:
-- Mobile-видео переведено на desktop-подобный сценарий: is-video-ready включается после единой задержки 3200ms.
-- Убрана зависимость скрытия poster от iframe load, чтобы исключить мобильный рывок poster → первый кадр → poster.
-- Отправка форм, маска даты, меню, галерея и lightbox не изменялись.
+- mobile lightbox: переключение фотографий перенесено на тап по открытому фото.
+- mobile lightbox: свайп-переключение отключено, крестик закрытия не переключает фотографии.
+- Отправка форм, Tilda Lead Bridge, маска телефона, cookie, меню и видео не изменялись.
 */
 
 (function(){
@@ -68,8 +68,6 @@
   var videoPosterHidden = false;
   var lightboxIndex = 0;
   var lightboxImages = [];
-  var lightboxTouchStartX = null;
-  var lightboxTouchStartY = null;
 
   if(!page || !stage){
     return;
@@ -958,55 +956,12 @@
       });
     });
 
-    lightbox.addEventListener(
-      'touchstart',
-      function(event){
-        var touch = event.touches && event.touches[0];
+    lightboxImage.addEventListener('click', function(event){
+      event.preventDefault();
+      event.stopPropagation();
 
-        if(!touch){
-          return;
-        }
-
-        lightboxTouchStartX = touch.clientX;
-        lightboxTouchStartY = touch.clientY;
-      },
-      { passive:true }
-    );
-
-    lightbox.addEventListener(
-      'touchend',
-      function(event){
-        var touch = event.changedTouches && event.changedTouches[0];
-
-        if(
-          !touch ||
-          lightboxTouchStartX === null ||
-          lightboxTouchStartY === null
-        ){
-          lightboxTouchStartX = null;
-          lightboxTouchStartY = null;
-          return;
-        }
-
-        var deltaX = touch.clientX - lightboxTouchStartX;
-        var deltaY = touch.clientY - lightboxTouchStartY;
-
-        lightboxTouchStartX = null;
-        lightboxTouchStartY = null;
-
-        if(Math.abs(deltaX) < 44 || Math.abs(deltaX) < Math.abs(deltaY)){
-          return;
-        }
-
-        if(deltaX < 0){
-          showNextLightboxImage();
-          return;
-        }
-
-        showPrevLightboxImage();
-      },
-      { passive:true }
-    );
+      showNextLightboxImage();
+    });
   }
 
   function setupGalleryInitialState(){

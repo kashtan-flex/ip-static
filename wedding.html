@@ -2,13 +2,11 @@
 
 <!DOCTYPE html>
 <!--
-Версия: wedding-html-076-stable-tilda-lead-success
+Версия: wedding-html-081-menu-gallery-lightbox
 ИЗМЕНЕНИЯ:
-- обновлён cache-buster js/tilda-lead-bridge.js до версии 080.
-- сохранена отправка заявок в Tilda через iframe/postMessage.
-- source больше не передаётся в заявку.
-- добавлен стабильный пользовательский success-сценарий внутри собственного попапа сайта.
-- сохранены маска телефона, cookie-баннер, меню, видео и утверждённая верстка страниц.
+- обновлены cache-buster для mobile CSS версии 081.
+- для страниц с мобильной галереей обновлён cache-buster mobile JS версии 081.
+- формы, Tilda Lead Bridge, cookie и desktop-режим не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -1119,11 +1117,11 @@
           return {
             mode:'mobile',
             css:[
-              './css/wedding-mobile.css?v=mobile-menu-close-cross-073'
+              './css/wedding-mobile.css?v=mobile-menu-gallery-cross-081'
             ],
             html:'./pages/wedding/wedding-mobile.html?v=mobile-video-sound-049',
             inlineHtml:null,
-            js:'./js/wedding-mobile.js',
+            js:'./js/wedding-mobile.js?v=mobile-gallery-tap-081',
             error:'Ошибка загрузки мобильной страницы Свадьба. Проверь путь: pages/wedding/wedding-mobile.html'
           };
         }
