@@ -2,12 +2,13 @@
 ==================================================
 TILDA LEAD BRIDGE JS
 
-Версия: tilda-lead-bridge-js-076-stable-success-ux
+Версия: tilda-lead-bridge-js-077-custom-success-notice
 
 ИЗМЕНЕНИЯ:
 - убрана техническая строка source из payload заявки.
-- добавлен оптимистичный success-сценарий: пользователь не ждёт технический ответ Tilda дольше необходимого.
-- при успешной отправке внутри нашего попапа показывается собственный текст «Спасибо! Я скоро свяжусь с вами.».
+- убран оптимистичный success-сценарий: успешное состояние показывается только после реального success-ответа от Tilda.
+- добавлено кастомное уведомление об успешной отправке внутри фирменного попапа сайта.
+- стандартное окно успеха Tilda скрывается на стороне Tilda Lead Bridge; GitHub-попап показывает собственное сообщение.
 - отправка в Tilda через postMessage сохранена: Tilda остаётся почтовым шлюзом через скрытую форму.
 - сохранена маска телефона +7 (___) ___-__-__ для всех попап-форм.
 - меню, cookie-баннер, видео, hash-bridge и визуальная верстка попапов не изменяются.
@@ -30,8 +31,7 @@ TILDA LEAD BRIDGE JS
   ]);
 
   var SUBMIT_TIMEOUT = 9000;
-  var OPTIMISTIC_SUCCESS_DELAY = 900;
-  var SUCCESS_CLOSE_DELAY = 1450;
+  var SUCCESS_CLOSE_DELAY = 2400;
 
   var pendingRequest = null;
 
@@ -319,28 +319,155 @@ TILDA LEAD BRIDGE JS
     return popup ? popup.querySelector('.ip-popup-text') : null;
   }
 
-  function showCustomSuccessMessage(form){
-    var textElement = getPopupTextElement(form);
-
-    if(!textElement){
+  function saveInlineStyle(element){
+    if(!element || element.hasAttribute('data-ip-lead-original-style')){
       return;
     }
 
-    if(!textElement.hasAttribute('data-ip-original-html')){
-      textElement.setAttribute('data-ip-original-html', textElement.innerHTML);
+    element.setAttribute('data-ip-lead-original-style', element.getAttribute('style') || '');
+  }
+
+  function restoreInlineStyle(element){
+    if(!element || !element.hasAttribute('data-ip-lead-original-style')){
+      return;
     }
 
-    textElement.innerHTML = '<strong>Спасибо!</strong><span>Я скоро свяжусь с вами.</span>';
+    var originalStyle = element.getAttribute('data-ip-lead-original-style');
+
+    if(originalStyle){
+      element.setAttribute('style', originalStyle);
+    }else{
+      element.removeAttribute('style');
+    }
+
+    element.removeAttribute('data-ip-lead-original-style');
+  }
+
+  function setElementHiddenForSuccess(element){
+    if(!element){
+      return;
+    }
+
+    saveInlineStyle(element);
+    element.style.opacity = '0';
+    element.style.visibility = 'hidden';
+    element.style.pointerEvents = 'none';
+    element.style.transition = 'opacity .22s ease, visibility .22s ease';
+  }
+
+  function getSuccessOverlay(form){
+    var overlay = form.querySelector('.ip-lead-success');
+    var isMobile = window.matchMedia && window.matchMedia('(max-width:767px)').matches;
+
+    if(!overlay){
+      overlay = document.createElement('div');
+      overlay.className = 'ip-lead-success';
+      overlay.setAttribute('aria-live', 'polite');
+      overlay.innerHTML = [
+        '<div class="ip-lead-success__icon">✓</div>',
+        '<div class="ip-lead-success__title">Спасибо!</div>',
+        '<div class="ip-lead-success__text">Я скоро свяжусь с вами.</div>'
+      ].join('');
+      form.appendChild(overlay);
+    }
+
+    overlay.style.cssText = [
+      'position:absolute',
+      'z-index:7',
+      'left:' + (isMobile ? 'calc(28 / 350 * 100cqw)' : 'calc(426 / 790 * 100cqw)'),
+      'top:' + (isMobile ? 'calc(202 / 350 * 100cqw)' : 'calc(176 / 790 * 100cqw)'),
+      'width:' + (isMobile ? 'calc(294 / 350 * 100cqw)' : 'calc(294 / 790 * 100cqw)'),
+      'min-height:' + (isMobile ? 'calc(170 / 350 * 100cqw)' : 'calc(190 / 790 * 100cqw)'),
+      'display:flex',
+      'flex-direction:column',
+      'align-items:center',
+      'justify-content:center',
+      'gap:' + (isMobile ? 'calc(11 / 350 * 100cqw)' : 'calc(12 / 790 * 100cqw)'),
+      'color:#fff',
+      'text-align:center',
+      'font-family:Montserrat,sans-serif',
+      'opacity:0',
+      'transform:translate3d(0,6px,0)',
+      'transition:opacity .34s cubic-bezier(.19,1,.22,1), transform .34s cubic-bezier(.19,1,.22,1)',
+      'pointer-events:none'
+    ].join(';') + ';';
+
+    var icon = overlay.querySelector('.ip-lead-success__icon');
+    var title = overlay.querySelector('.ip-lead-success__title');
+    var text = overlay.querySelector('.ip-lead-success__text');
+
+    if(icon){
+      icon.style.cssText = [
+        'width:' + (isMobile ? 'calc(34 / 350 * 100cqw)' : 'calc(34 / 790 * 100cqw)'),
+        'height:' + (isMobile ? 'calc(34 / 350 * 100cqw)' : 'calc(34 / 790 * 100cqw)'),
+        'border:1px solid rgba(255,255,255,.62)',
+        'border-radius:50%',
+        'display:flex',
+        'align-items:center',
+        'justify-content:center',
+        'font-size:' + (isMobile ? 'calc(18 / 350 * 100cqw)' : 'calc(18 / 790 * 100cqw)'),
+        'font-weight:600',
+        'line-height:1',
+        'box-shadow:0 8px 24px rgba(0,0,0,.22)'
+      ].join(';') + ';';
+    }
+
+    if(title){
+      title.style.cssText = [
+        'font-family:Benzin,Arial,sans-serif',
+        'font-size:' + (isMobile ? 'calc(20 / 350 * 100cqw)' : 'calc(20 / 790 * 100cqw)'),
+        'line-height:.95',
+        'font-weight:700',
+        'letter-spacing:' + (isMobile ? 'calc(.4 / 350 * 100cqw)' : 'calc(.4 / 790 * 100cqw)')
+      ].join(';') + ';';
+    }
+
+    if(text){
+      text.style.cssText = [
+        'max-width:100%',
+        'font-size:' + (isMobile ? 'calc(15 / 350 * 100cqw)' : 'calc(15 / 790 * 100cqw)'),
+        'line-height:1.18',
+        'font-weight:400',
+        'color:rgba(255,255,255,.88)'
+      ].join(';') + ';';
+    }
+
+    return overlay;
+  }
+
+  function showCustomSuccessMessage(form){
+    var heading = form.querySelector('.ip-popup-heading');
+    var fields = form.querySelector('.ip-popup-fields');
+    var policy = form.querySelector('.ip-popup-policy');
+    var overlay = getSuccessOverlay(form);
+
+    form.setAttribute('data-ip-lead-success-active', 'true');
+
+    setElementHiddenForSuccess(heading);
+    setElementHiddenForSuccess(fields);
+    setElementHiddenForSuccess(policy);
+
+    window.requestAnimationFrame(function(){
+      overlay.style.opacity = '1';
+      overlay.style.transform = 'translate3d(0,0,0)';
+    });
   }
 
   function restorePopupText(form){
-    var textElement = getPopupTextElement(form);
+    var heading = form.querySelector('.ip-popup-heading');
+    var fields = form.querySelector('.ip-popup-fields');
+    var policy = form.querySelector('.ip-popup-policy');
+    var overlay = form.querySelector('.ip-lead-success');
 
-    if(!textElement || !textElement.hasAttribute('data-ip-original-html')){
-      return;
+    form.removeAttribute('data-ip-lead-success-active');
+
+    restoreInlineStyle(heading);
+    restoreInlineStyle(fields);
+    restoreInlineStyle(policy);
+
+    if(overlay){
+      overlay.remove();
     }
-
-    textElement.innerHTML = textElement.getAttribute('data-ip-original-html');
   }
 
   function closePopup(form){
@@ -480,10 +607,6 @@ TILDA LEAD BRIDGE JS
       window.clearTimeout(pendingRequest.timeoutId);
     }
 
-    if(pendingRequest.optimisticSuccessId){
-      window.clearTimeout(pendingRequest.optimisticSuccessId);
-    }
-
     pendingRequest = null;
   }
 
@@ -499,7 +622,8 @@ TILDA LEAD BRIDGE JS
     clearPendingRequest();
 
     if(status === 'success'){
-      setButtonText(button, 'Отправлено');
+      button.disabled = false;
+      setButtonText(button, 'Хорошо');
       showCustomSuccessMessage(form);
       resetForm(form);
 
@@ -547,10 +671,7 @@ TILDA LEAD BRIDGE JS
       button: button,
       timeoutId: window.setTimeout(function(){
         finishRequest('error', 'Tilda response timeout.');
-      }, SUBMIT_TIMEOUT),
-      optimisticSuccessId: window.setTimeout(function(){
-        finishRequest('success', 'Optimistic success after postMessage.');
-      }, OPTIMISTIC_SUCCESS_DELAY)
+      }, SUBMIT_TIMEOUT)
     };
 
     postLeadMessage(buildPayload(form));
@@ -569,6 +690,14 @@ TILDA LEAD BRIDGE JS
 
       event.preventDefault();
       event.stopPropagation();
+
+      if(form.getAttribute('data-ip-lead-success-active') === 'true'){
+        closePopup(form);
+        restoreButton(getSubmitButton(form));
+        restorePopupText(form);
+        return;
+      }
+
       submitLead(form);
     },
     true
