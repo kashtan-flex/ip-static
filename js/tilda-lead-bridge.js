@@ -2,13 +2,16 @@
 ==================================================
 TILDA LEAD BRIDGE JS
 
-Версия: tilda-lead-bridge-js-065-tilda-email-submit
+Версия: tilda-lead-bridge-js-073-phone-mask-mobile-cross
 
 ИЗМЕНЕНИЯ:
 - добавлена отправка заявок из собственных попапов GitHub-сайта в родительскую Tilda-страницу через postMessage.
 - форма остаётся внутри текущего дизайна сайта, Tilda используется только как почтовый шлюз через скрытую форму.
 - SMTP, backend и сторонние сервисы не используются.
-- меню, попап-вёрстка, hash-bridge и визуальная логика страниц не изменяются.
+- добавлена явная маска телефона +7 (___) ___-__-__ для всех полей phone в попап-формах.
+- маска работает через делегирование и MutationObserver, поэтому сохраняется после динамической загрузки HTML-фрагментов.
+- меню, попап-вёрстка, hash-bridge, дата, cookie-баннер и визуальная логика страниц не изменяются.
+- версия объединена с mobile-правками 072 без изменения логики отправки и маски телефона.
 ==================================================
 */
 
@@ -75,6 +78,162 @@ TILDA LEAD BRIDGE JS
       event_type: 'consent'
     }
   };
+
+
+  function normalizePhoneDigits(value){
+    var digits = String(value || '').replace(/\D/g, '');
+
+    if(digits.charAt(0) === '7' || digits.charAt(0) === '8'){
+      digits = digits.slice(1);
+    }
+
+    return digits.slice(0, 10);
+  }
+
+  function formatPhoneValue(value){
+    var digits = normalizePhoneDigits(value);
+    var result = '';
+
+    if(!digits){
+      return '';
+    }
+
+    result = '+7';
+
+    if(digits.length > 0){
+      result += ' (' + digits.slice(0, 3);
+    }
+
+    if(digits.length >= 3){
+      result += ')';
+    }
+
+    if(digits.length > 3){
+      result += ' ' + digits.slice(3, 6);
+    }
+
+    if(digits.length > 6){
+      result += '-' + digits.slice(6, 8);
+    }
+
+    if(digits.length > 8){
+      result += '-' + digits.slice(8, 10);
+    }
+
+    return result;
+  }
+
+  function isPhoneField(field){
+    if(!field || !field.matches){
+      return false;
+    }
+
+    return field.matches('input[name="phone"], input[type="tel"]');
+  }
+
+  function moveCaretToEnd(field){
+    if(!field || typeof field.setSelectionRange !== 'function'){
+      return;
+    }
+
+    var length = field.value.length;
+
+    try{
+      field.setSelectionRange(length, length);
+    }catch(error){
+      /* Некоторые мобильные браузеры не разрешают менять caret у type="tel". */
+    }
+  }
+
+  function applyPhoneMask(field){
+    if(!isPhoneField(field)){
+      return;
+    }
+
+    var formattedValue = formatPhoneValue(field.value);
+
+    if(field.value !== formattedValue){
+      field.value = formattedValue;
+    }
+
+    moveCaretToEnd(field);
+  }
+
+  function preparePhoneField(field){
+    if(!isPhoneField(field) || field.getAttribute('data-ip-phone-mask-ready') === 'true'){
+      return;
+    }
+
+    field.setAttribute('data-ip-phone-mask-ready', 'true');
+    field.setAttribute('inputmode', 'tel');
+    field.setAttribute('autocomplete', 'tel');
+    field.setAttribute('maxlength', '18');
+
+    if(field.value){
+      applyPhoneMask(field);
+    }
+  }
+
+  function preparePhoneFields(root){
+    var scope = root && root.querySelectorAll ? root : document;
+    var fields = scope.querySelectorAll('input[name="phone"], input[type="tel"]');
+
+    fields.forEach(function(field){
+      preparePhoneField(field);
+    });
+  }
+
+  function initPhoneMask(){
+    preparePhoneFields(document);
+
+    document.addEventListener('focusin', function(event){
+      if(!isPhoneField(event.target)){
+        return;
+      }
+
+      preparePhoneField(event.target);
+    });
+
+    document.addEventListener('input', function(event){
+      if(!isPhoneField(event.target)){
+        return;
+      }
+
+      applyPhoneMask(event.target);
+    });
+
+    document.addEventListener('blur', function(event){
+      if(!isPhoneField(event.target)){
+        return;
+      }
+
+      applyPhoneMask(event.target);
+    }, true);
+
+    if('MutationObserver' in window){
+      var observer = new MutationObserver(function(mutations){
+        mutations.forEach(function(mutation){
+          mutation.addedNodes.forEach(function(node){
+            if(!node || node.nodeType !== 1){
+              return;
+            }
+
+            if(isPhoneField(node)){
+              preparePhoneField(node);
+              return;
+            }
+
+            preparePhoneFields(node);
+          });
+        });
+      });
+
+      observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+      });
+    }
+  }
 
   function getPageFileName(){
     var path = window.location.pathname || '';
@@ -285,6 +444,8 @@ TILDA LEAD BRIDGE JS
       TARGET_PARENT_ORIGIN
     );
   }
+
+  initPhoneMask();
 
   document.addEventListener(
     'submit',

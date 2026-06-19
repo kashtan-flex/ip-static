@@ -2,11 +2,12 @@
 
 <!DOCTYPE html>
 <!--
-Версия: birthday-html-072-mobile-menu-close-cross
+Версия: birthday-html-073-phone-mask-mobile-cross-merge
 ИЗМЕНЕНИЯ:
-- mobile: обновлён cache-buster CSS после правки крестика закрытия меню.
-- mobile: размер и цвет крестика в открытом меню синхронизированы с мобильными попапами и нумерацией фотографий.
-- desktop, контент, меню-логика, попапы, формы, видео и Tilda hash-bridge не изменялись.
+- сохранена версия js/tilda-lead-bridge.js с отправкой заявок в Tilda и явной маской телефона +7 (___) ___-__-__.
+- сохранены mobile-правки 072: размер и цвет крестика закрытия меню/галереи в мобильной версии.
+- обновлены cache-buster для объединённой версии без отката cookie-баннера, политики, форм и Tilda hash-bridge.
+- desktop, контент, видео, меню-логика, попап-вёрстка и cookie-логика не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -74,7 +75,7 @@
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
   <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
-  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-065" defer></script>
+  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
 </head>
 
 <body>
@@ -113,7 +114,7 @@
       function getConfig(mode){
         if(mode === 'mobile'){
           return {
-            css:['./css/birthday-mobile.css?v=mobile-menu-close-cross-072'],
+            css:['./css/birthday-mobile.css?v=mobile-menu-close-cross-073'],
             html:'./pages/birthday/birthday-mobile.html?v=mobile-video-sound-049',
             js:'./js/birthday-mobile.js',
             error:'Ошибка загрузки мобильной страницы День рождения. Проверь путь: pages/birthday/birthday-mobile.html'
@@ -274,6 +275,9 @@
       }
     })();
   </script>
+
+  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-073-phone-mask-mobile-cross" defer></script>
+  <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 
 </body>
 </html>
