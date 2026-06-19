@@ -1,13 +1,13 @@
 /*
 ==================================================
-GRADUATION MOBILE CSS 081 MENU GALLERY CROSS SPLIT
+GRADUATION MOBILE CSS 083 SMALL GALLERY CROSS
 
-Версия: graduation-mobile-css-081-menu-gallery-cross-split
+Версия: graduation-mobile-css-083-small-gallery-cross
 
 ИЗМЕНЕНИЯ:
-- mobile: крестик открытого меню возвращён к approved-размеру через базовые параметры .ip-menu-line.
-- mobile: маленький крестик оставлен только для lightbox-галереи, селекторы меню и галереи разведены.
-- desktop, формы, Tilda Lead Bridge, cookie, видео и структура страниц не изменялись.
+- mobile gallery: уменьшен крестик закрытия открытого фото до размера мобильного попапа формы.
+- mobile gallery: кликабельная зона крестика 27×27px, линии крестика 15×2px.
+- mobile menu, tap-переключение фото, формы, Tilda Lead Bridge, cookie, видео и desktop не изменялись.
 ==================================================
 */
 
@@ -767,8 +767,8 @@ GRADUATION MOBILE CSS 081 MENU GALLERY CROSS SPLIT
     top:22px;
     right:22px;
     z-index:6;
-    width:34px;
-    height:34px;
+    width:27px;
+    height:27px;
     padding:0;
     border:none;
     outline:none;
@@ -782,12 +782,12 @@ GRADUATION MOBILE CSS 081 MENU GALLERY CROSS SPLIT
 
   .ip-graduation-mobile-lightbox-close span{
     position:absolute;
-    left:4px;
-    top:16px;
-    width:26px;
+    left:6px;
+    top:13px;
+    width:15px;
     height:2px;
     border-radius:999px;
-    background:rgba(255,255,255,.92);
+    background:rgba(255,255,255,.72);
     pointer-events:none;
   }
 

@@ -1,9 +1,9 @@
 /*
-Версия: corporate-mobile-js-081-lightbox-tap
+Версия: corporate-mobile-js-083-small-gallery-cross
 ИЗМЕНЕНИЯ:
-- mobile lightbox: переключение фотографий перенесено на тап по открытому фото.
-- mobile lightbox: свайп-переключение отключено, крестик закрытия не переключает фотографии.
-- Отправка форм, Tilda Lead Bridge, маска телефона, cookie, меню и видео не изменялись.
+- mobile lightbox: fallback-размер крестика закрытия уменьшен с 34×34px до 27×27px.
+- mobile lightbox: tap-переключение фото сохранено, свайп-переключение не возвращалось.
+- Mobile menu, формы, Tilda Lead Bridge, маска телефона, cookie и видео не изменялись.
 */
 
 (function(){
@@ -810,8 +810,8 @@
     }
 
     var imageRect = lightboxImage.getBoundingClientRect();
-    var closeWidth = lightboxCloseButton.offsetWidth || 34;
-    var closeHeight = lightboxCloseButton.offsetHeight || 34;
+    var closeWidth = lightboxCloseButton.offsetWidth || 27;
+    var closeHeight = lightboxCloseButton.offsetHeight || 27;
 
     if(!imageRect.width || !imageRect.height){
       return;
