@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <!--
-Версия: biography-html-071-desktop-media-guard
+Версия: biography-html-065-tilda-lead-bridge
 ИЗМЕНЕНИЯ:
-- desktop: обновлён cache-buster biography.css для прозрачного защитного слоя поверх фотокарусели.
-- mobile, меню, попапы, формы, cookie-баннер и Tilda hash-bridge не изменялись.
+- добавлено подключение js/tilda-lead-bridge.js для отправки заявок из собственных попапов в скрытую Tilda-форму через postMessage.
+- визуальная вёрстка, меню, попапы, видео и Tilda hash-bridge не изменялись.
+- desktop/mobile: обновлены cache-buster для файлов биографии после ускорения смены фотографий.
+- desktop: подключена версия с внутренними стрелками управления фотографиями.
+- mobile: подключена версия с горизонтальным свайпом фотографий без изменения меню.
 -->
 <html lang="ru">
 <head>
@@ -76,13 +79,13 @@
   >
 
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
-  <link rel="stylesheet" href="./css/biography.css?v=desktop-media-guard-071">
+  <link rel="stylesheet" href="./css/biography.css?v=biography-carousel-arrows-shadow-056">
   <link rel="stylesheet" href="./css/biography-mobile.css?v=biography-carousel-arrows-shadow-056">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 
-  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
+  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-065" defer></script>
 </head>
 
 <body>
@@ -167,7 +170,7 @@
           document.createElement('script');
 
         transitionScript.src =
-          './js/page-transition.js?v=page-transition-menu-current-close-068';
+          './js/page-transition.js?v=tilda-hash-bridge-036';
 
         document.body.appendChild(
           transitionScript
@@ -183,10 +186,6 @@
           '<pre style="color:#fff;padding:40px;font-family:Arial,sans-serif;">Ошибка загрузки страницы Биография. Проверь путь: pages/biography/biography.html</pre>';
       });
   </script>
-
-  <script src="./js/phone-mask.js?v=phone-mask-067" defer></script>
-
-  <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 
 </body>
 </html>

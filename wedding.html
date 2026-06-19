@@ -2,10 +2,13 @@
 
 <!DOCTYPE html>
 <!--
-Версия: wedding-html-071-desktop-media-guard
+Версия: wedding-html-065-tilda-lead-bridge
 ИЗМЕНЕНИЯ:
-- desktop: обновлён cache-buster wedding.css для прозрачного защитного слоя поверх видео.
-- mobile-видео 070, меню, попапы, формы, cookie-баннер и Tilda hash-bridge сохранены.
+- добавлено подключение js/tilda-lead-bridge.js для отправки заявок из собственных попапов в скрытую Tilda-форму через postMessage.
+- визуальная вёрстка, меню, попапы, видео и Tilda hash-bridge не изменялись.
+- desktop: добавлены и принудительно отображены стрелки перелистывания фотографий в открытом lightbox галереи.
+- расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
+- mobile, меню, попапы форм, отзывы и видео не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -80,10 +83,10 @@
 
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
 
-  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
+  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-065" defer></script>
 </head>
 
 <body>
@@ -1096,7 +1099,7 @@
         return new Promise(function(resolve, reject){
           var script = document.createElement('script');
 
-          script.src = src + (src.indexOf('?') === -1 ? '?v=' : '&v=') + Date.now();
+          script.src = src + '?v=' + Date.now();
           script.defer = true;
           script.setAttribute('data-wedding-page-script', 'true');
 
@@ -1116,11 +1119,11 @@
           return {
             mode:'mobile',
             css:[
-              './css/wedding-mobile.css?v=mobile-video-ready-070'
+              './css/wedding-mobile.css'
             ],
             html:'./pages/wedding/wedding-mobile.html?v=mobile-video-sound-049',
             inlineHtml:null,
-            js:'./js/wedding-mobile.js?v=mobile-video-ready-070',
+            js:'./js/wedding-mobile.js',
             error:'Ошибка загрузки мобильной страницы Свадьба. Проверь путь: pages/wedding/wedding-mobile.html'
           };
         }
@@ -1128,7 +1131,7 @@
         return {
           mode:'desktop',
           css:[
-            './css/wedding.css?v=desktop-media-guard-071',
+            './css/wedding.css?v=desktop-gallery-arrows-052',
             './css/project-reviews.css?v=desktop-review-arrows-050'
           ],
           html:'./pages/wedding/wedding.html?v=desktop-gallery-arrows-052',
@@ -1266,7 +1269,7 @@
             if(!document.querySelector('script[data-page-transition-script]')){
               var transitionScript = document.createElement('script');
 
-              transitionScript.src = './js/page-transition.js?v=page-transition-menu-current-close-068';
+              transitionScript.src = './js/page-transition.js?v=tilda-hash-bridge-036';
               transitionScript.defer = true;
               transitionScript.setAttribute('data-page-transition-script', 'true');
 
@@ -1299,10 +1302,6 @@
 
     })();
   </script>
-
-  <script src="./js/phone-mask.js?v=phone-mask-067" defer></script>
-
-  <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 
 </body>
 </html>

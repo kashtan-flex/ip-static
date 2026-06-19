@@ -2,10 +2,13 @@
 
 <!DOCTYPE html>
 <!--
-Версия: musical-show-html-071-desktop-media-guard
+Версия: musical-show-html-065-tilda-lead-bridge
 ИЗМЕНЕНИЯ:
-- desktop: обновлён cache-buster musical-show.css для прозрачного защитного слоя поверх видео.
-- mobile-видео 070, меню, попапы, формы, cookie-баннер и Tilda hash-bridge сохранены.
+- добавлено подключение js/tilda-lead-bridge.js для отправки заявок из собственных попапов в скрытую Tilda-форму через postMessage.
+- визуальная вёрстка, меню, попапы, видео и Tilda hash-bridge не изменялись.
+- desktop: добавлены и принудительно отображены стрелки перелистывания фотографий в открытом lightbox галереи.
+- расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
+- mobile, меню, попапы форм, отзывы и видео не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -28,9 +31,9 @@
   <link rel="preload" href="./assets/img/musical/video/musical-show-video-poster.webp" as="image">
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
-  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
+  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-065" defer></script>
 </head>
 <body>
   <div class="ip-page-transition is-enter" aria-hidden="true"></div>
@@ -55,9 +58,9 @@
       }
       function getConfig(mode){
         if(mode === 'mobile'){
-          return {css:['./css/musical-show-mobile.css?v=mobile-video-ready-070'],html:'./pages/musical-show/musical-show-mobile.html?v=mobile-video-sound-049',js:'./js/musical-show-mobile.js?v=mobile-video-ready-070',error:'Ошибка загрузки мобильной страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show-mobile.html'};
+          return {css:['./css/musical-show-mobile.css'],html:'./pages/musical-show/musical-show-mobile.html?v=mobile-video-sound-049',js:'./js/musical-show-mobile.js',error:'Ошибка загрузки мобильной страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show-mobile.html'};
         }
-        return {css:['./css/musical-show.css?v=desktop-media-guard-071','./css/musical-show-reviews.css?v=desktop-review-arrows-050'],html:'./pages/musical-show/musical-show.html?v=desktop-gallery-arrows-052',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
+        return {css:['./css/musical-show.css?v=desktop-gallery-arrows-052','./css/musical-show-reviews.css?v=desktop-review-arrows-050'],html:'./pages/musical-show/musical-show.html?v=desktop-gallery-arrows-052',js:'./js/musical-show.js',error:'Ошибка загрузки страницы Музыкальное шоу. Проверь путь: pages/musical-show/musical-show.html'};
       }
       function resetState(){
         document.documentElement.classList.remove('ip-popup-lock');
@@ -78,12 +81,12 @@
         return new Promise(function(resolve,reject){var link=document.createElement('link');link.rel='stylesheet';link.href=href;link.setAttribute('data-musical-show-page-style','true');link.onload=function(){resolve(link);};link.onerror=reject;document.head.appendChild(link);});
       }
       function loadScript(src){
-        return new Promise(function(resolve,reject){var script=document.createElement('script');script.src=src+(src.indexOf('?')===-1?'?v=':'&v=')+Date.now();script.defer=true;script.setAttribute('data-musical-show-page-script','true');script.onload=function(){loadedScript=script;resolve(script);};script.onerror=reject;document.body.appendChild(script);});
+        return new Promise(function(resolve,reject){var script=document.createElement('script');script.src=src+'?v='+Date.now();script.defer=true;script.setAttribute('data-musical-show-page-script','true');script.onload=function(){loadedScript=script;resolve(script);};script.onerror=reject;document.body.appendChild(script);});
       }
       function loadPage(mode){
         var config=getConfig(mode); var token=loadToken+1; loadToken=token; currentMode=mode;
         resetState(); clearPageAssets(); root.innerHTML='';
-        Promise.all(config.css.map(loadStylesheet)).then(function(links){if(token!==loadToken){throw new Error('stale-load');} loadedStyles=links; return fetch(config.html);}).then(function(response){if(!response.ok){throw new Error(config.error);} return response.text();}).then(function(html){if(token!==loadToken){throw new Error('stale-load');} root.innerHTML=html; return loadScript(config.js);}).then(function(){if(!document.querySelector('script[data-page-transition-script]')){var transitionScript=document.createElement('script');transitionScript.src='./js/page-transition.js?v=page-transition-menu-current-close-068';transitionScript.defer=true;transitionScript.setAttribute('data-page-transition-script','true');document.body.appendChild(transitionScript);}}).catch(function(error){if(error && error.message==='stale-load'){return;} console.error(error); root.innerHTML='<pre style="color:#fff;padding:40px;font-family:Arial,sans-serif;">'+config.error+'</pre>';});
+        Promise.all(config.css.map(loadStylesheet)).then(function(links){if(token!==loadToken){throw new Error('stale-load');} loadedStyles=links; return fetch(config.html);}).then(function(response){if(!response.ok){throw new Error(config.error);} return response.text();}).then(function(html){if(token!==loadToken){throw new Error('stale-load');} root.innerHTML=html; return loadScript(config.js);}).then(function(){if(!document.querySelector('script[data-page-transition-script]')){var transitionScript=document.createElement('script');transitionScript.src='./js/page-transition.js?v=tilda-hash-bridge-036';transitionScript.defer=true;transitionScript.setAttribute('data-page-transition-script','true');document.body.appendChild(transitionScript);}}).catch(function(error){if(error && error.message==='stale-load'){return;} console.error(error); root.innerHTML='<pre style="color:#fff;padding:40px;font-family:Arial,sans-serif;">'+config.error+'</pre>';});
       }
       function scheduleModeCheck(){if(resizeTimer){window.clearTimeout(resizeTimer);} resizeTimer=window.setTimeout(function(){var nextMode=getMode(); if(nextMode!==currentMode){loadPage(nextMode);}}, BREAKPOINT_DEBOUNCE);}
       if(!root){return;}
@@ -93,9 +96,5 @@
       if(window.visualViewport){window.visualViewport.addEventListener('resize', function(){setViewportHeight();scheduleModeCheck();}, {passive:true});}
     })();
   </script>
-  <script src="./js/phone-mask.js?v=phone-mask-067" defer></script>
-
-  <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
-
 </body>
 </html>

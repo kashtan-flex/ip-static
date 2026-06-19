@@ -2,10 +2,13 @@
 
 <!DOCTYPE html>
 <!--
-Версия: graduation-html-071-desktop-media-guard
+Версия: graduation-html-065-tilda-lead-bridge
 ИЗМЕНЕНИЯ:
-- desktop: обновлён cache-buster graduation.css для прозрачного защитного слоя поверх видео.
-- mobile-видео 070, меню, попапы, формы, cookie-баннер и Tilda hash-bridge сохранены.
+- добавлено подключение js/tilda-lead-bridge.js для отправки заявок из собственных попапов в скрытую Tilda-форму через postMessage.
+- визуальная вёрстка, меню, попапы, видео и Tilda hash-bridge не изменялись.
+- desktop: добавлены и принудительно отображены стрелки перелистывания фотографий в открытом lightbox галереи.
+- расположение и внешний вид стрелок синхронизированы со стрелками desktop-попапов отзывов.
+- mobile, меню, попапы форм, отзывы и видео не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -71,9 +74,9 @@
 
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
-  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
+  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-065" defer></script>
 </head>
 
 <body>
@@ -112,15 +115,15 @@
       function getConfig(mode){
         if(mode === 'mobile'){
           return {
-            css:['./css/graduation-mobile.css?v=mobile-video-ready-070'],
+            css:['./css/graduation-mobile.css'],
             html:'./pages/graduation/graduation-mobile.html?v=mobile-video-sound-049',
-            js:'./js/graduation-mobile.js?v=mobile-video-ready-070',
+            js:'./js/graduation-mobile.js',
             error:'Ошибка загрузки мобильной страницы День рождения. Проверь путь: pages/graduation/graduation-mobile.html'
           };
         }
 
         return {
-          css:['./css/graduation.css?v=desktop-media-guard-071', './css/graduation-reviews.css?v=desktop-review-arrows-050'],
+          css:['./css/graduation.css?v=desktop-gallery-arrows-052', './css/graduation-reviews.css?v=desktop-review-arrows-050'],
           html:'./pages/graduation/graduation.html?v=desktop-gallery-arrows-052',
           js:'./js/graduation.js',
           error:'Ошибка загрузки страницы День рождения. Проверь путь: pages/graduation/graduation.html'
@@ -172,7 +175,7 @@
       function loadScript(src){
         return new Promise(function(resolve, reject){
           var script = document.createElement('script');
-          script.src = src + (src.indexOf('?') === -1 ? '?v=' : '&v=') + Date.now();
+          script.src = src + '?v=' + Date.now();
           script.defer = true;
           script.setAttribute('data-graduation-page-script', 'true');
           script.onload = function(){
@@ -218,7 +221,7 @@
           .then(function(){
             if(!document.querySelector('script[data-page-transition-script]')){
               var transitionScript = document.createElement('script');
-              transitionScript.src = './js/page-transition.js?v=page-transition-menu-current-close-068';
+              transitionScript.src = './js/page-transition.js?v=tilda-hash-bridge-036';
               transitionScript.defer = true;
               transitionScript.setAttribute('data-page-transition-script', 'true');
               document.body.appendChild(transitionScript);
@@ -273,10 +276,6 @@
       }
     })();
   </script>
-
-  <script src="./js/phone-mask.js?v=phone-mask-067" defer></script>
-
-  <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 
 </body>
 </html>

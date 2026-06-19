@@ -2,16 +2,13 @@
 
 <!DOCTYPE html>
 <!--
-Версия: policy-html-069-legal-mobile-menu-links-close
+Версия: policy-html-065-tilda-lead-bridge
 ИЗМЕНЕНИЯ:
-- Mobile legal-menu: обновлён cache-buster legal.css 069 для закрытия нижних правовых ссылок вместе с меню на страницах политики и согласия.
-- Меню: обновлён cache-buster page-transition.js для закрытия меню при клике по текущей странице.
-- Desktop/mobile: сохранены ранее подключённые mobile-попапы 066 и маска телефона 067.
-- Визуал меню, попапы, формы, видео, cookie-баннер и Tilda hash-bridge не изменялись.
-- обновлён cache-buster фрагмента политики для точечных переносов текста в разделе 2.1 о cookie.
-- desktop: слово «не» во фразе про неподключённые рекламные сервисы перенесено на новую строку.
-- mobile: последний абзац раздела 2.1 получил согласованные переносы без влияния на desktop.
-- cookie-баннер, меню, попапы, формы, видео, Tilda и hash-bridge не изменялись.
+- добавлено подключение js/tilda-lead-bridge.js для отправки заявок из собственных попапов в скрытую Tilda-форму через postMessage.
+- визуальная вёрстка, меню, попапы, видео и Tilda hash-bridge не изменялись.
+- mobile: обновлён cache-buster общего popups-mobile.css после уменьшения визуального крестика формы.
+- mobile: единый размер крестика теперь применяется ко всем формам-попапам сайта.
+- desktop, меню, галереи, отзывы, контент и логика страниц не изменялись.
 -->
 <html lang="ru">
 <head>
@@ -42,10 +39,10 @@
 
   <link rel="stylesheet" href="./css/home.css?v=home-social-icons-stable-034">
   <link rel="stylesheet" href="./css/popups.css?v=popups-desktop-figma-radius-030">
-  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-figma-card-066">
+  <link rel="stylesheet" href="./css/popups-mobile.css?v=popups-mobile-close-size-048">
   <link rel="stylesheet" href="./css/page-transition.css?v=tilda-balanced-006">
-  <link rel="stylesheet" href="./css/cookie-notice.css?v=cookie-notice-063">
-  <link rel="stylesheet" href="./css/legal.css?v=legal-mobile-menu-links-close-069">
+  <link rel="stylesheet" href="./css/legal.css?v=062-mobile-text-linebreaks-only">
+  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-065" defer></script>
 </head>
 
 <body>
@@ -54,7 +51,7 @@
   <div id="ip-policy-root"></div>
 
   <script>
-    fetch('./pages/legal/policy.html?v=policy-cookie-breaks-064')
+    fetch('./pages/legal/policy.html?v=popup-close-030')
       .then(function(response){
         return response.text();
       })
@@ -66,14 +63,10 @@
         document.body.appendChild(pageScript);
 
         var transitionScript = document.createElement('script');
-        transitionScript.src = './js/page-transition.js?v=page-transition-menu-current-close-068';
+        transitionScript.src = './js/page-transition.js?v=tilda-hash-bridge-036';
         document.body.appendChild(transitionScript);
       });
   </script>
-
-  <script src="./js/phone-mask.js?v=phone-mask-067" defer></script>
-
-  <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 
 </body>
 </html>
