@@ -2,13 +2,13 @@
 
 <!DOCTYPE html>
 <!--
-Версия: wedding-html-073-phone-mask-mobile-cross-merge
+Версия: wedding-html-076-stable-tilda-lead-success
 ИЗМЕНЕНИЯ:
-- сохранена версия js/tilda-lead-bridge.js с отправкой заявок в Tilda и явной маской телефона +7 (___) ___-__-__.
-- обновлён cache-buster Tilda lead bridge для надёжной отправки postMessage в домен Tilda.
-- сохранены mobile-правки 072: размер и цвет крестика закрытия меню/галереи в мобильной версии.
-- обновлены cache-buster для объединённой версии без отката cookie-баннера, политики, форм и Tilda hash-bridge.
-- desktop, контент, видео, меню-логика, попап-вёрстка и cookie-логика не изменялись.
+- обновлён cache-buster js/tilda-lead-bridge.js до версии 076.
+- сохранена отправка заявок в Tilda через iframe/postMessage.
+- source больше не передаётся в заявку.
+- добавлен стабильный пользовательский success-сценарий внутри собственного попапа сайта.
+- сохранены маска телефона, cookie-баннер, меню, видео и утверждённая верстка страниц.
 -->
 <html lang="ru">
 <head>
@@ -1303,7 +1303,7 @@
     })();
   </script>
 
-  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-075-parent-origin-fallback" defer></script>
+  <script src="./js/tilda-lead-bridge.js?v=tilda-lead-bridge-076-stable-success-ux" defer></script>
   <script src="./js/cookie-notice.js?v=cookie-notice-063" defer></script>
 
 </body>

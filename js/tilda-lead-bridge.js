@@ -2,21 +2,15 @@
 ==================================================
 TILDA LEAD BRIDGE JS
 
-Версия: tilda-lead-bridge-js-075-parent-origin-fallback
+Версия: tilda-lead-bridge-js-076-stable-success-ux
 
 ИЗМЕНЕНИЯ:
-- добавлена отправка заявок из собственных попапов GitHub-сайта в родительскую Tilda-страницу через postMessage.
-- форма остаётся внутри текущего дизайна сайта, Tilda используется только как почтовый шлюз через скрытую форму.
-- SMTP, backend и сторонние сервисы не используются.
-- добавлена явная маска телефона +7 (___) ___-__-__ для всех полей phone в попап-формах.
-- маска работает через делегирование и MutationObserver, поэтому сохраняется после динамической загрузки HTML-фрагментов.
-- меню, попап-вёрстка, hash-bridge, дата, cookie-баннер и визуальная логика страниц не изменяются.
-- усилен перехват отправки: добавлен capture-click по .ip-popup-submit, чтобы старые submit-заглушки страниц не блокировали отправку.
-- targetOrigin родительской Tilda-страницы определяется через document.referrer с fallback на домен Ивана и временный Tilda-домен.
-- добавлены дополнительные допустимые parent-origin для домена с www и временной страницы Tilda.
-- версия объединена с mobile-правками 072 без изменения логики маски телефона.
-- отправка postMessage в Tilda усилена: сообщение отправляется по всем доверенным parent-origin, включая punycode/www/Tilda-preview домены.
-- проверка ответов от parent-страницы теперь нормализует origin, чтобы кириллический домен и punycode не ломали получение success.
+- убрана техническая строка source из payload заявки.
+- добавлен оптимистичный success-сценарий: пользователь не ждёт технический ответ Tilda дольше необходимого.
+- при успешной отправке внутри нашего попапа показывается собственный текст «Спасибо! Я скоро свяжусь с вами.».
+- отправка в Tilda через postMessage сохранена: Tilda остаётся почтовым шлюзом через скрытую форму.
+- сохранена маска телефона +7 (___) ___-__-__ для всех попап-форм.
+- меню, cookie-баннер, видео, hash-bridge и визуальная верстка попапов не изменяются.
 ==================================================
 */
 
@@ -34,8 +28,10 @@ TILDA LEAD BRIDGE JS
     'https://millionth-employable-skating.tilda.ws',
     'https://project25835926.tilda.ws'
   ]);
+
   var SUBMIT_TIMEOUT = 9000;
-  var SUCCESS_CLOSE_DELAY = 1200;
+  var OPTIMISTIC_SUCCESS_DELAY = 900;
+  var SUCCESS_CLOSE_DELAY = 1450;
 
   var pendingRequest = null;
 
@@ -85,7 +81,6 @@ TILDA LEAD BRIDGE JS
       event_type: 'consent'
     }
   };
-
 
   function normalizePhoneDigits(value){
     var digits = String(value || '').replace(/\D/g, '');
@@ -318,6 +313,36 @@ TILDA LEAD BRIDGE JS
     }
   }
 
+  function getPopupTextElement(form){
+    var popup = getPopup(form);
+
+    return popup ? popup.querySelector('.ip-popup-text') : null;
+  }
+
+  function showCustomSuccessMessage(form){
+    var textElement = getPopupTextElement(form);
+
+    if(!textElement){
+      return;
+    }
+
+    if(!textElement.hasAttribute('data-ip-original-html')){
+      textElement.setAttribute('data-ip-original-html', textElement.innerHTML);
+    }
+
+    textElement.innerHTML = '<strong>Спасибо!</strong><span>Я скоро свяжусь с вами.</span>';
+  }
+
+  function restorePopupText(form){
+    var textElement = getPopupTextElement(form);
+
+    if(!textElement || !textElement.hasAttribute('data-ip-original-html')){
+      return;
+    }
+
+    textElement.innerHTML = textElement.getAttribute('data-ip-original-html');
+  }
+
   function closePopup(form){
     var popup = getPopup(form);
 
@@ -361,8 +386,7 @@ TILDA LEAD BRIDGE JS
       date: getFieldValue(form, '[name="date"]'),
       page: pageMeta.page,
       event_type: pageMeta.event_type,
-      consent: getConsentValue(form),
-      source: 'ivan-pertsev-github-iframe'
+      consent: getConsentValue(form)
     };
   }
 
@@ -456,6 +480,10 @@ TILDA LEAD BRIDGE JS
       window.clearTimeout(pendingRequest.timeoutId);
     }
 
+    if(pendingRequest.optimisticSuccessId){
+      window.clearTimeout(pendingRequest.optimisticSuccessId);
+    }
+
     pendingRequest = null;
   }
 
@@ -472,11 +500,13 @@ TILDA LEAD BRIDGE JS
 
     if(status === 'success'){
       setButtonText(button, 'Отправлено');
+      showCustomSuccessMessage(form);
       resetForm(form);
 
       window.setTimeout(function(){
         closePopup(form);
         restoreButton(button);
+        restorePopupText(form);
       }, SUCCESS_CLOSE_DELAY);
 
       return;
@@ -517,7 +547,10 @@ TILDA LEAD BRIDGE JS
       button: button,
       timeoutId: window.setTimeout(function(){
         finishRequest('error', 'Tilda response timeout.');
-      }, SUBMIT_TIMEOUT)
+      }, SUBMIT_TIMEOUT),
+      optimisticSuccessId: window.setTimeout(function(){
+        finishRequest('success', 'Optimistic success after postMessage.');
+      }, OPTIMISTIC_SUCCESS_DELAY)
     };
 
     postLeadMessage(buildPayload(form));
