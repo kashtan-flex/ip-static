@@ -1,6 +1,7 @@
 /*
-Версия: cookie-notice-js-063
+Версия: cookie-notice-js-091-cookie-button-label
 ИЗМЕНЕНИЯ:
+- текст кнопки cookie-предупреждения изменён с «Понятно» на «Хорошо».
 - появление cookie-баннера разделено на подготовку слоя и видимый старт анимации, чтобы убрать резкий скачок.
 - баннер сначала монтируется в скрытом положении, затем плавно проявляется и выезжает снизу.
 - единая задержка, текст, логика сохранения согласия и скрытия под меню/попапами/лайтбоксами сохранены.
@@ -87,7 +88,7 @@
           '<a href="./policy.html">Политика обработки персональных данных</a>',
         '</span>',
       '</p>',
-      '<button class="ip-cookie-notice__button" type="button">Понятно</button>'
+      '<button class="ip-cookie-notice__button" type="button">Хорошо</button>'
     ].join('');
 
     notice.querySelector('.ip-cookie-notice__button').addEventListener('click', function(){
