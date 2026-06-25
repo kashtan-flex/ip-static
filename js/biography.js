@@ -1,9 +1,9 @@
 /*
-Версия: biography-js-055-carousel-controls
+Версия: biography-js-093-mobile-tap-auto-carousel
 ИЗМЕНЕНИЯ:
-- ускорена автоматическая смена фотографий биографии в 1.5 раза.
-- desktop: добавлены обработчики стрелок внутри фотографии.
-- mobile: добавлен горизонтальный свайп фотографий без изменения логики меню.
+- mobile: смена фотографий биографии переведена со свайпа на тап по фотографии.
+- mobile: автоматическая смена фотографий сохранена.
+- desktop: автоматическая смена и стрелки карусели сохранены без изменений.
 */
 
 (function(){
@@ -59,9 +59,6 @@
   var carouselTimer = null;
   var resizeFrame = null;
 
-  var carouselTouchStartX = null;
-  var carouselTouchStartY = null;
-  var carouselTouchStartTime = 0;
 
   var touchStartY = null;
   var touchStartedInsideMenu = false;
@@ -313,75 +310,17 @@
       });
     }
 
-    carousel.addEventListener(
-      'touchstart',
-      function(event){
-        if(!isMobile()){
-          return;
-        }
+    carousel.addEventListener('click', function(event){
+      if(!isMobile()){
+        return;
+      }
 
-        var touch = event.touches && event.touches[0];
+      event.preventDefault();
+      event.stopPropagation();
 
-        if(!touch){
-          return;
-        }
-
-        carouselTouchStartX = touch.clientX;
-        carouselTouchStartY = touch.clientY;
-        carouselTouchStartTime = Date.now();
-      },
-      { passive:true }
-    );
-
-    carousel.addEventListener(
-      'touchend',
-      function(event){
-        if(
-          !isMobile() ||
-          carouselTouchStartX === null ||
-          carouselTouchStartY === null
-        ){
-          carouselTouchStartX = null;
-          carouselTouchStartY = null;
-          carouselTouchStartTime = 0;
-          return;
-        }
-
-        var touch = event.changedTouches && event.changedTouches[0];
-
-        if(!touch){
-          carouselTouchStartX = null;
-          carouselTouchStartY = null;
-          carouselTouchStartTime = 0;
-          return;
-        }
-
-        var deltaX = touch.clientX - carouselTouchStartX;
-        var deltaY = touch.clientY - carouselTouchStartY;
-        var elapsed = Date.now() - carouselTouchStartTime;
-
-        carouselTouchStartX = null;
-        carouselTouchStartY = null;
-        carouselTouchStartTime = 0;
-
-        if(
-          Math.abs(deltaX) < 42 ||
-          Math.abs(deltaX) <= Math.abs(deltaY) * 1.25 ||
-          elapsed > 900
-        ){
-          return;
-        }
-
-        if(deltaX < 0){
-          showNextSlide();
-        }else{
-          showPreviousSlide();
-        }
-
-        restartCarousel();
-      },
-      { passive:true }
-    );
+      showNextSlide();
+      restartCarousel();
+    });
   }
 
   function openMenu(){
